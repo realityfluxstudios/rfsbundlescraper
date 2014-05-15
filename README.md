@@ -9,6 +9,11 @@ I wrote this bookmarklet to add a text box and a tab delimited list of all the g
 
 I am releasing this to the public in the hopes that it will be useful to others. Also, if IndieGala changes up their code I hope to have some help updating the code once in a while. I just updated it to their latest changes.
 
+### How to use
+You can either create a new bookmark and paste the code from the IndieGalaKeyGetter.min.js file into the link part of the bookmark or [Click and drag this to your bookmark bar](javascript:(function(){document.body.appendChild(document.createElement('script')).src='https://rawgit.com/tvl83/IndieGalaKeyGetter/master/IndieGalaKeyGetter.min.js';})();)
+
+When you are at your bundle link just click the bookmarklet and it will create a textbox and a list of all the games, their cd keys and the store links.
+
 ### 13May14 - v1.0
 
 Initial Release
