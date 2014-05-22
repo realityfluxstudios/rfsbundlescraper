@@ -1,5 +1,5 @@
 javascript:(function(){
-    $('#steam-key.row h3').append('<div id="games-list"><textarea onClick="this.select();" id="games-list-text" rows="25" cols="950" style="width:900px"></textarea></div>');
+    $('#indie_gala_2 h2').append('<div id="games-list" style="text-align: center;"><textarea onClick="this.select();" id="games-list-text" rows="25" cols="950" style="width:900px"></textarea></div>');
     gamesList = $('#games-list-text');
     gamesList.val( window.location.href );
     
