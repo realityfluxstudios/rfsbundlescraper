@@ -135,7 +135,7 @@ var rfsigbundle = {
     this.fillGamesList();
   },
 
-  fillGamesList: function(){
+  readfromls: function(){
     if(this.bundle != null || this.bundle != undefined)
       $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
     else
@@ -194,7 +194,7 @@ var rfsigbundle = {
     console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
   },
 
-  reset : function(){
+  resetandclear : function(){
     combiner = false;
     exists = false;
     debug = true;
