@@ -160,7 +160,7 @@ var rfsigbundle = {
   },
 
   run : function(){
-    /*this.init();*/
+    this.init();
 
     do{
       if(settings.giftLinks.length >= 1 && settings.interval == 0){
@@ -202,4 +202,4 @@ var rfsigbundle = {
   }
 }
 
-rfsigbundle.run();
+
