@@ -201,5 +201,4 @@ var rfsigbundle = {
     this.removeFromLS();
   }
 }
-
-
+rfsigbundle.run();
