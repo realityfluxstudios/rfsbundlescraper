@@ -22,12 +22,19 @@ var rfsigbundle = {
   },
 
   init : function(){
+
+    if($('#rfs-container').length == 0)
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
+
     if(localStorage.getItem('RFSIGBundle') != null)
     {
       this.combine = true;
       this.debuglog('Loading existing bundle');
+      this.readfromls();
       this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
       this.debuglog('bundle.games.length: ' + this.bundle.games.length);
+      this.bundle.name = $('.color-text').text();
+      this.bundle.site = "IndieGala";
 
       if(this.bundle.url === window.location.href)
       {
@@ -40,8 +47,6 @@ var rfsigbundle = {
       this.bundle.name = $('.color-text').text();
       this.bundle.site = "IndieGala";
     }
-    if($('#rfs-games-list').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <br /> <textarea onClick="this.select();" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <!-- link rel="stylesheet" type="text/css" href="http://rocktronica.github.com/Add-CSS-Bookmarklet/addcss.min.css" --> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
   },
 
   convertToSlug : function (value){
@@ -69,6 +74,7 @@ var rfsigbundle = {
         followed by Steam games. I am _taking this for granted_. If they change
         this, it will break.
     */
+
     var steamLinkIndex = 0;
 
     for(var i = 0; i < titles.length-1; i++)
@@ -78,6 +84,7 @@ var rfsigbundle = {
       if(this.combine)
       {
         game = this.bundle.games[i];
+        debuglog('Combining ' + this.bundle.games[i].title);
       } else {
         game = {};
         game.keys = [];
@@ -91,17 +98,20 @@ var rfsigbundle = {
 
       if(drm.match('desura') || ( i < $('.small-tits2').length && $('.small-tits2')[i].text.match(/desura/i)))
       {
-        game.drm = 'Desura';
+        if(!this.combine)
+          game.drm = 'Desura';
         key.key = otherKeys[i].value;
       }
       else if(drm.match('origin'))
       {
-        game.drm = 'Origin';
+        if(!this.combine)
+          game.drm = 'Origin';
         key.key = otherKeys[i].value;
       }
       else if(drm.match('steam'))
       {
-        game.drm = 'Steam';
+        if(!this.combine)
+          game.drm = 'Steam';
 
         key.key = steamLinks[steamLinkIndex].href;
 
@@ -109,12 +119,14 @@ var rfsigbundle = {
       }
       else if(drm.match('gamersgate'))
       {
-        game.drm = 'GamersGate';
+        if(!this.combine)
+          game.drm = 'GamersGate';
         key.key = otherKeys[i].value;
       }
       else if(drm.match('gog'))
       {
-        game.drm = 'GOG';
+        if(!this.combine)
+          game.drm = 'GOG';
         key.key = otherKeys[i].value;
       }
 
@@ -132,7 +144,7 @@ var rfsigbundle = {
     }
 
     this.removeDupes(this.bundle.games);
-    this.fillGamesList();
+    this.readfromls();
   },
 
   readfromls: function(){
@@ -173,7 +185,7 @@ var rfsigbundle = {
       this.removeDupes(this.bundle.games);
       this.saveToLS();
     } else {
-      console.log('It\'s the same bundle dude!');
+      debuglog('It\'s the same bundle dude!');
     }
   },
 
