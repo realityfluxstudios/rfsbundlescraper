@@ -1,11 +1,30 @@
-var VERSION = '0.8102300';
+var VERSION = '0.8110005';
 
 var settings = {
   interval : 0,
   giftLinks : $('#icon-gift img'),
   cacheBuster: '',
   oldCacheBuster: '',
-  firstReload: true
+  firstReload: true,
+  textHeight: 408,
+  textWidth: 415,
+  autoClick: true,
+
+  toggleSettingsDisplay: function(){
+    $('div#rfsSettings').toggle();
+  },
+
+  updateSettings: function(){
+    localStorage.setItem('rfsSettingsTextHeight', $('#rfsSettingsTextHeight').val());
+    localStorage.setItem('rfsSettingsTextWidth', $('#rfsSettingsTextWidth').val());
+    localStorage.setItem('rfsSettingsAutoClick', $('#rfsSettingsAutoClick').val());
+  },
+
+  loadSettings: function(){
+    $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
+    $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
+    $('#rfsSettingsAutoClick').val(localStorage.getItem('rfsSettingsAutoClick'));
+  }
 };
 
 var RFSGameInfoGathering = {
@@ -31,7 +50,7 @@ var RFSGameInfoGathering = {
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span>\n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input id="rfsSettingsAutoClick" type="checkbox">\n    </div>\n    \n    <button onClick="rfsToggleSettings()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <!-- span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span -->\n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
@@ -245,5 +264,8 @@ function reloadScript() {
     settings.oldCacheBuster = settings.cacheBuster;
   }
 }
+
+
+
 
 RFSGameInfoGathering.run();
