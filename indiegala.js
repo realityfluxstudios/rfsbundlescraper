@@ -1,11 +1,11 @@
-var VERSION = '0.8102150';
+var VERSION = '0.8102207';
 
 var settings = {
   interval : 0,
   giftLinks : $('#icon-gift').find('img')
 };
 
-var rfsigbundle = {
+var RFSGameInfoGathering = {
 
   combiner: false,
 
@@ -28,15 +28,15 @@ var rfsigbundle = {
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <button class="btn-danger" onClick="reloadscript();">Reload Script</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button> \n    <button class="btn-info" onClick="RFSGameInfoGathering.readFromLS();">Print From LS</button> \n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear LS</button> \n     <br /> \n    <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span>\n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
       this.combine = true;
-      this.debuglog('Loading existing bundle');
-      this.readfromls();
+      console.log('Loading existing bundle');
+      this.readFromLS();
       this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
-      this.debuglog('bundle.games.length: ' + this.bundle.games.length);
+      console.log('bundle.games.length: ' + this.bundle.games.length);
       this.bundle.name = $('.color-text').text();
       this.bundle.site = "IndieGala";
 
@@ -47,7 +47,7 @@ var rfsigbundle = {
       }
     }
     else {
-      this.debuglog('No existing bundle...');
+      console.log('No existing bundle...');
       this.bundle.name = $('.color-text').text();
       this.bundle.site = "IndieGala";
     }
@@ -89,7 +89,7 @@ var rfsigbundle = {
       if(this.combine)
       {
         game = this.bundle.games[i];
-        this.debuglog('Combining ' + this.bundle.games[i].title);
+        console.log('Combining ' + this.bundle.games[i].title);
       } else {
         game = {};
         game.keys = [];
@@ -151,10 +151,10 @@ var rfsigbundle = {
     }
 
     this.removeDupes(this.bundle.games);
-    this.readfromls();
+    this.readFromLS();
   },
 
-  readfromls: function(){
+  readFromLS: function(){
     if(this.bundle != null || this.bundle != undefined)
       $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
     else
@@ -174,7 +174,7 @@ var rfsigbundle = {
         }
       }, 2000);
     } else {
-      this.debuglog('No gift images to click... continue on...');
+      console.log('No gift images to click... continue on...');
     }
   },
 
@@ -192,16 +192,16 @@ var rfsigbundle = {
       this.removeDupes(this.bundle.games);
       this.saveToLS();
     } else {
-      this.debuglog('It\'s the same bundle dude!');
+      console.log('It\'s the same bundle dude!');
     }
   },
 
   saveToLS: function(){
     localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
-    $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
+    this.readFromLS();
   },
 
-  debuglog: function(text){
+  debugLog: function(text){
     if(this.debug)
       console.log('debug: ' + text);
   },
@@ -211,20 +211,22 @@ var rfsigbundle = {
     this.bundle = {};
     console.log('this.bundle: ' + JSON.stringify(this.bundle, null, 2));
     console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
+    this.readFromLS();
   },
 
-  resetandclear : function(){
+  resetAndClear : function(){
     combiner = false;
     exists = false;
     debug = true;
     this.removeFromLS();
+    this.readFromLS();
   }
 };
 
-function reloadscript() {
+function reloadScript() {
   var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
   $('script[src="' + src + '"]').remove();
   $('<script>').attr('src', src).appendTo('head');
 }
 
-rfsigbundle.run();
+RFSGameInfoGathering.run();

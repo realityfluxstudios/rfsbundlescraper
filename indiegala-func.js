@@ -25,9 +25,9 @@ var rfsigbundle = {
     if(localStorage.getItem('RFSIGBundle') != null)
     {
       this.combine = true;
-      this.debuglog('Loading existing bundle');
+      this.debugLog('Loading existing bundle');
       this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
-      this.debuglog('bundle.games.length: ' + this.bundle.games.length);
+      this.debugLog('bundle.games.length: ' + this.bundle.games.length);
 
       if(this.bundle.url === window.location.href)
       {
@@ -36,12 +36,12 @@ var rfsigbundle = {
       }
     }
     else {
-      this.debuglog('No existing bundle...')
+      this.debugLog('No existing bundle...')
       this.bundle.name = $('.color-text').text();
       this.bundle.site = "IndieGala";
     }
     if($('#rfs-games-list').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <!-- link rel="stylesheet" type="text/css" href="http://rocktronica.github.com/Add-CSS-Bookmarklet/addcss.min.css" --> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="RFSGameInfoGathering.run();">Run()</button> <button class="btn-info" onClick="RFSGameInfoGathering.readFromLS();">Print From LS</button> <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear LS</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <!-- link rel="stylesheet" type="text/css" href="http://rocktronica.github.com/Add-CSS-Bookmarklet/addcss.min.css" --> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
   },
 
   convertToSlug : function (value){
@@ -155,7 +155,7 @@ var rfsigbundle = {
         }
       }, 2000);
     } else {
-      this.debuglog('No gift images to click... continue on...');
+      this.debugLog('No gift images to click... continue on...');
     }
   },
 
@@ -182,7 +182,7 @@ var rfsigbundle = {
     $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
   },
 
-  debuglog: function(text){
+  debugLog: function(text){
     if(this.debug)
       console.log('debug: ' + text);
   },
