@@ -1,4 +1,4 @@
-var VERSION = 0.8102140;
+var VERSION = '0.8102150';
 
 var settings = {
   interval : 0,
@@ -222,7 +222,7 @@ var rfsigbundle = {
 };
 
 function reloadscript() {
-  var src = "https://raw.githubusercontent.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
   $('script[src="' + src + '"]').remove();
   $('<script>').attr('src', src).appendTo('head');
 }
