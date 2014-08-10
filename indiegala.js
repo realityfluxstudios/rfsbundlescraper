@@ -220,7 +220,7 @@ var rfsigbundle = {
 }
 
 function reloadscript() {
-  var src = https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js
+  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
   $('script[src="' + src + '"]').remove();
   $('<script>').attr('src', src).appendTo('head');
 }
