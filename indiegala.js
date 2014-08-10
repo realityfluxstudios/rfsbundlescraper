@@ -1,4 +1,4 @@
-var VERSION = '0.8110007';
+var VERSION = '0.8110100';
 
 var settings = {
   interval : 0,
@@ -24,8 +24,11 @@ var settings = {
     localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
     localStorage.setItem('rfsSettingsAutoClick', autoClick.val());
 
-    textArea.height(textHeight.val());
-    textArea.width(textWidth.val());
+    var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
+
+    console.log(cssString);
+
+    textArea.css('cssText', cssString);
 
   },
 
@@ -71,7 +74,7 @@ var RFSGameInfoGathering = {
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked>\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <!-- span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span -->\n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked>\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
