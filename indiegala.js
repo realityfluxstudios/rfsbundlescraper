@@ -26,8 +26,6 @@ var settings = {
 
     var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
 
-    console.log(cssString);
-
     textArea.css('cssText', cssString);
 
   },
@@ -45,7 +43,7 @@ var settings = {
 
       textArea.height(textHeight.val());
       textArea.width(textWidth.val());
-      autoClick.checked(true);
+
     }
 
   }
@@ -260,8 +258,6 @@ var RFSGameInfoGathering = {
     localStorage.removeItem('rfsSettingsTextWidth');
     localStorage.removeItem('rfsSettingsAutoClick');
 
-
-
     this.bundle = {};
     console.log('this.bundle: ' + JSON.stringify(this.bundle, null, 2));
     console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
@@ -270,14 +266,13 @@ var RFSGameInfoGathering = {
   },
 
   resetAndClear : function(){
-    settings.combiner = false;
-    settings.exists = false;
-    settings.debug = true;
+    this.combiner = false;
+    this.exists = false;
+    this.debug = true;
 
     settings.textHeight = 408;
     settings.textWidth = 415;
     settings.autoClick = true;
-
 
     this.removeFromLS();
     this.readFromLS();
