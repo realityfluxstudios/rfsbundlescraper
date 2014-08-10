@@ -1,7 +1,9 @@
+var VERSION = 0.8102140;
+
 var settings = {
   interval : 0,
-  giftLinks : $('#icon-gift img')
-}
+  giftLinks : $('#icon-gift').find('img')
+};
 
 var rfsigbundle = {
 
@@ -18,12 +20,12 @@ var rfsigbundle = {
     games : [],
     drm_free : [],
     music_tracks : [],
-    android_games : [],
+    android_games : []
   },
 
   init : function(){
 
-    console.log("RFS Game Info Gather Bookmarklet v0.8102131")
+    console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
       $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <button class="btn-danger" onClick="reloadscript();">Reload Script</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
@@ -40,12 +42,12 @@ var rfsigbundle = {
 
       if(this.bundle.url === window.location.href)
       {
-        console.log("this.bundle.url: " + this.bundle.url + " === window.location.href: " + window.location.href)
+        console.log("this.bundle.url: " + this.bundle.url + " === window.location.href: " + window.location.href);
         this.exists = true;
       }
     }
     else {
-      this.debuglog('No existing bundle...')
+      this.debuglog('No existing bundle...');
       this.bundle.name = $('.color-text').text();
       this.bundle.site = "IndieGala";
     }
@@ -66,7 +68,7 @@ var rfsigbundle = {
   },
 
   gatherDRMGames : function(){
-    var gameRow = $('#stringa-game-key .row');
+    var gameRow = $('#stringa-game-key').find('.row');
 
     var titles = $('.title_game a');
     var drm;
@@ -93,15 +95,15 @@ var rfsigbundle = {
         game.keys = [];
         key = {};
         key.gift_url = window.location.href;
-
       }
 
       drm = titles[i].href;
 
       var otherKeys = $('.keys');
       var steamLinks = $('.keyfield a');
+      var smalltits2 = $('.small-tits2');
 
-      if(drm.match('desura') || ( i < $('.small-tits2').length && $('.small-tits2')[i].text.match(/desura/i)))
+      if(drm.match('desura') || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
       {
         if(!this.combine)
           game.drm = 'Desura';
@@ -165,7 +167,7 @@ var rfsigbundle = {
         if(settings.giftLinks.length == 0){
           clearInterval(interval);
         } else {
-          settings.giftLinks = $('#icon-gift img');
+          settings.giftLinks = $('#icon-gift').find('img');
           settings.giftLinks[0].click();
           settings.giftLinks[0].remove();
           console.log('removing img');
@@ -217,7 +219,7 @@ var rfsigbundle = {
     debug = true;
     this.removeFromLS();
   }
-}
+};
 
 function reloadscript() {
   var src = "https://raw.githubusercontent.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
