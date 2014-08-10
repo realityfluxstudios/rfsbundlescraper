@@ -1,4 +1,4 @@
-var VERSION = '0.8102253';
+var VERSION = '0.8102300';
 
 var settings = {
   interval : 0,
@@ -31,7 +31,7 @@ var RFSGameInfoGathering = {
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n     <br /> \n    <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span>\n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> \n    <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span>\n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
