@@ -1,8 +1,8 @@
-var VERSION = '0.8102235';
+var VERSION = '0.8102253';
 
 var settings = {
   interval : 0,
-  giftLinks : $('#icon-gift').find('img'),
+  giftLinks : $('#icon-gift img'),
   cacheBuster: '',
   oldCacheBuster: '',
   firstReload: true
@@ -71,7 +71,7 @@ var RFSGameInfoGathering = {
   },
 
   gatherDRMGames : function(){
-    var gameRow = $('#stringa-game-key').find('.row');
+    var gameRow = $('#stringa-game-key .row');
 
     var titles = $('.title_game a');
     var drm;
@@ -171,7 +171,7 @@ var RFSGameInfoGathering = {
         if(settings.giftLinks.length == 0){
           clearInterval(interval);
         } else {
-          settings.giftLinks = $('#icon-gift').find('img');
+          settings.giftLinks = $('#icon-gift img');
           settings.giftLinks[0].click();
           settings.giftLinks[0].remove();
           console.log('removing img');
