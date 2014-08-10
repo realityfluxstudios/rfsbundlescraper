@@ -1,4 +1,4 @@
-var VERSION = '0.8102207';
+var VERSION = '0.8102211';
 
 var settings = {
   interval : 0,
@@ -93,11 +93,12 @@ var RFSGameInfoGathering = {
       } else {
         game = {};
         game.keys = [];
-        key = {};
-        key.gift_url = window.location.href;
+
       }
 
       drm = titles[i].href;
+      key = {};
+      key.gift_url = window.location.href;
 
       var otherKeys = $('.keys');
       var steamLinks = $('.keyfield a');
