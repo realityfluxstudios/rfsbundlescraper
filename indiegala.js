@@ -86,7 +86,7 @@ var rfsigbundle = {
       if(this.combine)
       {
         game = this.bundle.games[i];
-        debuglog('Combining ' + this.bundle.games[i].title);
+        this.debuglog('Combining ' + this.bundle.games[i].title);
       } else {
         game = {};
         game.keys = [];
@@ -187,7 +187,7 @@ var rfsigbundle = {
       this.removeDupes(this.bundle.games);
       this.saveToLS();
     } else {
-      debuglog('It\'s the same bundle dude!');
+      this.debuglog('It\'s the same bundle dude!');
     }
   },
 
