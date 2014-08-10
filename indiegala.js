@@ -26,7 +26,7 @@ var rfsigbundle = {
     console.log("RFS Game Info Gather Bookmarklet v0.8102117")
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;"> <button class="btn-default" onClick="rfsigbundle.run();">Run()</button> <button class="btn-info" onClick="rfsigbundle.readfromls();">Print From LS</button> <button class="btn-danger" onClick="rfsigbundle.resetandclear();">Reset and Clear LS</button> <button class="btn-danger" onClick="reloadscript();">Reload Script</button> <br /> <textarea id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px!important;"></textarea> <span id="rfs-handle" style="border-width: 8px; border-style: solid;border-color: #fff transparent transparent #fff;position: absolute;top: 0;left: 0;opacity: .1;cursor: nw-resize;"> </span></div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
