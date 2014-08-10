@@ -225,7 +225,7 @@ var RFSGameInfoGathering = {
 };
 
 function reloadScript() {
-  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js?" + Date.now();
   $('script[src="' + src + '"]').remove();
   $('<script>').attr('src', src).appendTo('head');
 }
