@@ -1,4 +1,4 @@
-var VERSION = '0.8102215';
+var VERSION = '0.8102224';
 
 var settings = {
   interval : 0,
@@ -225,9 +225,9 @@ var RFSGameInfoGathering = {
 };
 
 function reloadScript() {
-  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js?" + Date.now();
+  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
   $('script[src="' + src + '"]').remove();
-  $('<script>').attr('src', src).appendTo('head');
+  $('<script>').attr('src', src + "?" + Date.now()).appendTo('head');
 }
 
 RFSGameInfoGathering.run();
