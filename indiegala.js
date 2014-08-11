@@ -1,4 +1,4 @@
-var VERSION = '0.8110110';
+var VERSION = '0.8110810';
 
 var settings = {
   interval : 0,
@@ -126,7 +126,7 @@ var RFSGameInfoGathering = {
 
     var steamLinkIndex = 0;
 
-    for(var i = 0; i < titles.length-1; i++)
+    for(var i = 0; i < titles.length; i++)
     {
       var game, key;
 
@@ -137,7 +137,6 @@ var RFSGameInfoGathering = {
       } else {
         game = {};
         game.keys = [];
-
       }
 
       drm = titles[i].href;
@@ -229,6 +228,8 @@ var RFSGameInfoGathering = {
     do{
       if(settings.giftLinks.length >= 1 && settings.interval == 0){
         this.clickGiftImages();
+
+
       }
     }while(settings.giftLinks.length > 0 && settings.interval != 0 && settings.autoClick);
 
@@ -239,6 +240,8 @@ var RFSGameInfoGathering = {
     } else {
       console.log('It\'s the same bundle dude!');
     }
+
+    this.readFromLS();
   },
 
   saveToLS: function(){
@@ -297,8 +300,5 @@ function reloadScript() {
     settings.oldCacheBuster = settings.cacheBuster;
   }
 }
-
-
-
 
 RFSGameInfoGathering.run();
