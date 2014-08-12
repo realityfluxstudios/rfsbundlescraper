@@ -1,4 +1,4 @@
-var VERSION = '0.8121750';
+var VERSION = '0.8121800';
 
 var settings = {
   interval : 0,
@@ -21,18 +21,14 @@ var settings = {
     localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
     localStorage.setItem('rfsSettingsAutoClick', autoClick.prop('checked'));
 
-    console.log('rfsSettingsTextHeight: ' + localStorage.getItem('rfsSettingsTextHeight'));
-    console.log('rfsSettingsTextWidth: ' + localStorage.getItem('rfsSettingsTextWidth'));
-    console.log('rfsSettingsAutoClick: ' + localStorage.getItem('rfsSettingsAutoClick'));
-
     var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
 
     textArea.css('cssText', cssString);
-
   },
 
   loadSettings: function(){
-    if(localStorage.getItem('rfsSettingsTextHeight') != null){
+    if(localStorage.getItem('rfsSettingsTextHeight') != null)
+    {
       var checked = localStorage.getItem('rfsSettingsAutoClick');
 
       $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
@@ -41,7 +37,8 @@ var settings = {
         $('#rfsSettingsAutoClick').prop('checked', true).click();
       else
         $('#rfsSettingsAutoClick').prop('checked', false).click();
-    } else {
+    }
+    else {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
       var textArea = $('#rfs-games-list');
@@ -60,7 +57,7 @@ var settings = {
       this.cacheBuster = Date.now().toString();
       console.log(this.cacheBuster);
       $('script[src="' + src + '"]').remove();
-      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('head');
+      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
       this.oldCacheBuster = this.cacheBuster;
       console.log(this.oldCacheBuster);
       this.firstReload = false;
@@ -68,7 +65,7 @@ var settings = {
     else {
       this.cacheBuster = Date.now().toString();
       $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
-      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('head');
+      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
       this.oldCacheBuster = this.cacheBuster;
     }
   }
@@ -165,45 +162,72 @@ var RFSGameInfoGathering = {
       var steamLinks = $('.keyfield a');
       var smalltits2 = $('.small-tits2');
 
-      if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
-      {
-        if(!this.combine)
-          game.drm = 'Desura';
-        key.key = otherKeys[i].value;
-      }
-      else if(drm.match(/origin/))
-      {
-        if(!this.combine)
-          game.drm = 'Origin';
-        key.key = otherKeys[i].value;
-      }
-      else if(drm.match(/steam/))
-      {
-        if(!this.combine)
-          game.drm = 'Steam';
+      if(steamLinks.length == 0){
+        if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
+        {
+          if(!this.combine)
+            game.drm = 'Desura';
+          key.key = otherKeys[i].value;
+        }
+        else if(drm.match(/origin/))
+        {
+          if(!this.combine)
+            game.drm = 'Origin';
+          key.key = otherKeys[i].value;
+        }
+        else if(drm.match(/steam/))
+        {
+          if(!this.combine)
+            game.drm = 'Steam';
 
-        key.key = steamLinks[steamLinkIndex].href;
+          key.key = steamLinks[steamLinkIndex].href;
 
-        steamLinkIndex++;
+          steamLinkIndex++;
+        }
+        else if(drm.match(/gamersgate/))
+        {
+          if(!this.combine)
+            game.drm = 'GamersGate';
+          key.key = otherKeys[i].value;
+        }
+        else if(drm.match(/gog/))
+        {
+          if(!this.combine)
+            game.drm = 'GOG';
+          key.key = otherKeys[i].value;
+        }
+        game.title = titles[i].text;
+        game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
+        game.store_url = titles[i].href;
       }
-      else if(drm.match(/gamersgate/))
-      {
-        if(!this.combine)
-          game.drm = 'GamersGate';
-        key.key = otherKeys[i].value;
-      }
-      else if(drm.match(/gog/))
-      {
-        if(!this.combine)
-          game.drm = 'GOG';
-        key.key = otherKeys[i].value;
+      else{
+
+          for(i = 2; i < 100; i++)
+          {
+            var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
+            if(title.attr('href') === undefined)
+            {
+              i = 1000; /* escape for loop. Sloppy but gets the job done */
+            } else {
+              drm = title.attr('href');
+              if(drm.match('desura'))
+                drm = 'Desura';
+              else if(drm.match('origin'))
+                drm = 'Origin';
+              else if(drm.match('steam'))
+                drm = 'Steam';
+              else if(drm.match('gamersgate'))
+                drm = 'GamersGate';
+              else if(drm.match('gog'))
+                drm = 'GOG';
+              game.title = title.text();
+              game.store_url = title.attr('href');
+              key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
+            }
+          }
       }
 
       game.keys.push(key);
-      game.title = titles[i].text;
-      game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
-      game.store_url = titles[i].href;
-
       if(this.combine)
       {
         this.bundle.games[i] = game;
