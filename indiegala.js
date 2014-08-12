@@ -1,4 +1,4 @@
-var VERSION = '0.8121800';
+var VERSION = '0.8121830';
 
 var settings = {
   interval : 0,
@@ -162,7 +162,7 @@ var RFSGameInfoGathering = {
       var steamLinks = $('.keyfield a');
       var smalltits2 = $('.small-tits2');
 
-      if(steamLinks.length == 0){
+      if(steamLinks.length != 0){
         if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
         {
           if(!this.combine)
