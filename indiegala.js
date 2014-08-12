@@ -1,4 +1,4 @@
-var VERSION = '0.8121550';
+var VERSION = '0.8121626';
 
 var settings = {
   interval : 0,
@@ -48,6 +48,8 @@ var settings = {
 
   reloadScript: function(){
     var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+
+    $('#rfs-container').remove();
 
     if(this.firstReload){
       this.cacheBuster = Date.now().toString();
