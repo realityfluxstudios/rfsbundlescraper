@@ -1,4 +1,4 @@
-var VERSION = '0.8121837';
+var VERSION = '0.8121840';
 
 var settings = {
   interval : 0,
@@ -200,7 +200,14 @@ var RFSGameInfoGathering = {
     } else {
         for(i = 2; i < 100; i++)
         {
-          game = {};
+          if(this.combine)
+          {
+            game = this.bundle.games[i];
+            console.log('Combining ' + this.bundle.games[i].title);
+          } else {
+            game = {};
+            game.keys = [];
+          }
           key = {};
           var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
           if(title.attr('href') === undefined)
