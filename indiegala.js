@@ -1,14 +1,11 @@
-var VERSION = '0.8110810';
+var VERSION = '0.8121550';
 
 var settings = {
   interval : 0,
   giftLinks : $('#icon-gift img'),
-  cacheBuster: '',
-  oldCacheBuster: '',
+  cacheBuster: 0,
+  oldCacheBuster: 0,
   firstReload: true,
-  textHeight: 408,
-  textWidth: 415,
-  autoClick: true,
 
   toggleSettingsDisplay: function(){
     $('div#rfsSettings').toggle();
@@ -22,7 +19,11 @@ var settings = {
 
     localStorage.setItem('rfsSettingsTextHeight', textHeight.val());
     localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
-    localStorage.setItem('rfsSettingsAutoClick', autoClick.val());
+    localStorage.setItem('rfsSettingsAutoClick', autoClick.prop('checked'));
+
+    console.log('rfsSettingsTextHeight: ' + localStorage.getItem('rfsSettingsTextHeight'));
+    console.log('rfsSettingsTextWidth: ' + localStorage.getItem('rfsSettingsTextWidth'));
+    console.log('rfsSettingsAutoClick: ' + localStorage.getItem('rfsSettingsAutoClick'));
 
     var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
 
@@ -31,21 +32,38 @@ var settings = {
   },
 
   loadSettings: function(){
-    if(localStorage.getItem('rfsSettingsTextHeight').length != 0){
+    if(localStorage.getItem('rfsSettingsTextHeight') != null){
       $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
       $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-      $('#rfsSettingsAutoClick').val(localStorage.getItem('rfsSettingsAutoClick'));
+      $('#rfsSettingsAutoClick').prop('checked', localStorage.getItem('rfsSettingsAutoClick'))
     } else {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
-      var autoClick = $('#rfsSettingsAutoClick');
       var textArea = $('#rfs-games-list');
 
       textArea.height(textHeight.val());
       textArea.width(textWidth.val());
-
     }
+  },
 
+  reloadScript: function(){
+    var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+
+    if(this.firstReload){
+      this.cacheBuster = Date.now().toString();
+      console.log(this.cacheBuster);
+      $('script[src="' + src + '"]').remove();
+      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('head');
+      this.oldCacheBuster = this.cacheBuster;
+      console.log(this.oldCacheBuster);
+      this.firstReload = false;
+    }
+    else {
+      this.cacheBuster = Date.now().toString();
+      $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
+      $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('head');
+      this.oldCacheBuster = this.cacheBuster;
+    }
   }
 };
 
@@ -69,10 +87,12 @@ var RFSGameInfoGathering = {
 
   init : function(){
 
+    settings.loadSettings();
+
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked>\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="settings.reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
@@ -112,7 +132,7 @@ var RFSGameInfoGathering = {
   },
 
   gatherDRMGames : function(){
-    var gameRow = $('#stringa-game-key .row');
+    //var gameRow = $('#stringa-game-key .row');
 
     var titles = $('.title_game a');
     var drm;
@@ -147,19 +167,19 @@ var RFSGameInfoGathering = {
       var steamLinks = $('.keyfield a');
       var smalltits2 = $('.small-tits2');
 
-      if(drm.match('desura') || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
+      if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
       {
         if(!this.combine)
           game.drm = 'Desura';
         key.key = otherKeys[i].value;
       }
-      else if(drm.match('origin'))
+      else if(drm.match(/origin/))
       {
         if(!this.combine)
           game.drm = 'Origin';
         key.key = otherKeys[i].value;
       }
-      else if(drm.match('steam'))
+      else if(drm.match(/steam/))
       {
         if(!this.combine)
           game.drm = 'Steam';
@@ -168,13 +188,13 @@ var RFSGameInfoGathering = {
 
         steamLinkIndex++;
       }
-      else if(drm.match('gamersgate'))
+      else if(drm.match(/gamersgate/))
       {
         if(!this.combine)
           game.drm = 'GamersGate';
         key.key = otherKeys[i].value;
       }
-      else if(drm.match('gog'))
+      else if(drm.match(/gog/))
       {
         if(!this.combine)
           game.drm = 'GOG';
@@ -228,8 +248,6 @@ var RFSGameInfoGathering = {
     do{
       if(settings.giftLinks.length >= 1 && settings.interval == 0){
         this.clickGiftImages();
-
-
       }
     }while(settings.giftLinks.length > 0 && settings.interval != 0 && settings.autoClick);
 
@@ -265,7 +283,7 @@ var RFSGameInfoGathering = {
     console.log('this.bundle: ' + JSON.stringify(this.bundle, null, 2));
     console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
     this.readFromLS();
-    settings.loadSettings();
+
   },
 
   resetAndClear : function(){
@@ -281,24 +299,5 @@ var RFSGameInfoGathering = {
     this.readFromLS();
   }
 };
-
-function reloadScript() {
-
-  var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
-
-  if(settings.firstReload){
-    settings.cacheBuster = Date.now();
-    $('script[src="' + src + '"]').remove();
-    $('<script>').attr('src', src + "?" + settings.cacheBuster).appendTo('head');
-    settings.oldCacheBuster = settings.cacheBuster;
-    settings.firstReload = false;
-  }
-  else {
-    settings.cacheBuster = Date.now();
-    $('script[src="' + src + '?' + settings.oldCacheBuster + '"]').remove();
-    $('<script>').attr('src', src + "?" + settings.cacheBuster).appendTo('head');
-    settings.oldCacheBuster = settings.cacheBuster;
-  }
-}
 
 RFSGameInfoGathering.run();
