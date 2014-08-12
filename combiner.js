@@ -7,7 +7,7 @@ $('#indie_gala_2 h2')
 gamesList = $('#games-list-text');
 
 if($('#steam-key :nth-child(2) .title_game a').attr('href') !== undefined){
-  /* because we dont know how many items there are I make sure there */
+  /* because we don't know how many items there are I make sure there */
   for(var i = 2; i < 100; i  )
   {
     var keys = [];

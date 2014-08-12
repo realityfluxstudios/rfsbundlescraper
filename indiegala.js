@@ -1,4 +1,4 @@
-var VERSION = '0.8121840';
+var VERSION = '0.8121855';
 
 var settings = {
   interval : 0,
@@ -96,7 +96,7 @@ var RFSGameInfoGathering = {
       this.readFromLS();
       this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
       console.log('bundle.games.length: ' + this.bundle.games.length);
-      this.bundle.name = $('.color-text').text();
+      this.bundle.name = $('.text_align_center h2')[0].innerText;
       this.bundle.site = "IndieGala";
 
       if(this.bundle.url === window.location.href)
