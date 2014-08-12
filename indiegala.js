@@ -1,4 +1,4 @@
-var VERSION = '0.8121830';
+var VERSION = '0.8121837';
 
 var settings = {
   interval : 0,
@@ -128,7 +128,7 @@ var RFSGameInfoGathering = {
     //var gameRow = $('#stringa-game-key .row');
 
     var titles = $('.title_game a');
-    var drm;
+    var drm, game, key;
 
     /*
         The index `i` is based on the order of the items on the page.
@@ -139,30 +139,27 @@ var RFSGameInfoGathering = {
 
     var steamLinkIndex = 0;
 
-    var oldKeyIndex = 2;
+    var otherKeys = $('.keys');
+    var steamLinks = $('.keyfield a');
+    var smalltits2 = $('.small-tits2');
 
-    for(var i = 0; i < titles.length; i++)
+    if(steamLinks.length != 0)
     {
-      var game, key;
-
-      if(this.combine)
+      for(var i = 0; i < titles.length; i++)
       {
-        game = this.bundle.games[i];
-        console.log('Combining ' + this.bundle.games[i].title);
-      } else {
-        game = {};
-        game.keys = [];
-      }
+        if(this.combine)
+        {
+          game = this.bundle.games[i];
+          console.log('Combining ' + this.bundle.games[i].title);
+        } else {
+          game = {};
+          game.keys = [];
+        }
 
-      drm = titles[i].href;
-      key = {};
-      key.gift_url = window.location.href;
+        drm = titles[i].href;
+        key = {};
+        key.gift_url = window.location.href;
 
-      var otherKeys = $('.keys');
-      var steamLinks = $('.keyfield a');
-      var smalltits2 = $('.small-tits2');
-
-      if(steamLinks.length != 0){
         if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
         {
           if(!this.combine)
@@ -200,40 +197,41 @@ var RFSGameInfoGathering = {
         game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
         game.store_url = titles[i].href;
       }
-      else{
-
-          for(i = 2; i < 100; i++)
+    } else {
+        for(i = 2; i < 100; i++)
+        {
+          game = {};
+          key = {};
+          var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
+          if(title.attr('href') === undefined)
           {
-            var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
-            if(title.attr('href') === undefined)
-            {
-              i = 1000; /* escape for loop. Sloppy but gets the job done */
-            } else {
-              drm = title.attr('href');
-              if(drm.match('desura'))
-                drm = 'Desura';
-              else if(drm.match('origin'))
-                drm = 'Origin';
-              else if(drm.match('steam'))
-                drm = 'Steam';
-              else if(drm.match('gamersgate'))
-                drm = 'GamersGate';
-              else if(drm.match('gog'))
-                drm = 'GOG';
-              game.title = title.text();
-              game.store_url = title.attr('href');
-              key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
-            }
+            i = 1000; /* escape for loop. Sloppy but gets the job done */
+          } else {
+            drm = title.attr('href');
+            if(drm.match('desura'))
+              drm = 'Desura';
+            else if(drm.match('origin'))
+              drm = 'Origin';
+            else if(drm.match('steam'))
+              drm = 'Steam';
+            else if(drm.match('gamersgate'))
+              drm = 'GamersGate';
+            else if(drm.match('gog'))
+              drm = 'GOG';
+            game.title = title.text();
+            game.store_url = title.attr('href');
+            key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
           }
-      }
+        }
+    }
 
-      game.keys.push(key);
-      if(this.combine)
-      {
-        this.bundle.games[i] = game;
-      } else {
-        this.bundle.games.push(game);
-      }
+    game.keys.push(key);
+
+    if(this.combine)
+    {
+      this.bundle.games[i] = game;
+    } else {
+      this.bundle.games.push(game);
     }
 
     this.removeDupes(this.bundle.games);
