@@ -1,4 +1,4 @@
-var VERSION = '0.8121626';
+var VERSION = '0.8121700';
 
 var settings = {
   interval : 0,
@@ -47,7 +47,7 @@ var settings = {
   },
 
   reloadScript: function(){
-    var src = "https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+    var src = "https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
 
     $('#rfs-container').remove();
 
@@ -72,20 +72,9 @@ var settings = {
 var RFSGameInfoGathering = {
 
   combiner: false,
-
   exists: false,
-
   debug : true,
-
-  bundle : {
-    name : '',
-    url : window.location.href,
-    site : '',
-    games : [],
-    drm_free : [],
-    music_tracks : [],
-    android_games : []
-  },
+  bundle : {},
 
   init : function(){
 
@@ -94,7 +83,7 @@ var RFSGameInfoGathering = {
     console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    \n    <button class="btn-warning" onClick="settings.reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="settings.reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();RFSGameInfoGathering.readFromLS();">Reset and Clear</button>\n    <button class="btn-danger pull-right" onClick="RFSGameInfoGathering.close();">Close</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
@@ -248,7 +237,7 @@ var RFSGameInfoGathering = {
     this.init();
 
     do{
-      if(settings.giftLinks.length >= 1 && settings.interval == 0){
+      if(settings.giftLinks.length >= 1 && settings.interval == 0 && localStorage.getItem('rfsSettingsAutoClick') == true){
         this.clickGiftImages();
       }
     }while(settings.giftLinks.length > 0 && settings.interval != 0 && settings.autoClick);
@@ -267,11 +256,6 @@ var RFSGameInfoGathering = {
   saveToLS: function(){
     localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
     this.readFromLS();
-  },
-
-  debugLog: function(text){
-    if(this.debug)
-      console.log('debug: ' + text);
   },
 
   removeFromLS: function(){
@@ -298,7 +282,11 @@ var RFSGameInfoGathering = {
     settings.autoClick = true;
 
     this.removeFromLS();
-    this.readFromLS();
+
+  },
+
+  close : function(){
+    this.resetAndClear();
   }
 };
 

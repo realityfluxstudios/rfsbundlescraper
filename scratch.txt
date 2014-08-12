@@ -25,3 +25,8 @@ reload_js('source_file.js');
 
 javascript: (function() {    s = document.createElement('script');    s.setAttribute('type', 'text/javascript');    s.setAttribute('src', 'https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js');    document.body.appendChild(s); })();
 
+javascript: (function() {
+s = document.createElement('script');
+s.setAttribute('type', 'text/javascript');
+s.setAttribute('src', 'https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/indiegala.js');
+document.body.appendChild(s); })();
