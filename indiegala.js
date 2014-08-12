@@ -76,7 +76,9 @@ var RFSGameInfoGathering = {
   combiner: false,
   exists: false,
   debug : true,
-  bundle : {},
+  bundle : {
+    games: []
+  },
 
   init : function(){
 
