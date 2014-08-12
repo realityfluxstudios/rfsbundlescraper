@@ -33,9 +33,14 @@ var settings = {
 
   loadSettings: function(){
     if(localStorage.getItem('rfsSettingsTextHeight') != null){
+      var checked = localStorage.getItem('rfsSettingsAutoClick');
+
       $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
       $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-      $('#rfsSettingsAutoClick').prop('checked', localStorage.getItem('rfsSettingsAutoClick'))
+      if(checked)
+        $('#rfsSettingsAutoClick').prop('checked', true).click();
+      else
+        $('#rfsSettingsAutoClick').prop('checked', false).click();
     } else {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
@@ -136,6 +141,8 @@ var RFSGameInfoGathering = {
     */
 
     var steamLinkIndex = 0;
+
+    var oldKeyIndex = 2;
 
     for(var i = 0; i < titles.length; i++)
     {
