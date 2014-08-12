@@ -1,4 +1,4 @@
-var VERSION = '0.8121700';
+var VERSION = '0.8121750';
 
 var settings = {
   interval : 0,
@@ -293,7 +293,6 @@ var RFSGameInfoGathering = {
   },
 
   close : function(){
-    this.resetAndClear();
     $('#rfs-container').remove();
   }
 };
