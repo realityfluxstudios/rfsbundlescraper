@@ -1,4 +1,4 @@
-var VERSION = '0.8140012';
+var VERSION = '0.8140020';
 
 var settings = {
   interval : 0,
@@ -347,11 +347,11 @@ var RFSGameInfoGathering = {
     this.bundle.androidgames = [];
     var androidgame = {};
 
-    var androidGameTitle = $('#android #stringa-android-key .title_game').innerText;
-    var androidGameLink = $('#android #stringa-android-key .button').href;
+    var androidGameTitle = $('#android #stringa-android-key .title_game');
+    var androidGameLink = $('#android #stringa-android-key .button');
 
-    androidgame.title = androidGameTitle[i].replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-    androidgame.dllink = androidGameLink[i].attr('href');
+    androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+    androidgame.dllink = androidGameLink[i].href;
 
     this.bundle.androidgames.push(androidgame);
   },
