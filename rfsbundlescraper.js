@@ -1,4 +1,4 @@
-var VERSION = '0.8140055';
+var VERSION = '0.8140120';
 
 var settings = {
   interval : 0,
@@ -48,7 +48,7 @@ var settings = {
   },
 
   reloadScript: function(){
-    var src = "https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js";
+    var src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
 
     $('#rfs-container').remove();
 
@@ -127,17 +127,9 @@ var rfsbundlescraper = {
   },
 
   gatherDRMGames : function(){
-    //var gameRow = $('#stringa-game-key .row');
 
     var titles = $('.title_game a');
     var drm, game, key;
-
-    /*
-        The index `i` is based on the order of the items on the page.
-        As of right now Desura is always listed at the top of the list
-        followed by Steam games. I am _taking this for granted_. If they change
-        this, it will break.
-    */
 
     var steamLinkIndex = 0;
 
@@ -263,11 +255,6 @@ var rfsbundlescraper = {
     }
 
     this.removeDupes(this.bundle.games);
-//    for(var j = 0; j < this.bundle.games.length-1; j++)
-//    {
-//      this.removeDupes(this.bundle.games[j].keys);
-//    }
-//    this.removeDupes(this.bundle.games);
     this.readFromLS();
   },
 
@@ -409,7 +396,6 @@ var rfsbundlescraper = {
     console.log('this.bundle: ' + JSON.stringify(this.bundle, null, 2));
     console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
     this.readFromLS();
-
   },
 
   resetAndClear : function(){
@@ -422,7 +408,6 @@ var rfsbundlescraper = {
     settings.autoClick = true;
 
     this.removeFromLS();
-
   },
 
   close : function(){

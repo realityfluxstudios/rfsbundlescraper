@@ -28,5 +28,9 @@ javascript: (function() {    s = document.createElement('script');    s.setAttri
 javascript: (function() {
 s = document.createElement('script');
 s.setAttribute('type', 'text/javascript');
-s.setAttribute('src', 'https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js');
+s.setAttribute('src', 'https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js');
 document.body.appendChild(s); })();
+
+Quickly retrieve all keys and download links of your bundle from IndieGala or Humble Bundle. This is not a
+hack or anything like that to get keys illegally. This is a tool to allow you to retrieve your keys you purchased
+legally in a format that is easy to read and use.
