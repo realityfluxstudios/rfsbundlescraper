@@ -1,4 +1,4 @@
-var VERSION = '0.8132115';
+var VERSION = '0.8132120';
 
 var settings = {
   interval : 0,
@@ -212,18 +212,22 @@ var RFSGameInfoGathering = {
     } else {
       console.log('Old Bundle type');
 
+      var gameCount=0;
       for(i = 2; i < 100; i++)
       {
         if(this.combine)
         {
-          game = this.bundle.games[i];
-          console.log('Combining ' + this.bundle.games[i].title);
+          game = this.bundle.games[gameCount];
+          console.log('Combining ' + this.bundle.games[gameCount].title);
+          gameCount++;
         } else {
           game = {};
           game.keys = [];
         }
+
         key = {};
         var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
+
         if(title.attr('href') === undefined)
         {
           i = 1000; /* escape for loop. Sloppy but gets the job done */
