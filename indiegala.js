@@ -1,4 +1,4 @@
-var VERSION = '0.8132150';
+var VERSION = '0.8132152';
 
 var settings = {
   interval : 0,
@@ -219,6 +219,7 @@ var RFSGameInfoGathering = {
         {
           game = this.bundle.games[gameCount];
           console.log('Combining ' + this.bundle.games[gameCount].title);
+          console.log('gameCount is ' + gameCount);
           gameCount++;
         } else {
           game = {};
@@ -232,7 +233,7 @@ var RFSGameInfoGathering = {
 
         if(title.attr('href') === undefined)
         {
-          i = 1000; /* escape for loop. Sloppy but gets the job done */
+          i = 100; /* escape for loop. Sloppy but gets the job done */
         } else {
           console.log('i is ' + i);
           drm = title.attr('href');
