@@ -1,4 +1,4 @@
-var VERSION = '0.8132137';
+var VERSION = '0.8132145';
 
 var settings = {
   interval : 0,
@@ -228,7 +228,7 @@ var RFSGameInfoGathering = {
         key = {};
         var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
 
-        console.log(title);
+        console.log(title.text());
 
         if(title.attr('href') === undefined)
         {
@@ -263,11 +263,11 @@ var RFSGameInfoGathering = {
     }
 
     this.removeDupes(this.bundle.games);
-    for(var j = 0; j < this.bundle.games.length-1; j++)
-    {
-      this.removeDupes(this.bundle.games[j].keys);
-    }
-    this.removeDupes(this.bundle.games);
+//    for(var j = 0; j < this.bundle.games.length-1; j++)
+//    {
+//      this.removeDupes(this.bundle.games[j].keys);
+//    }
+//    this.removeDupes(this.bundle.games);
     this.readFromLS();
   },
 
