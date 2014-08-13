@@ -1,4 +1,4 @@
-var VERSION = '0.8132145';
+var VERSION = '0.8132150';
 
 var settings = {
   interval : 0,
@@ -234,6 +234,7 @@ var RFSGameInfoGathering = {
         {
           i = 1000; /* escape for loop. Sloppy but gets the job done */
         } else {
+          console.log('i is ' + i);
           drm = title.attr('href');
           if(drm.match('desura'))
             drm = 'Desura';
