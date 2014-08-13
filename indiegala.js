@@ -1,4 +1,4 @@
-var VERSION = '0.8132050';
+var VERSION = '0.8132115';
 
 var settings = {
   interval : 0,
@@ -211,15 +211,6 @@ var RFSGameInfoGathering = {
       }
     } else {
       console.log('Old Bundle type');
-
-      if(this.combine)
-      {
-        game = this.bundle.games[i];
-        console.log('Combining ' + this.bundle.games[i].title);
-      } else {
-        game = {};
-        game.keys = [];
-      }
 
       for(i = 2; i < 100; i++)
       {
