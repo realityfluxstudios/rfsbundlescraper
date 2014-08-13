@@ -1,4 +1,4 @@
-var VERSION = '0.8132152';
+var VERSION = '0.8132220';
 
 var settings = {
   interval : 0,
@@ -212,46 +212,42 @@ var RFSGameInfoGathering = {
     } else {
       console.log('Old Bundle type');
 
-      var gameCount=0;
-      for(i = 2; i < 100; i++)
+      var titlesOldBundles = $('#steam-key #stringa-game-key .title_game a');
+      var keys = $('.keys');
+
+      for(i = 0; i < titlesOldBundles.length; i++)
       {
         if(this.combine)
         {
-          game = this.bundle.games[gameCount];
-          console.log('Combining ' + this.bundle.games[gameCount].title);
-          console.log('gameCount is ' + gameCount);
-          gameCount++;
+          game = this.bundle.games[i];
+          console.log('Combining ' + this.bundle.games[i].title);
+          console.log('i is ' + i);
         } else {
           game = {};
           game.keys = [];
         }
 
         key = {};
-        var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
 
-        console.log(title.text());
+        console.log(titlesOldBundles[i].innerText);
 
-        if(title.attr('href') === undefined)
-        {
-          i = 100; /* escape for loop. Sloppy but gets the job done */
-        } else {
-          console.log('i is ' + i);
-          drm = title.attr('href');
-          if(drm.match('desura'))
-            drm = 'Desura';
-          else if(drm.match('origin'))
-            drm = 'Origin';
-          else if(drm.match('steam'))
-            drm = 'Steam';
-          else if(drm.match('gamersgate'))
-            drm = 'GamersGate';
-          else if(drm.match('gog'))
-            drm = 'GOG';
-          game.title = title.text();
-          game.store_url = title.attr('href');
-          key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
-          key.url = window.location.href;
-        }
+        drm = titlesOldBundles[i].href;
+        if(drm.match('desura'))
+          drm = 'Desura';
+        else if(drm.match('origin'))
+          drm = 'Origin';
+        else if(drm.match('steam'))
+          drm = 'Steam';
+        else if(drm.match('gamersgate'))
+          drm = 'GamersGate';
+        else if(drm.match('gog'))
+          drm = 'GOG';
+
+        game.title = titlesOldBundles[i].innerText;
+        game.store_url = drm;
+        key.key = keys[i].value;
+        key.url = window.location.href;
+
 
         game.keys.push(key);
 
