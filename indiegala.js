@@ -1,4 +1,4 @@
-var VERSION = '0.8140045';
+var VERSION = '0.8140050';
 
 var settings = {
   interval : 0,
@@ -317,7 +317,7 @@ var RFSGameInfoGathering = {
   gatherMusicTracks: function(){
 
     this.bundle.musictracks = [];
-    var musictrack = {};
+    var musictrack;
 
     var musicTracks = $('#music #stringa-music-key');
     var musicTitles = $('#music #stringa-music-key .title_music');
@@ -325,6 +325,7 @@ var RFSGameInfoGathering = {
 
     for(var i = 0; i < musicTracks.length; i++)
     {
+      musictrack = {};
       /* forgive the magic numbers in the arrays. they are necessary to drill down to the location of the given required information */
       var MP3DLLink = $('#music .span-keys')[i].children[0].children[0].children[0].href;
       var MP3DLLinkText = $('#music .span-keys')[i].children[0].children[0].children[1].innerText;
@@ -348,13 +349,14 @@ var RFSGameInfoGathering = {
   gatherAndroidGames: function(){
 
     this.bundle.androidgames = [];
-    var androidgame = {};
+    var androidgame;
 
     var androidGameTitle = $('#android #stringa-android-key .title_game');
     var androidGameLink = $('#android #stringa-android-key .button');
 
     for(var i = 0; i< androidGameTitle.length; i++)
     {
+      androidgame = {};
       androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
       androidgame.title_slug = this.convertToSlug(androidgame.title);
       androidgame.dllink = androidGameLink[i].href;
