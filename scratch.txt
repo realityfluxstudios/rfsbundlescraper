@@ -1,11 +1,11 @@
-https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js
+https://rawgit.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js
 
 javascript:(function(){var s=document.createElement('div');s.innerHTML='Loading...';s.style.color='black';s.style.padding='20px';s.style.position='fixed';s.style.zIndex='9999';s.style.fontSize='3.0em';s.style.border='2px solid black';s.style.right='40px';s.style.top='40px';s.setAttribute('class','selector_gadget_loading');s.style.background='white';document.body.appendChild(s);s=document.createElement('script');s.setAttribute('type','text/javascript');s.setAttribute('src','https://dv0akt2986vzh.cloudfront.net/unstable/lib/selectorgadget.js');document.body.appendChild(s);})();
 
 javascript: (function() {
     s = document.createElement('script');
     s.setAttribute('type', 'text/javascript');
-    s.setAttribute('src', 'https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js');
+    s.setAttribute('src', 'https://rawgit.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js');
     document.body.appendChild(s);
 })();
 
@@ -15,7 +15,7 @@ javascript: (function() {
 
 
 function reloadscript() {
-  var src = https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js
+  var src = https://rawgit.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js
   $('script[src="' + src + '"]').remove();
   $('<script>').attr('src', src).appendTo('head');
 }
@@ -23,10 +23,10 @@ reload_js('source_file.js');
 
 
 
-javascript: (function() {    s = document.createElement('script');    s.setAttribute('type', 'text/javascript');    s.setAttribute('src', 'https://rawgit.com/tvl83/GameBundleInfoHarvester/master/indiegala.js');    document.body.appendChild(s); })();
+javascript: (function() {    s = document.createElement('script');    s.setAttribute('type', 'text/javascript');    s.setAttribute('src', 'https://rawgit.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js');    document.body.appendChild(s); })();
 
 javascript: (function() {
 s = document.createElement('script');
 s.setAttribute('type', 'text/javascript');
-s.setAttribute('src', 'https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/indiegala.js');
+s.setAttribute('src', 'https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js');
 document.body.appendChild(s); })();

@@ -1,4 +1,4 @@
-var VERSION = '0.8140050';
+var VERSION = '0.8140055';
 
 var settings = {
   interval : 0,
@@ -48,7 +48,7 @@ var settings = {
   },
 
   reloadScript: function(){
-    var src = "https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/indiegala.js";
+    var src = "https://raw.githack.com/tvl83/GameBundleInfoHarvester/master/rfsbundlescraper.js";
 
     $('#rfs-container').remove();
 
@@ -70,12 +70,14 @@ var settings = {
   }
 };
 
-var RFSGameInfoGathering = {
+var rfsbundlescraper = {
 
   combiner: false,
   exists: false,
   debug : true,
   bundle : {
+    name: '',
+    site: '',
     games: []
   },
 
@@ -83,10 +85,10 @@ var RFSGameInfoGathering = {
 
     settings.loadSettings();
 
-    console.log("RFS Game Info Gather Bookmarklet v" + VERSION);
+    console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
 
     if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="settings.reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="RFSGameInfoGathering.resetAndClear();">Reset and Clear</button>\n    <button class="btn-danger pull-right" onClick="RFSGameInfoGathering.close();">Close</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="settings.reloadScript();">Reload Script</button>\n    <button class="btn-danger" onClick="rfsbundlescraper.resetAndClear();">Reset and Clear</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.close();">Close</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
 
     if(localStorage.getItem('RFSIGBundle') != null)
     {
@@ -269,30 +271,6 @@ var RFSGameInfoGathering = {
     this.readFromLS();
   },
 
-  readFromLS: function(){
-    if(this.bundle != null || this.bundle != undefined)
-      $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
-    else
-      $('#rfs-games-list').val('No Bundle in Local Storage');
-  },
-
-  clickGiftImages: function(){
-    if(settings.giftLinks.length > 0){
-      var interval = setInterval(function(){
-        if(settings.giftLinks.length == 0){
-          clearInterval(interval);
-        } else {
-          settings.giftLinks = $('#icon-gift img');
-          settings.giftLinks[0].click();
-          settings.giftLinks[0].remove();
-          console.log('removing img');
-        }
-      }, 2000);
-    } else {
-      console.log('No gift images to click... continue on...');
-    }
-  },
-
   gatherDRMFreeGames: function(){
     var drmFreeGames = $('#drm-free-games #stringa-music-key');
     var drmFreeGamesTitles = $('#drm-free-games #stringa-music-key .title_game');
@@ -346,6 +324,7 @@ var RFSGameInfoGathering = {
       this.bundle.musictracks.push(musictrack);
     }
   },
+
   gatherAndroidGames: function(){
 
     this.bundle.androidgames = [];
@@ -364,6 +343,31 @@ var RFSGameInfoGathering = {
       this.bundle.androidgames.push(androidgame);
     }
   },
+
+  readFromLS: function(){
+    if(this.bundle != null || this.bundle != undefined)
+      $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
+    else
+      $('#rfs-games-list').val('No Bundle in Local Storage');
+  },
+
+  clickGiftImages: function(){
+    if(settings.giftLinks.length > 0){
+      var interval = setInterval(function(){
+        if(settings.giftLinks.length == 0){
+          clearInterval(interval);
+        } else {
+          settings.giftLinks = $('#icon-gift img');
+          settings.giftLinks[0].click();
+          settings.giftLinks[0].remove();
+          console.log('removing img');
+        }
+      }, 2000);
+    } else {
+      console.log('No gift images to click... continue on...');
+    }
+  },
+
   run : function(){
     this.init();
 
@@ -426,4 +430,4 @@ var RFSGameInfoGathering = {
   }
 };
 
-RFSGameInfoGathering.run();
+rfsbundlescraper.run();
