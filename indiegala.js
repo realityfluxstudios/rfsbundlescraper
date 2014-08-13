@@ -37,8 +37,7 @@ var settings = {
         $('#rfsSettingsAutoClick').prop('checked', true).click();
       else
         $('#rfsSettingsAutoClick').prop('checked', false).click();
-    }
-    else {
+    } else {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
       var textArea = $('#rfs-games-list');
@@ -148,8 +147,11 @@ var RFSGameInfoGathering = {
     if(steamLinks.length != 0)
     {
       console.log('New Bundle Type');
+      console.log('number of games: ' + titles.length);
+
       for(var i = 0; i < titles.length; i++)
       {
+        console.log('-- ' + i);
         if(this.combine)
         {
           game = this.bundle.games[i];
