@@ -1,4 +1,4 @@
-var VERSION = '0.8132035';
+var VERSION = '0.8132045';
 
 var settings = {
   interval : 0,
@@ -201,6 +201,15 @@ var RFSGameInfoGathering = {
         game.title = titles[i].text;
         game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
         game.store_url = titles[i].href;
+
+        game.keys.push(key);
+
+        if(this.combine)
+        {
+          this.bundle.games[i] = game;
+        } else {
+          this.bundle.games.push(game);
+        }
       }
     } else {
       console.log('Old Bundle type');
@@ -235,17 +244,19 @@ var RFSGameInfoGathering = {
             game.store_url = title.attr('href');
             key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
           }
+
+          game.keys.push(key);
+
+          if(this.combine)
+          {
+            this.bundle.games[i] = game;
+          } else {
+            this.bundle.games.push(game);
+          }
         }
     }
 
-    game.keys.push(key);
 
-    if(this.combine)
-    {
-      this.bundle.games[i] = game;
-    } else {
-      this.bundle.games.push(game);
-    }
 
     this.removeDupes(this.bundle.games);
     this.readFromLS();
