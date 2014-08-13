@@ -1,4 +1,4 @@
-var VERSION = '0.8140010';
+var VERSION = '0.8140012';
 
 var settings = {
   interval : 0,
@@ -339,7 +339,7 @@ var RFSGameInfoGathering = {
       musictrack.flacdllink = FLACDLLink;
       musictrack.flactype = FLACDLLinkText;
 
-      this.bundle.musictracks.push(musicTrack);
+      this.bundle.musictracks.push(musictrack);
     }
   },
   gatherAndroidGames: function(){
