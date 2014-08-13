@@ -1,4 +1,4 @@
-var VERSION = '0.8140020';
+var VERSION = '0.8140040';
 
 var settings = {
   interval : 0,
@@ -370,10 +370,11 @@ var RFSGameInfoGathering = {
 
     if(!this.exists){
       this.gatherDRMGames();
-      this.gatherDRMFreeGames();
-      this.gatherMusicTracks();
-      this.gatherAndroidGames();
-
+      if(!this.combine){
+        this.gatherDRMFreeGames();
+        this.gatherMusicTracks();
+        this.gatherAndroidGames();
+      }
       this.removeDupes(this.bundle.games);
       this.saveToLS();
     } else {
