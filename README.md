@@ -1,5 +1,4 @@
 # RFS Bundle Scraper
-(new name)
 
 This has turned into a script that will not only scrap IG bundles, but will also scrape Humble Bundle. All of the information is then printed neatly in JSON for your own consumption.
 
@@ -13,21 +12,20 @@ I have multiple copies of each bundle and found myself wanting to easily retriev
 
 I wrote this bookmarklet to add a text box and a tab delimited list of all the games, music, drm free games, and android games of the bundle on the current page.
 
-I am releasing this to the public in the hopes that it will be useful to others. Also, if IndieGala changes up their code I hope to have some help updating the code once in a while. I just updated it to their latest changes.
+I am releasing this to the public in the hopes that it will be useful to others. Also, if IndieGala or HumbleBundle changes up their code I hope to have some help updating the code once in a while. I just updated it to their latest changes (May '14).
 
 ### How to use
-You can either create a new bookmark and paste the code from the IndieGalaKeyGetter.min.js file into the link part of the bookmark or check out my blog post (here)[http://www.thomasle.info/2014/05/indiegala-key-getter] which has a link that you can drag to your bookmark bar, or just view the source to this file and copy the contents of the link into a new bookmark. 
+Instructions have changed new instructions coming soon.
 
-When you are at your bundle link just click the bookmarklet and it will create a textbox and a list of all the games, their cd keys and the store links.
-
-### ToDo
+### To Do
 
 * Integrate the Humble Bundle code and detect which site you're on.
 
 ### Known Issues
 
 * ~~On the android games list the very first game has a list of all the subsequent game names for some reason~~
-* rfsbundle object will be an array of all bundles, but because localStorage doesn't cross domains it'll have to always be separate.
+* the `rfsbundle` object will be an array of all bundles, but because localStorage doesn't cross domains it'll have to always be separate.
+* `games.game[i].title_slug` is not being saved for some reason despite line 200. `games.game[i].title` is saved properly but `title_slug` is not.
 
 ### More Info
 
@@ -38,12 +36,12 @@ for the frontend.
 
 ## History
 
-### 14Aug14 - v1.1
+### 14Aug14 - v0.8140125
 
 * Updated for changes to IG layout
 * Supports both old (with steam key visible) and gift link url
 * Auto clicks (with a setting to disable it) all gift links on a bundle page
 
-### 13May14 - v1.0
+### 13May14 - v0.1
 
-Initial Release
+Initial Release on GitHub
