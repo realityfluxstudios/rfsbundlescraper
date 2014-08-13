@@ -190,16 +190,15 @@ var rfsbundlescraper = {
           key.key = otherKeys[i].value;
         }
 
-        game.title = titles[i].text;
-        game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
-        game.store_url = titles[i].href;
-
         game.keys.push(key);
 
         if(this.combine)
         {
           this.bundle.games[i] = game;
         } else {
+          game.title = titles[i].text;
+          game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
+          game.store_url = titles[i].href;
           this.bundle.games.push(game);
         }
       }
