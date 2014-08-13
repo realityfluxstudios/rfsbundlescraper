@@ -301,13 +301,14 @@ var RFSGameInfoGathering = {
     var drmFreeGamesDLLink = $('#drm-free-games #stringa-music-key .button');
 
     this.bundle.drmFreeGames = [];
-    var drmFreeGame = {};
+    var drmFreeGame;
 
-    for(var i = 0; i < drmFreeGames.length-1; i++)
+    for(var i = 0; i < drmFreeGames.length; i++)
     {
+      drmFreeGame = {};
       drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
       drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
-      drmFreeGame.DLLink = drmFreeGamesDLLink[i].href;
+      drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
 
       this.bundle.drmFreeGames.push(drmFreeGame);
     }
@@ -322,7 +323,7 @@ var RFSGameInfoGathering = {
     var musicTitles = $('#music #stringa-music-key .title_music');
     var musicDev = $('#music #stringa-music-key .title_dev');
 
-    for(var i = 0; i < musicTracks.length-1; i++)
+    for(var i = 0; i < musicTracks.length; i++)
     {
       /* forgive the magic numbers in the arrays. they are necessary to drill down to the location of the given required information */
       var MP3DLLink = $('#music .span-keys')[i].children[0].children[0].children[0].href;
@@ -350,10 +351,13 @@ var RFSGameInfoGathering = {
     var androidGameTitle = $('#android #stringa-android-key .title_game');
     var androidGameLink = $('#android #stringa-android-key .button');
 
-    androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-    androidgame.dllink = androidGameLink[i].href;
+    for(var i = 0; i< androidGameTitle.length; i++)
+    {
+      androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      androidgame.dllink = androidGameLink[i].href;
 
-    this.bundle.androidgames.push(androidgame);
+      this.bundle.androidgames.push(androidgame);
+    }
   },
   run : function(){
     this.init();
