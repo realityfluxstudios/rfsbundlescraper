@@ -1,4 +1,4 @@
-var VERSION = '0.8140040';
+var VERSION = '0.8140045';
 
 var settings = {
   interval : 0,
@@ -95,8 +95,6 @@ var RFSGameInfoGathering = {
       this.readFromLS();
       this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
       console.log('bundle.games.length: ' + this.bundle.games.length);
-      this.bundle.name = $('.text_align_center h2')[0].innerText;
-      this.bundle.site = "IndieGala";
 
       if(this.bundle.url === window.location.href)
       {
@@ -106,9 +104,10 @@ var RFSGameInfoGathering = {
     }
     else {
       console.log('No existing bundle...');
-      this.bundle.name = $('.color-text').text();
-      this.bundle.site = "IndieGala";
     }
+
+    this.bundle.name = $('.text_align_center h2')[0].innerText;
+    this.bundle.site = "IndieGala";
   },
 
   convertToSlug : function (value){
@@ -196,6 +195,7 @@ var RFSGameInfoGathering = {
             game.drm = 'GOG';
           key.key = otherKeys[i].value;
         }
+
         game.title = titles[i].text;
         game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
         game.store_url = titles[i].href;
@@ -213,7 +213,6 @@ var RFSGameInfoGathering = {
       console.log('Old Bundle type');
 
       var titlesOldBundles = $('#steam-key #stringa-game-key .title_game a');
-
 
       var keys = $('.keys');
 
@@ -307,6 +306,7 @@ var RFSGameInfoGathering = {
     {
       drmFreeGame = {};
       drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      drmFreeGame.title_slug = this.convertToSlug(drmFreeGame.title);
       drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
       drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
 
@@ -333,7 +333,9 @@ var RFSGameInfoGathering = {
       var FLACDLLinkText = $('#music .span-keys')[i].children[1].children[0].children[1].innerText;
 
       musictrack.title = musicTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      musictrack.title_slug = this.convertToSlug(musictrack.title);
       musictrack.dev = musicDev[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      musictrack.dev_slug = this.convertToSlug(musictrack.dev);
 
       musictrack.mp3dllink = MP3DLLink;
       musictrack.mp3type = MP3DLLinkText;
@@ -354,6 +356,7 @@ var RFSGameInfoGathering = {
     for(var i = 0; i< androidGameTitle.length; i++)
     {
       androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      androidgame.title_slug = this.convertToSlug(androidgame.title);
       androidgame.dllink = androidGameLink[i].href;
 
       this.bundle.androidgames.push(androidgame);
