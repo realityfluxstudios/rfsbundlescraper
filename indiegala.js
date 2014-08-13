@@ -1,4 +1,4 @@
-var VERSION = '0.8121855';
+var VERSION = '0.8132035';
 
 var settings = {
   interval : 0,
@@ -147,6 +147,7 @@ var RFSGameInfoGathering = {
 
     if(steamLinks.length != 0)
     {
+      console.log('New Bundle Type');
       for(var i = 0; i < titles.length; i++)
       {
         if(this.combine)
@@ -200,6 +201,7 @@ var RFSGameInfoGathering = {
         game.store_url = titles[i].href;
       }
     } else {
+      console.log('Old Bundle type');
         for(i = 2; i < 100; i++)
         {
           if(this.combine)
