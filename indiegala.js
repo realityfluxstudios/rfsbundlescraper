@@ -1,4 +1,4 @@
-var VERSION = '0.8132120';
+var VERSION = '0.8132135';
 
 var settings = {
   interval : 0,
@@ -228,6 +228,8 @@ var RFSGameInfoGathering = {
         key = {};
         var title = $('#steam-key :nth-child(' + i + ') #stringa-game-key .title_game a');
 
+        console.log(title);
+
         if(title.attr('href') === undefined)
         {
           i = 1000; /* escape for loop. Sloppy but gets the job done */
@@ -246,6 +248,7 @@ var RFSGameInfoGathering = {
           game.title = title.text();
           game.store_url = title.attr('href');
           key.key = $('#steam-key :nth-child(' + i + ') .span-keys').children('div.option').attr('id');
+          key.url = window.location.href;
         }
 
         game.keys.push(key);
@@ -259,6 +262,11 @@ var RFSGameInfoGathering = {
       }
     }
 
+    this.removeDupes(this.bundle.games);
+    for(var j = 0; j < this.bundle.games.length; j++)
+    {
+      this.removeDupes(this.bundle.games[j].keys);
+    }
     this.removeDupes(this.bundle.games);
     this.readFromLS();
   },
