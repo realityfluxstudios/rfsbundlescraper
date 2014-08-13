@@ -1,4 +1,4 @@
-var VERSION = '0.8132220';
+var VERSION = '0.8140010';
 
 var settings = {
   interval : 0,
@@ -213,6 +213,8 @@ var RFSGameInfoGathering = {
       console.log('Old Bundle type');
 
       var titlesOldBundles = $('#steam-key #stringa-game-key .title_game a');
+
+
       var keys = $('.keys');
 
       for(i = 0; i < titlesOldBundles.length; i++)
@@ -247,7 +249,6 @@ var RFSGameInfoGathering = {
         game.store_url = drm;
         key.key = keys[i].value;
         key.url = window.location.href;
-
 
         game.keys.push(key);
 
@@ -293,6 +294,67 @@ var RFSGameInfoGathering = {
     }
   },
 
+  gatherDRMFreeGames: function(){
+    var drmFreeGames = $('#drm-free-games #stringa-music-key');
+    var drmFreeGamesTitles = $('#drm-free-games #stringa-music-key .title_game');
+    var drmFreeGamesPlatforms = $('#drm-free-games #stringa-music-key .title_dev');
+    var drmFreeGamesDLLink = $('#drm-free-games #stringa-music-key .button');
+
+    this.bundle.drmFreeGames = [];
+    var drmFreeGame = {};
+
+    for(var i = 0; i < drmFreeGames.length-1; i++)
+    {
+      drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
+      drmFreeGame.DLLink = drmFreeGamesDLLink[i].href;
+
+      this.bundle.drmFreeGames.push(drmFreeGame);
+    }
+  },
+
+  gatherMusicTracks: function(){
+
+    this.bundle.musictracks = [];
+    var musictrack = {};
+
+    var musicTracks = $('#music #stringa-music-key');
+    var musicTitles = $('#music #stringa-music-key .title_music');
+    var musicDev = $('#music #stringa-music-key .title_dev');
+
+    for(var i = 0; i < musicTracks.length-1; i++)
+    {
+      /* forgive the magic numbers in the arrays. they are necessary to drill down to the location of the given required information */
+      var MP3DLLink = $('#music .span-keys')[i].children[0].children[0].children[0].href;
+      var MP3DLLinkText = $('#music .span-keys')[i].children[0].children[0].children[1].innerText;
+
+      var FLACDLLink = $('#music .span-keys')[i].children[1].children[0].children[0].href;
+      var FLACDLLinkText = $('#music .span-keys')[i].children[1].children[0].children[1].innerText;
+
+      musictrack.title = musicTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+      musictrack.dev = musicDev[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+
+      musictrack.mp3dllink = MP3DLLink;
+      musictrack.mp3type = MP3DLLinkText;
+      musictrack.flacdllink = FLACDLLink;
+      musictrack.flactype = FLACDLLinkText;
+
+      this.bundle.musictracks.push(musicTrack);
+    }
+  },
+  gatherAndroidGames: function(){
+
+    this.bundle.androidgames = [];
+    var androidgame = {};
+
+    var androidGameTitle = $('#android #stringa-android-key .title_game').innerText;
+    var androidGameLink = $('#android #stringa-android-key .button').href;
+
+    androidgame.title = androidGameTitle[i].replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+    androidgame.dllink = androidGameLink[i].attr('href');
+
+    this.bundle.androidgames.push(androidgame);
+  },
   run : function(){
     this.init();
 
@@ -304,6 +366,10 @@ var RFSGameInfoGathering = {
 
     if(!this.exists){
       this.gatherDRMGames();
+      this.gatherDRMFreeGames();
+      this.gatherMusicTracks();
+      this.gatherAndroidGames();
+
       this.removeDupes(this.bundle.games);
       this.saveToLS();
     } else {
