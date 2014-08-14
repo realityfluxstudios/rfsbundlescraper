@@ -320,7 +320,7 @@ var rfsbundlescraper = {
       console.log('inside forEach: val.keys = ');
       console.log(val.keys);
 
-      rfsbundlescraper.removeDupes(val.keys,true);
+      rfsbundlescraper.oldRemoveDupes(val.keys);
     });
 
     this.readFromLS();
