@@ -1,4 +1,4 @@
-var VERSION = '0.8141710';
+var VERSION = '0.8141745';
 
 var settings = {
   interval : 0,
@@ -159,17 +159,19 @@ var rfsbundlescraper = {
   {
     for(var i=0; i < arr.length; i++)
     {
-      if(print){
+      if(print)
+      {
         console.log('arr[i] outer for loop');
         console.log(arr[i]);
       }
       for(var j=0; j < arr.length; j++)
       {
-        if(print){
+        if(print)
+        {
           console.log('arr[j] INNER for loop');
           console.log(arr[j]);
         }
-        if(arr[i] === arr[j] && i != j)
+        if(arr[i].key == arr[j].key && i != j)
         {
           console.log('deleting...');
           console.log(arr[j]);
