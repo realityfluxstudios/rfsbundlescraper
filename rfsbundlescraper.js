@@ -1,4 +1,4 @@
-var VERSION = '0.8140835';
+var VERSION = '0.8140840';
 
 var settings = {
   interval : 0,
@@ -118,6 +118,7 @@ var rfsbundlescraper = {
     }
 
     this.bundle.name = $('.text_align_center h2')[0].innerText;
+    this.bundle.name_slug = this.convertToSlug(this.bundle.name);
     this.bundle.site = "IndieGala";
   },
 
