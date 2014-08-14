@@ -76,6 +76,8 @@ var settings = {
       $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
       this.oldCacheBuster = this.cacheBuster;
     }
+
+    this.updateSettings();
   }
 };
 
