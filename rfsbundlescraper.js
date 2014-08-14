@@ -157,14 +157,14 @@ var rfsbundlescraper = {
   /* this is just a temp solution. any input is welcome! :) */
   removeDupes : function(arr, print)
   {
-    for(var i=0; i < arr.length; i++)
+    for(var i=0; i < arr.length-1; i++)
     {
       if(print)
       {
         console.log('arr[i] outer for loop');
         console.log(arr[i]);
       }
-      for(var j=0; j < arr.length; j++)
+      for(var j=0; j < arr.length-1; j++)
       {
         if(print)
         {
