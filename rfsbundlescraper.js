@@ -1,4 +1,4 @@
-var VERSION = '0.8141650';
+var VERSION = '0.8141710';
 
 var settings = {
   interval : 0,
@@ -155,17 +155,24 @@ var rfsbundlescraper = {
   },
 
   /* this is just a temp solution. any input is welcome! :) */
-  removeDupes : function(arr)
+  removeDupes : function(arr, print)
   {
     for(var i=0; i < arr.length; i++)
     {
-      console.log(arr[i]);
+      if(print){
+        console.log('arr[i] outer for loop');
+        console.log(arr[i]);
+      }
       for(var j=0; j < arr.length; j++)
       {
-        console.log(arr[j]);
+        if(print){
+          console.log('arr[j] INNER for loop');
+          console.log(arr[j]);
+        }
         if(arr[i] === arr[j] && i != j)
         {
-
+          console.log('deleting...');
+          console.log(arr[j]);
           delete arr[j];
         }
       }
@@ -305,13 +312,13 @@ var rfsbundlescraper = {
       }
     }
 
-    this.removeDupes(this.bundle.games);
+    this.removeDupes(this.bundle.games,false);
 
     this.bundle.games.forEach(function(val){
       console.log('inside forEach: val.keys = ');
       console.log(val.keys);
 
-      rfsbundlescraper.removeDupes(val.keys);
+      rfsbundlescraper.removeDupes(val.keys,true);
     });
 
     this.readFromLS();
@@ -427,11 +434,14 @@ var rfsbundlescraper = {
 
   run : function()
   {
+
     this.init();
+    settings.loadSettings();
+    settings.updateSettings();
 
     console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
 
-    settings.updateSettings();
+
 
     do
     {
