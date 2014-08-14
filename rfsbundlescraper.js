@@ -1,4 +1,4 @@
-var VERSION = '0.8142022';
+var VERSION = '0.8142025';
 
 var settings = {
   interval : 0,
@@ -158,7 +158,14 @@ var rfsbundlescraper = {
   {
 
     var titles = $('.title_game a');
-    var drm, game, key;
+    var drm, key;
+    var game = {
+      title: '',
+      title_slug: '',
+      store_url: '',
+      drm: '',
+      keys: []
+    };
 
     var steamLinkIndex = 0;
 
