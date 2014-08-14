@@ -1,4 +1,4 @@
-var VERSION = '0.8141550';
+var VERSION = '0.8141610';
 
 var settings = {
   interval : 0,
@@ -138,7 +138,7 @@ var rfsbundlescraper = {
     return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
   },
 
-  removeDupes : function (list)
+  oldRemoveDupes : function (list)
   {
     console.log('removing dupes from : ');
     console.log(list);
@@ -152,6 +152,21 @@ var rfsbundlescraper = {
       }
     });
     return unique;
+  },
+
+  /* this is just a temp solution. any input is welcome! :) */
+  removeDupes : function(arr)
+  {
+    for(var i=0; i < arr.length; i++)
+    {
+      for(var j=arr.length; j >= 0; j--)
+      {
+        if(arr[i] === arr[j])
+        {
+          delete arr[j];
+        }
+      }
+    }
   },
 
   gatherDRMGames : function()
@@ -407,7 +422,8 @@ var rfsbundlescraper = {
     }
   },
 
-  run : function(){
+  run : function()
+  {
     this.init();
 
     console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
@@ -447,7 +463,8 @@ var rfsbundlescraper = {
     this.readFromLS();
   },
 
-  cleanup : function(){
+  cleanup : function()
+  {
     if(this.bundle.drmFreeGames.length == 0)
       delete this.bundle.drmFreeGames;
     if(this.bundle.musictracks.length == 0)
@@ -456,12 +473,14 @@ var rfsbundlescraper = {
       delete this.bundle.androidgames;
   },
 
-  saveToLS : function(){
+  saveToLS : function()
+  {
     localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
     this.readFromLS();
   },
 
-  removeFromLS : function(){
+  removeFromLS : function()
+  {
     localStorage.removeItem('RFSIGBundle');
 
     localStorage.removeItem('rfsSettingsTextHeight');
@@ -474,14 +493,16 @@ var rfsbundlescraper = {
     this.readFromLS();
   },
 
-  resetAndClear : function(){
+  resetAndClear : function()
+  {
     this.combiner = false;
     this.exists = false;
     this.debug = true;
     this.removeFromLS();
   },
 
-  close : function(){
+  close : function()
+  {
     $('#rfs-container').remove();
   }
 };
