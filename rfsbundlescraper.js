@@ -1,4 +1,4 @@
-var VERSION = '0.8141625';
+var VERSION = '0.8141630';
 
 var settings = {
   interval : 0,
@@ -159,7 +159,7 @@ var rfsbundlescraper = {
   {
     for(var i=0; i < arr.length; i++)
     {
-      for(var j=arr.length; j >= 0; j--)
+      for(var j=0; j < arr.length; j++)
       {
         if(arr[i] === arr[j] && i != j)
         {
