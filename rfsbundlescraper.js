@@ -270,6 +270,7 @@ var rfsbundlescraper = {
           drm = 'GOG';
 
         game.title = titlesOldBundles[i].innerText;
+        game.title_slug = this.convertToSlug(game.title);
         game.store_url = drm;
         key.key = keys[i].value;
         key.url = window.location.href;
