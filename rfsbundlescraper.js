@@ -1,4 +1,4 @@
-var VERSION = '0.8142025';
+var VERSION = '0.8142030';
 
 var settings = {
   interval : 0,
@@ -158,14 +158,8 @@ var rfsbundlescraper = {
   {
 
     var titles = $('.title_game a');
-    var drm, key;
-    var game = {
-      title: '',
-      title_slug: '',
-      store_url: '',
-      drm: '',
-      keys: []
-    };
+    var drm, game, key;
+
 
     var steamLinkIndex = 0;
 
@@ -186,8 +180,13 @@ var rfsbundlescraper = {
           game = this.bundle.games[i];
           console.log('Combining ' + this.bundle.games[i].title);
         } else {
-          game = {};
-          game.keys = [];
+          game = {
+            title: '',
+            title_slug: '',
+            store_url: '',
+            drm: '',
+            keys: []
+          };
         }
 
         drm = titles[i].href;
