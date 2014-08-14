@@ -267,6 +267,7 @@ var rfsbundlescraper = {
         game.title = titlesOldBundles[i].innerText;
         game.title_slug = this.convertToSlug(game.title);
         game.store_url = drm;
+
         key.key = keys[i].value;
         key.url = window.location.href;
 
@@ -284,8 +285,10 @@ var rfsbundlescraper = {
     }
 
     this.removeDupes(this.bundle.games);
+
     this.bundle.games.forEach(function(val){
-      console.log('inside forEach: val = ' + val);
+      console.log('inside forEach: val = ');
+      console.log(val);
       rfsbundlescraper.removeDupes(val);
     });
 
