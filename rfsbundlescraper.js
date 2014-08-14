@@ -1,4 +1,4 @@
-var VERSION = '0.8142010';
+var VERSION = '0.8142020';
 
 var settings = {
   interval : 0,
@@ -138,7 +138,7 @@ var rfsbundlescraper = {
     return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
   },
 
-  oldRemoveDupes : function (list)
+  removeDupes : function (list)
   {
     console.log('removing dupes from : ');
     console.log(list);
@@ -152,33 +152,6 @@ var rfsbundlescraper = {
       }
     });
     return unique;
-  },
-
-  /* this is just a temp solution. any input is welcome! :) */
-  removeDupes : function(arr, print)
-  {
-    for(var i=0; i < arr.length-1; i++)
-    {
-      if(print)
-      {
-        console.log('arr[i] outer for loop');
-        console.log(arr[i]);
-      }
-      for(var j=0; j < arr.length-1; j++)
-      {
-        if(print)
-        {
-          console.log('arr[j] INNER for loop');
-          console.log(arr[j]);
-        }
-        if(arr[i].key === arr[j].key && i != j)
-        {
-          console.log('deleting...');
-          console.log(arr[j]);
-          delete arr[j];
-        }
-      }
-    }
   },
 
   gatherDRMGames : function()
@@ -273,7 +246,7 @@ var rfsbundlescraper = {
 
       var keys = $('.keys');
 
-      for(i = 0; i < titlesOldBundles.length; i++)
+      p: for(i = 0; i < titlesOldBundles.length; i++)
       {
         if(this.combine)
         {
@@ -310,6 +283,15 @@ var rfsbundlescraper = {
         key.key = keys[i].value;
         key.url = window.location.href;
 
+        for(var k=0; j < game.keys.length; j++)
+        {
+          if(key.key == game.keys[j].key)
+          {
+            console.log('found a match!');
+            i = titlesOldBundles.length+3;
+            continue p;
+          }
+        }
         game.keys.push(key);
 
         if(this.combine)
@@ -323,11 +305,11 @@ var rfsbundlescraper = {
       }
     }
 
-    this.oldRemoveDupes(this.bundle.games);
+    this.removeDupes(this.bundle.games);
 
     for(var z=0; z < this.bundle.games.length; z++)
     {
-      this.oldRemoveDupes(this.bundle.games[z].keys);
+      this.removeDupes(this.bundle.games[z].keys);
     }
 
     this.readFromLS();
@@ -470,7 +452,7 @@ var rfsbundlescraper = {
 
         this.cleanup()
       }
-      this.oldRemoveDupes(this.bundle.games);
+      this.removeDupes(this.bundle.games);
       this.saveToLS();
     }
     else
