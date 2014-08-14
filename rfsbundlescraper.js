@@ -1,4 +1,4 @@
-var VERSION = '0.8141500';
+var VERSION = '0.8141520';
 
 var settings = {
   interval : 0,
@@ -404,6 +404,8 @@ var rfsbundlescraper = {
     this.init();
 
     console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
+
+    settings.updateSettings();
 
     do
     {
