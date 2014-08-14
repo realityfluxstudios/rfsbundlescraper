@@ -1,4 +1,5 @@
 var VERSION = '0.8140810';
+var HOTLINKGIT = 'githack';
 
 var settings = {
   interval : 0,
@@ -6,6 +7,9 @@ var settings = {
   cacheBuster: 0,
   oldCacheBuster: 0,
   firstReload: true,
+  rfsSettingsTextHeight: 0,
+  rfsSettingsTextWidth: 0,
+  rfsSettingsAutoClick: true,
 
   toggleSettingsDisplay: function(){
     $('div#rfsSettings').toggle();
@@ -30,13 +34,18 @@ var settings = {
     if(localStorage.getItem('rfsSettingsTextHeight') != null)
     {
       var checked = localStorage.getItem('rfsSettingsAutoClick');
+      console.log('checked: ' + checked);
 
       $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
       $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-      if(checked)
-        $('#rfsSettingsAutoClick').prop('checked', true).click();
-      else
+      if(checked === 'true'){
         $('#rfsSettingsAutoClick').prop('checked', false).click();
+        console.log('ticking the checkbox')
+      }
+      else {
+        $('#rfsSettingsAutoClick').prop('checked', true).click();
+        console.log('unticking the checkbox')
+      }
     } else {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
@@ -48,7 +57,11 @@ var settings = {
   },
 
   reloadScript: function(){
-    var src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
+    var src;
+    if(HOTLINKGIT === 'githack')
+      src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
+    else if(HOTLINKGIT === 'rawgit')
+      src = "https://rawgit.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
 
     $('#rfs-container').remove();
 
@@ -356,6 +369,8 @@ var rfsbundlescraper = {
 
   run : function(){
     this.init();
+
+    console.log('localStorage.getItem(\'rfsSettingsAutoClick\')' + localStorage.getItem('rfsSettingsAutoClick'));
 
     do{
       if(settings.giftLinks.length >= 1 && settings.interval == 0 && localStorage.getItem('rfsSettingsAutoClick') === 'true'){
