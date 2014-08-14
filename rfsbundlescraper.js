@@ -1,4 +1,4 @@
-var VERSION = '0.8141745';
+var VERSION = '0.8141800';
 
 var settings = {
   interval : 0,
@@ -6,8 +6,8 @@ var settings = {
   cacheBuster: 0,
   oldCacheBuster: 0,
   firstReload: true,
-  rfsSettingsTextHeight: 0,
-  rfsSettingsTextWidth: 0,
+  rfsSettingsTextHeight: 400,
+  rfsSettingsTextWidth: 315,
   rfsSettingsAutoClick: true,
 
   toggleSettingsDisplay: function(){
@@ -171,7 +171,7 @@ var rfsbundlescraper = {
           console.log('arr[j] INNER for loop');
           console.log(arr[j]);
         }
-        if(arr[i].key == arr[j].key && i != j)
+        if(arr[i].key === arr[j].key && i != j)
         {
           console.log('deleting...');
           console.log(arr[j]);
@@ -438,12 +438,8 @@ var rfsbundlescraper = {
   {
 
     this.init();
-    settings.loadSettings();
-    settings.updateSettings();
 
     console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
-
-
 
     do
     {
