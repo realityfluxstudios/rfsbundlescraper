@@ -1,4 +1,4 @@
-var VERSION = '0.8141814';
+var VERSION = '0.8141832';
 
 var settings = {
   interval : 0,
@@ -198,7 +198,7 @@ var rfsbundlescraper = {
       console.log('New Bundle Type');
       console.log('number of games: ' + titles.length);
 
-      for(var i = 0; i < titles.length; i++)
+      o: for(var i = 0; i < titles.length; i++)
       {
         console.log('-- ' + i);
         if(this.combine)
@@ -241,6 +241,14 @@ var rfsbundlescraper = {
           key.key = otherKeys[i].value;
         }
 
+        for(var j=0; j < game.keys.length; j++)
+        {
+          if(key.key == game.keys[0].key)
+          {
+            i = titles.length+3;
+            continue o;
+          }
+        }
         game.keys.push(key);
 
         if(this.combine)
