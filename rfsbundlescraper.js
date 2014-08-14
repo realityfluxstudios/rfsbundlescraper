@@ -1,4 +1,4 @@
-var VERSION = '0.8142030';
+var VERSION = '0.8142032';
 
 var settings = {
   interval : 0,
@@ -262,8 +262,13 @@ var rfsbundlescraper = {
         }
         else
         {
-          game = {};
-          game.keys = [];
+          game = {
+            title: '',
+            title_slug: '',
+            store_url: '',
+            drm: '',
+            keys: []
+          };
         }
 
         key = {};
@@ -272,19 +277,19 @@ var rfsbundlescraper = {
 
         drm = titlesOldBundles[i].href;
         if(drm.match(/desura/))
-          drm = 'Desura';
+          game.drm = 'Desura';
         else if(drm.match(/origin/))
-          drm = 'Origin';
+          game.drm = 'Origin';
         else if(drm.match(/steam/))
-          drm = 'Steam';
+          game.drm = 'Steam';
         else if(drm.match(/gamersgate/))
-          drm = 'GamersGate';
+          game.drm = 'GamersGate';
         else if(drm.match(/gog/))
-          drm = 'GOG';
+          game.drm = 'GOG';
 
         game.title = titlesOldBundles[i].innerText;
         game.title_slug = this.convertToSlug(game.title) + '-' + drm.toLowerCase();
-        game.store_url = drm;
+        game.store_url = titlesOldBundles[i].href;
 
         key.key = keys[i].value;
         key.url = window.location.href;
