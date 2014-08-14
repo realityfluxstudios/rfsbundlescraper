@@ -1,4 +1,4 @@
-var VERSION = '0.8141832';
+var VERSION = '0.8141840';
 
 var settings = {
   interval : 0,
@@ -245,6 +245,7 @@ var rfsbundlescraper = {
         {
           if(key.key == game.keys[0].key)
           {
+            console.log('found a match!');
             i = titles.length+3;
             continue o;
           }
