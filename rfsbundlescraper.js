@@ -86,6 +86,7 @@ var rfsbundlescraper = {
   debug : true,
   bundle : {
     name: '',
+    name_slug: '',
     site: '',
     games: []
   },
