@@ -58,10 +58,7 @@ var settings = {
 
   reloadScript: function(){
     var src;
-    if(HOTLINKGIT === 'githack')
-      src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
-    else if(HOTLINKGIT === 'rawgit')
-      src = "https://rawgit.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
+    src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
 
     $('#rfs-container').remove();
 
