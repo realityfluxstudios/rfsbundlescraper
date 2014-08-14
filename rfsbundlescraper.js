@@ -1,4 +1,4 @@
-var VERSION = '0.8141547';
+var VERSION = '0.8141550';
 
 var settings = {
   interval : 0,
@@ -140,6 +140,9 @@ var rfsbundlescraper = {
 
   removeDupes : function (list)
   {
+    console.log('removing dupes from : ');
+    console.log(list);
+
     var unique = [];
     $.each(list, function(i, el)
     {
@@ -287,8 +290,9 @@ var rfsbundlescraper = {
     this.removeDupes(this.bundle.games);
 
     this.bundle.games.forEach(function(val){
-      console.log('inside forEach: val = ');
-      console.log(val);
+      console.log('inside forEach: val.keys = ');
+      console.log(val.keys);
+
       rfsbundlescraper.removeDupes(val.keys);
     });
 
