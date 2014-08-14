@@ -1,4 +1,4 @@
-var VERSION = '0.8142032';
+var VERSION = '0.8142035';
 
 var settings = {
   interval : 0,
@@ -288,7 +288,7 @@ var rfsbundlescraper = {
           game.drm = 'GOG';
 
         game.title = titlesOldBundles[i].innerText;
-        game.title_slug = this.convertToSlug(game.title) + '-' + drm.toLowerCase();
+        game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
         game.store_url = titlesOldBundles[i].href;
 
         key.key = keys[i].value;
