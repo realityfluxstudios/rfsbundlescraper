@@ -1,4 +1,4 @@
-var VERSION = '0.8140841';
+var VERSION = '0.8141410';
 
 var settings = {
   interval : 0,
@@ -37,15 +37,20 @@ var settings = {
 
       $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
       $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-      if(checked === 'true'){
+
+      if(checked === 'true')
+      {
         $('#rfsSettingsAutoClick').prop('checked', false).click();
         console.log('ticking the checkbox')
       }
-      else {
+      else
+      {
         $('#rfsSettingsAutoClick').prop('checked', true).click();
         console.log('unticking the checkbox')
       }
-    } else {
+    }
+    else
+    {
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
       var textArea = $('#rfs-games-list');
@@ -55,13 +60,15 @@ var settings = {
     }
   },
 
-  reloadScript: function(){
+  reloadScript: function()
+  {
     var src;
     src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
 
     $('#rfs-container').remove();
 
-    if(this.firstReload){
+    if(this.firstReload)
+    {
       this.cacheBuster = Date.now().toString();
       console.log(this.cacheBuster);
       $('script[src="' + src + '"]').remove();
@@ -70,7 +77,8 @@ var settings = {
       console.log(this.oldCacheBuster);
       this.firstReload = false;
     }
-    else {
+    else
+    {
       this.cacheBuster = Date.now().toString();
       $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
       $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
@@ -86,6 +94,7 @@ var rfsbundlescraper = {
   combiner: false,
   exists: false,
   debug : true,
+  bundles: [],
   bundle : {
     name: '',
     name_slug: '',
@@ -129,17 +138,21 @@ var rfsbundlescraper = {
     return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
   },
 
-  removeDupes : function (list){
+  removeDupes : function (list)
+  {
     var unique = [];
-    $.each(list, function(i, el){
-      if($.inArray(el, unique) === -1) {
+    $.each(list, function(i, el)
+    {
+      if($.inArray(el, unique) === -1)
+      {
         unique.push(el);
       }
     });
     return unique;
   },
 
-  gatherDRMGames : function(){
+  gatherDRMGames : function()
+  {
 
     var titles = $('.title_game a');
     var drm, game, key;
@@ -208,14 +221,18 @@ var rfsbundlescraper = {
         if(this.combine)
         {
           this.bundle.games[i] = game;
-        } else {
+        }
+        else
+        {
           game.title = titles[i].text;
           game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
           game.store_url = titles[i].href;
           this.bundle.games.push(game);
         }
       }
-    } else {
+    }
+    else
+    {
       console.log('Old Bundle type');
 
       var titlesOldBundles = $('#steam-key #stringa-game-key .title_game a');
@@ -229,7 +246,9 @@ var rfsbundlescraper = {
           game = this.bundle.games[i];
           console.log('Combining ' + this.bundle.games[i].title);
           console.log('i is ' + i);
-        } else {
+        }
+        else
+        {
           game = {};
           game.keys = [];
         }
@@ -239,15 +258,15 @@ var rfsbundlescraper = {
         console.log(titlesOldBundles[i].innerText);
 
         drm = titlesOldBundles[i].href;
-        if(drm.match('desura'))
+        if(drm.match(/desura/))
           drm = 'Desura';
-        else if(drm.match('origin'))
+        else if(drm.match(/origin/))
           drm = 'Origin';
-        else if(drm.match('steam'))
+        else if(drm.match(/steam/))
           drm = 'Steam';
-        else if(drm.match('gamersgate'))
+        else if(drm.match(/gamersgate/))
           drm = 'GamersGate';
-        else if(drm.match('gog'))
+        else if(drm.match(/gog/))
           drm = 'GOG';
 
         game.title = titlesOldBundles[i].innerText;
@@ -260,7 +279,9 @@ var rfsbundlescraper = {
         if(this.combine)
         {
           this.bundle.games[i] = game;
-        } else {
+        }
+        else
+        {
           this.bundle.games.push(game);
         }
       }
@@ -270,7 +291,8 @@ var rfsbundlescraper = {
     this.readFromLS();
   },
 
-  gatherDRMFreeGames: function(){
+  gatherDRMFreeGames: function()
+  {
     var drmFreeGames = $('#drm-free-games #stringa-music-key');
     var drmFreeGamesTitles = $('#drm-free-games #stringa-music-key .title_game');
     var drmFreeGamesPlatforms = $('#drm-free-games #stringa-music-key .title_dev');
@@ -291,7 +313,8 @@ var rfsbundlescraper = {
     }
   },
 
-  gatherMusicTracks: function(){
+  gatherMusicTracks: function()
+  {
 
     this.bundle.musictracks = [];
     var musictrack;
@@ -324,8 +347,8 @@ var rfsbundlescraper = {
     }
   },
 
-  gatherAndroidGames: function(){
-
+  gatherAndroidGames: function()
+  {
     this.bundle.androidgames = [];
     var androidgame;
 
@@ -343,26 +366,35 @@ var rfsbundlescraper = {
     }
   },
 
-  readFromLS: function(){
+  readFromLS: function()
+  {
     if(this.bundle != null || this.bundle != undefined)
       $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
     else
       $('#rfs-games-list').val('No Bundle in Local Storage');
   },
 
-  clickGiftImages: function(){
-    if(settings.giftLinks.length > 0){
-      var interval = setInterval(function(){
-        if(settings.giftLinks.length == 0){
+  clickGiftImages: function()
+  {
+    if(settings.giftLinks.length > 0)
+    {
+      var interval = setInterval(function()
+      {
+        if(settings.giftLinks.length == 0)
+        {
           clearInterval(interval);
-        } else {
+        }
+        else
+        {
           settings.giftLinks = $('#icon-gift img');
           settings.giftLinks[0].click();
           settings.giftLinks[0].remove();
           console.log('removing img');
         }
       }, 2000);
-    } else {
+    }
+    else
+    {
       console.log('No gift images to click... continue on...');
     }
   },
@@ -370,17 +402,24 @@ var rfsbundlescraper = {
   run : function(){
     this.init();
 
-    console.log('localStorage.getItem(\'rfsSettingsAutoClick\')' + localStorage.getItem('rfsSettingsAutoClick'));
+    console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
 
-    do{
-      if(settings.giftLinks.length >= 1 && settings.interval == 0 && localStorage.getItem('rfsSettingsAutoClick') === 'true'){
+    do
+    {
+      if(settings.giftLinks.length >= 1 &&
+          settings.interval == 0 &&
+            localStorage.getItem('rfsSettingsAutoClick') === 'true')
+      {
         this.clickGiftImages();
       }
-    }while(settings.giftLinks.length > 0 && settings.interval != 0 && settings.autoClick);
+    }while(settings.giftLinks.length > 0 && settings.interval != 0);
 
-    if(!this.exists){
+    if(!this.exists)
+    {
       this.gatherDRMGames();
-      if(!this.combine){
+
+      if(!this.combine)
+      {
         this.gatherDRMFreeGames();
         this.gatherMusicTracks();
         this.gatherAndroidGames();
@@ -389,14 +428,16 @@ var rfsbundlescraper = {
       }
       this.removeDupes(this.bundle.games);
       this.saveToLS();
-    } else {
+    }
+    else
+    {
       console.log('It\'s the same bundle dude!');
     }
 
     this.readFromLS();
   },
 
-  cleanup: function(){
+  cleanup : function(){
     if(this.bundle.drmFreeGames.length == 0)
       delete this.bundle.drmFreeGames;
     if(this.bundle.musictracks.length == 0)
@@ -405,12 +446,12 @@ var rfsbundlescraper = {
       delete this.bundle.androidgames;
   },
 
-  saveToLS: function(){
+  saveToLS : function(){
     localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
     this.readFromLS();
   },
 
-  removeFromLS: function(){
+  removeFromLS : function(){
     localStorage.removeItem('RFSIGBundle');
 
     localStorage.removeItem('rfsSettingsTextHeight');
