@@ -186,33 +186,28 @@ var rfsbundlescraper = {
 
         if(drm.match(/desura/) || ( i < smalltits2.length && smalltits2[i].text.match(/desura/i)))
         {
-          if(!this.combine)
-            game.drm = 'Desura';
+          game.drm = 'Desura';
           key.key = otherKeys[i].value;
         }
         else if(drm.match(/origin/))
         {
-          if(!this.combine)
-            game.drm = 'Origin';
+          game.drm = 'Origin';
           key.key = otherKeys[i].value;
         }
-        else if(drm.match(/steam/))
+        else if(drm.match(/steam/) || drm.match(/indiegala/))
         {
-          if(!this.combine)
-            game.drm = 'Steam';
+          game.drm = 'Steam';
           key.key = steamLinks[steamLinkIndex].href;
           steamLinkIndex++;
         }
         else if(drm.match(/gamersgate/))
         {
-          if(!this.combine)
-            game.drm = 'GamersGate';
+          game.drm = 'GamersGate';
           key.key = otherKeys[i].value;
         }
         else if(drm.match(/gog/))
         {
-          if(!this.combine)
-            game.drm = 'GOG';
+          game.drm = 'GOG';
           key.key = otherKeys[i].value;
         }
 
