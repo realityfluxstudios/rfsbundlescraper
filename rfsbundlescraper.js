@@ -1,5 +1,4 @@
-var VERSION = '0.8140810';
-var HOTLINKGIT = 'githack';
+var VERSION = '0.8140835';
 
 var settings = {
   interval : 0,
@@ -381,6 +380,8 @@ var rfsbundlescraper = {
         this.gatherDRMFreeGames();
         this.gatherMusicTracks();
         this.gatherAndroidGames();
+
+        this.cleanup()
       }
       this.removeDupes(this.bundle.games);
       this.saveToLS();
@@ -389,6 +390,15 @@ var rfsbundlescraper = {
     }
 
     this.readFromLS();
+  },
+
+  cleanup: function(){
+    if(this.bundle.drmFreeGames.length == 0)
+      delete this.bundle.drmFreeGames;
+    if(this.bundle.musictracks.length == 0)
+      delete this.bundle.musictracks;
+    if(this.bundle.androidgames.length == 0)
+      delete this.bundle.androidgames;
   },
 
   saveToLS: function(){
