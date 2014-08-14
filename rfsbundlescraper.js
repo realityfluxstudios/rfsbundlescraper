@@ -1,4 +1,4 @@
-var VERSION = '0.8140840';
+var VERSION = '0.8140841';
 
 var settings = {
   interval : 0,
