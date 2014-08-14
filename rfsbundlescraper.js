@@ -283,9 +283,9 @@ var rfsbundlescraper = {
         key.key = keys[i].value;
         key.url = window.location.href;
 
-        for(var k=0; j < game.keys.length; j++)
+        for(var k=0; k < game.keys.length; k++)
         {
-          if(key.key == game.keys[j].key)
+          if(key.key == game.keys[k].key)
           {
             console.log('found a match!');
             i = titlesOldBundles.length+3;
