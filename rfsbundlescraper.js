@@ -1,4 +1,4 @@
-var VERSION = '0.8140135';
+var VERSION = '0.8140810';
 
 var settings = {
   interval : 0,
@@ -358,7 +358,7 @@ var rfsbundlescraper = {
     this.init();
 
     do{
-      if(settings.giftLinks.length >= 1 && settings.interval == 0 && localStorage.getItem('rfsSettingsAutoClick') == true){
+      if(settings.giftLinks.length >= 1 && settings.interval == 0 && localStorage.getItem('rfsSettingsAutoClick') === 'true'){
         this.clickGiftImages();
       }
     }while(settings.giftLinks.length > 0 && settings.interval != 0 && settings.autoClick);
@@ -401,11 +401,6 @@ var rfsbundlescraper = {
     this.combiner = false;
     this.exists = false;
     this.debug = true;
-
-    settings.textHeight = 408;
-    settings.textWidth = 415;
-    settings.autoClick = true;
-
     this.removeFromLS();
   },
 
