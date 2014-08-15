@@ -1,6 +1,8 @@
-var VERSION = '0.8151345';
+var VERSION = '0.8151400';
 
 var settings = {
+  href: window.location.href,
+  site: '',
   interval : 0,
   giftLinks : $('#icon-gift img'),
   cacheBuster: 0,
@@ -9,6 +11,15 @@ var settings = {
   rfsSettingsTextHeight: 400,
   rfsSettingsTextWidth: 315,
   rfsSettingsAutoClick: true,
+
+  detect_site: function(){
+    if(this.href.match(/indiegala/))
+      this.site = 'indiegala';
+    else if(this.href.match(/humblebundle/))
+      this.site = 'humblebundle';
+    else if(this.href.match(/bundlestars/))
+      this.site = 'bundlestars';
+  },
 
   toggleSettingsDisplay: function(){
     $('div#rfsSettings').toggle();
@@ -94,7 +105,6 @@ var rfsbundlescraper = {
   combiner: false,
   exists: false,
   debug : true,
-  bundles: [],
   bundle : {
     name: '',
     name_slug: '',
@@ -143,15 +153,15 @@ var rfsbundlescraper = {
 
       if(!this.exists)
       {
-        this.indiegala.gatherDRMGames();
+        this.gatherDRMGames();
 
         if(!this.combine)
         {
-          this.indiegala.gatherDRMFreeGames();
-          this.indiegala.gatherMusicTracks();
-          this.indiegala.gatherAndroidGames();
+          this.gatherDRMFreeGames();
+          this.gatherMusicTracks();
+          this.gatherAndroidGames();
 
-          this.cleanup()
+          rfsbundlescraper.cleanup()
         }
         this.removeDupes(this.bundle.games);
         this.saveToLS();
@@ -448,7 +458,17 @@ var rfsbundlescraper = {
     },
 
     hb_run: function(){
+      this.hb_init();
+    }
+  },
 
+  bundlestars: {
+    bs_init: function(){
+
+    },
+
+    bs_run: function(){
+      this.bs_init();
     }
   },
 
@@ -484,8 +504,6 @@ var rfsbundlescraper = {
     }
   },
 
-
-
   cleanup : function()  {
     if(this.bundle.drmFreeGames.length == 0)
       delete this.bundle.drmFreeGames;
@@ -496,12 +514,23 @@ var rfsbundlescraper = {
   },
 
   saveToLS : function()  {
-    localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
+    if(settings.site === 'indiegala')
+      localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
+    else if(settings.site === 'humblebundle')
+      localStorage.setItem('RFSHBBundle', JSON.stringify(this.bundle, null, 2));
+    else if(settings.site === 'bundlestars')
+      localStorage.setItem('RFSBSBundle', JSON.stringify(this.bundle, null, 2));
+
     this.readFromLS();
   },
 
   removeFromLS : function()  {
-    localStorage.removeItem('RFSIGBundle');
+    if(settings.site === 'indiegala')
+      localStorage.removeItem('RFSIGBundle');
+    else if(settings.site === 'humblebundle')
+      localStorage.removeItem('RFSHBBundle');
+    else if(settings.site === 'bundlestars')
+      localStorage.removeItem('RFSBSBundle');
 
     localStorage.removeItem('rfsSettingsTextHeight');
     localStorage.removeItem('rfsSettingsTextWidth');
@@ -526,9 +555,11 @@ var rfsbundlescraper = {
   }
 };
 
-var href=window.location.href;
+settings.detect_site();
 
-if(href.match(/indiegala/))
+if(settings.site === 'indiegala')
   rfsbundlescraper.indiegala.ig_run();
-else if(href.match(/humblebundle/))
+else if(settings.site === 'humblebundle')
   rfsbundlescraper.humblebundle.hb_run();
+else if(settings.site === 'bundlestars')
+  rfsbundlescraper.bundlestars.bs_run();
