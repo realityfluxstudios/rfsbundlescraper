@@ -1,4 +1,4 @@
-var VERSION = '0.8151437';
+var VERSION = '0.8151440';
 
 var rfsbundlescraper = {
 
@@ -13,45 +13,6 @@ var rfsbundlescraper = {
   },
 
   indiegala: {
-
-    ig_run : function()  {
-
-      this.ig_init();
-
-      console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
-
-      do
-      {
-        if(rfsbundlescraper.utilities.giftLinks.length >= 1 &&
-          rfsbundlescraper.utilities.interval == 0 &&
-          localStorage.getItem('rfsSettingsAutoClick') === 'true')
-        {
-          this.clickGiftImages();
-        }
-      }while(rfsbundlescraper.utilities.giftLinks.length > 0 && rfsbundlescraper.utilities.interval != 0);
-
-      if(!this.exists)
-      {
-        this.gatherDRMGames();
-
-        if(!this.combine)
-        {
-          this.gatherDRMFreeGames();
-          this.gatherMusicTracks();
-          this.gatherAndroidGames();
-
-          rfsbundlescraper.utilities.cleanup()
-        }
-        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
-        rfsbundlescraper.utilities.saveToLS();
-      }
-      else
-      {
-        console.log('It\'s the same bundle dude!');
-      }
-
-      rfsbundlescraper.utilities.readFromLS();
-    },
 
     ig_init : function(){
 
@@ -83,6 +44,45 @@ var rfsbundlescraper = {
       rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
       rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utilities.convertToSlug(rfsbundlescraper.bundle.name);
       rfsbundlescraper.bundle.site = "IndieGala";
+    },
+
+    ig_run : function()  {
+
+      this.ig_init();
+
+      console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
+
+      do
+      {
+        if(rfsbundlescraper.utilities.giftLinks.length >= 1 &&
+          rfsbundlescraper.utilities.interval == 0 &&
+          localStorage.getItem('rfsSettingsAutoClick') === 'true')
+        {
+          this.clickGiftImages();
+        }
+      }while(rfsbundlescraper.utilities.giftLinks.length > 0 && rfsbundlescraper.utilities.interval != 0);
+
+      if(!this.exists)
+      {
+        this.gatherDRMGames();
+
+        if(!this.combine)
+        {
+          this.gatherDRMFreeGames();
+          this.gatherMusicTracks();
+          this.gatherAndroidGames();
+
+          this.cleanup()
+        }
+        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
+        rfsbundlescraper.utilities.saveToLS();
+      }
+      else
+      {
+        console.log('It\'s the same bundle dude!');
+      }
+
+      rfsbundlescraper.utilities.readFromLS();
     },
 
     gatherDRMGames : function()  {
