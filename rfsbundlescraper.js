@@ -1,4 +1,4 @@
-var VERSION = '0.8151435';
+var VERSION = '0.8151437';
 
 var rfsbundlescraper = {
 
@@ -40,7 +40,7 @@ var rfsbundlescraper = {
           this.gatherMusicTracks();
           this.gatherAndroidGames();
 
-          rfsbundlescraper.cleanup()
+          rfsbundlescraper.utilities.cleanup()
         }
         rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
         rfsbundlescraper.utilities.saveToLS();
