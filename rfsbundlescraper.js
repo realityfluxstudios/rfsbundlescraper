@@ -1,4 +1,4 @@
-var VERSION = '0.8151430';
+var VERSION = '0.8151435';
 
 var rfsbundlescraper = {
 
@@ -66,7 +66,7 @@ var rfsbundlescraper = {
       {
         rfsbundlescraper.combine = true;
         console.log('Loading existing bundle');
-        rfsbundlescraper.readFromLS();
+        rfsbundlescraper.utilities.readFromLS();
         rfsbundlescraper.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
         console.log('bundle.games.length: ' + rfsbundlescraper.bundle.games.length);
 
@@ -253,7 +253,7 @@ var rfsbundlescraper = {
         rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
-      rfsbundlescraper.readFromLS();
+      rfsbundlescraper.utilities.readFromLS();
     },
 
     gatherDRMFreeGames: function()  {
