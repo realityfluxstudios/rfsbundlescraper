@@ -1,4 +1,4 @@
-var VERSION = '0.8151400';
+var VERSION = '0.8151405';
 
 var settings = {
   href: window.location.href,
@@ -163,7 +163,7 @@ var rfsbundlescraper = {
 
           rfsbundlescraper.cleanup()
         }
-        this.removeDupes(this.bundle.games);
+        this.removeDupes(rfsbundlescraper.bundle.games);
         this.saveToLS();
       }
       else
@@ -188,12 +188,12 @@ var rfsbundlescraper = {
         this.combine = true;
         console.log('Loading existing bundle');
         this.readFromLS();
-        this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
-        console.log('bundle.games.length: ' + this.bundle.games.length);
+        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
+        console.log('bundle.games.length: ' + rfsbundlescraper.bundle.games.length);
 
-        if(this.bundle.url === window.location.href)
+        if(rfsbundlescraper.bundle.url === window.location.href)
         {
-          console.log("this.bundle.url: " + this.bundle.url + " === window.location.href: " + window.location.href);
+          console.log("rfsbundlescraper.bundle.url: " + rfsbundlescraper.bundle.url + " === window.location.href: " + window.location.href);
           this.exists = true;
         }
       }
@@ -201,9 +201,9 @@ var rfsbundlescraper = {
         console.log('No existing bundle...');
       }
 
-      this.bundle.name = $('.text_align_center h2')[0].innerText;
-      this.bundle.name_slug = this.convertToSlug(this.bundle.name);
-      this.bundle.site = "IndieGala";
+      rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
+      rfsbundlescraper.bundle.name_slug = this.convertToSlug(rfsbundlescraper.bundle.name);
+      rfsbundlescraper.bundle.site = "IndieGala";
     },
 
   gatherDRMGames : function()  {
@@ -228,8 +228,8 @@ var rfsbundlescraper = {
         console.log('-- ' + i);
         if(this.combine)
         {
-          game = this.bundle.games[i];
-          console.log('Combining ' + this.bundle.games[i].title);
+          game = rfsbundlescraper.bundle.games[i];
+          console.log('Combining ' + rfsbundlescraper.bundle.games[i].title);
         } else {
           game = {
             title: '',
@@ -284,14 +284,14 @@ var rfsbundlescraper = {
 
         if(this.combine)
         {
-          this.bundle.games[i] = game;
+          rfsbundlescraper.bundle.games[i] = game;
         }
         else
         {
           game.title = titles[i].text;
           game.title_slug = this.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
           game.store_url = titles[i].href;
-          this.bundle.games.push(game);
+          rfsbundlescraper.bundle.games.push(game);
         }
       }
     }
@@ -307,8 +307,8 @@ var rfsbundlescraper = {
       {
         if(this.combine)
         {
-          game = this.bundle.games[i];
-          console.log('Combining ' + this.bundle.games[i].title);
+          game = rfsbundlescraper.bundle.games[i];
+          console.log('Combining ' + rfsbundlescraper.bundle.games[i].title);
           console.log('i is ' + i);
         }
         else
@@ -358,20 +358,20 @@ var rfsbundlescraper = {
 
         if(this.combine)
         {
-          this.bundle.games[i] = game;
+          rfsbundlescraper.bundle.games[i] = game;
         }
         else
         {
-          this.bundle.games.push(game);
+          rfsbundlescraper.bundle.games.push(game);
         }
       }
     }
 
-    this.removeDupes(this.bundle.games);
+    this.removeDupes(rfsbundlescraper.bundle.games);
 
-    for(var z=0; z < this.bundle.games.length; z++)
+    for(var z=0; z < rfsbundlescraper.bundle.games.length; z++)
     {
-      this.removeDupes(this.bundle.games[z].keys);
+      this.removeDupes(rfsbundlescraper.bundle.games[z].keys);
     }
 
     this.readFromLS();
@@ -383,7 +383,7 @@ var rfsbundlescraper = {
     var drmFreeGamesPlatforms = $('#drm-free-games #stringa-music-key .title_dev');
     var drmFreeGamesDLLink = $('#drm-free-games #stringa-music-key .button');
 
-    this.bundle.drmFreeGames = [];
+    rfsbundlescraper.bundle.drmFreeGames = [];
     var drmFreeGame;
 
     for(var i = 0; i < drmFreeGames.length; i++)
@@ -394,13 +394,13 @@ var rfsbundlescraper = {
       drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
       drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
 
-      this.bundle.drmFreeGames.push(drmFreeGame);
+      rfsbundlescraper.bundle.drmFreeGames.push(drmFreeGame);
     }
   },
 
   gatherMusicTracks: function()  {
 
-    this.bundle.musictracks = [];
+    rfsbundlescraper.bundle.musictracks = [];
     var musictrack;
 
     var musicTracks = $('#music #stringa-music-key');
@@ -427,12 +427,12 @@ var rfsbundlescraper = {
       musictrack.flacdllink = FLACDLLink;
       musictrack.flactype = FLACDLLinkText;
 
-      this.bundle.musictracks.push(musictrack);
+      rfsbundlescraper.bundle.musictracks.push(musictrack);
     }
   },
 
   gatherAndroidGames: function()  {
-    this.bundle.androidgames = [];
+    rfsbundlescraper.bundle.androidgames = [];
     var androidgame;
 
     var androidGameTitle = $('#android #stringa-android-key .title_game');
@@ -445,7 +445,7 @@ var rfsbundlescraper = {
       androidgame.title_slug = this.convertToSlug(androidgame.title);
       androidgame.dllink = androidGameLink[i].href;
 
-      this.bundle.androidgames.push(androidgame);
+      rfsbundlescraper.bundle.androidgames.push(androidgame);
     }
   }
 
@@ -474,8 +474,8 @@ var rfsbundlescraper = {
 
   readFromLS: function()
   {
-    if(this.bundle != null || this.bundle != undefined)
-      $('#rfs-games-list').val( JSON.stringify(this.bundle, null, 2));
+    if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
+      $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
     else
       $('#rfs-games-list').val('No Bundle in Local Storage');
   },
@@ -505,21 +505,21 @@ var rfsbundlescraper = {
   },
 
   cleanup : function()  {
-    if(this.bundle.drmFreeGames.length == 0)
-      delete this.bundle.drmFreeGames;
-    if(this.bundle.musictracks.length == 0)
-      delete this.bundle.musictracks;
-    if(this.bundle.androidgames.length == 0)
-      delete this.bundle.androidgames;
+    if(rfsbundlescraper.bundle.drmFreeGames.length == 0)
+      delete rfsbundlescraper.bundle.drmFreeGames;
+    if(rfsbundlescraper.bundle.musictracks.length == 0)
+      delete rfsbundlescraper.bundle.musictracks;
+    if(rfsbundlescraper.bundle.androidgames.length == 0)
+      delete rfsbundlescraper.bundle.androidgames;
   },
 
   saveToLS : function()  {
     if(settings.site === 'indiegala')
-      localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
+      localStorage.setItem('RFSIGBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
     else if(settings.site === 'humblebundle')
-      localStorage.setItem('RFSHBBundle', JSON.stringify(this.bundle, null, 2));
+      localStorage.setItem('RFSHBBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
     else if(settings.site === 'bundlestars')
-      localStorage.setItem('RFSBSBundle', JSON.stringify(this.bundle, null, 2));
+      localStorage.setItem('RFSBSBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
 
     this.readFromLS();
   },
@@ -536,9 +536,9 @@ var rfsbundlescraper = {
     localStorage.removeItem('rfsSettingsTextWidth');
     localStorage.removeItem('rfsSettingsAutoClick');
 
-    this.bundle = {};
-    console.log('this.bundle: ' + JSON.stringify(this.bundle, null, 2));
-    console.log('this.bundle.games: ' + JSON.stringify(this.bundle.games, null, 2));
+    rfsbundlescraper.bundle = {};
+    console.log('rfsbundlescraper.bundle: ' + JSON.stringify(rfsbundlescraper.bundle, null, 2));
+    console.log('rfsbundlescraper.bundle.games: ' + JSON.stringify(rfsbundlescraper.bundle.games, null, 2));
     this.readFromLS();
   },
 
