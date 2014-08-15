@@ -4,6 +4,10 @@ This has turned into a script that will not only scrap IG bundles, but will also
 
 I use it specifically for a game database to organize all the bundles I own.
 
+
+### How to use
+Instructions have changed new instructions coming soon.
+
 #### History
 
 Since I found out about IndieGala I have loved the idea and have put in quite a bit of money towards the charities and publishers of these great games they offer.
@@ -13,9 +17,6 @@ I have multiple copies of each bundle and found myself wanting to easily retriev
 I wrote this bookmarklet to add a text box and a tab delimited list of all the games, music, drm free games, and android games of the bundle on the current page.
 
 I am releasing this to the public in the hopes that it will be useful to others. Also, if IndieGala or HumbleBundle changes up their code I hope to have some help updating the code once in a while. I just updated it to their latest changes (May '14).
-
-### How to use
-Instructions have changed new instructions coming soon.
 
 ### To Do
 

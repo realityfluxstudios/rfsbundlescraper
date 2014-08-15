@@ -1,4 +1,4 @@
-var VERSION = '0.8142240';
+var VERSION = '0.8151345';
 
 var settings = {
   interval : 0,
@@ -102,44 +102,13 @@ var rfsbundlescraper = {
     games: []
   },
 
-  init : function(){
 
-    settings.loadSettings();
-
-    console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
-
-    if($('#rfs-container').length == 0)
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="settings.reloadScript();">Reload</button>\n    <button class="btn-info" onClick="settings.readFromLS();">Load</button>    \n    <button class="btn-default" onClick="rfsbundlescraper.clickGiftImages();">Auto Click</button>    \n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.resetAndClear();">Reset/Clear</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.close();">X</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
-
-    if(localStorage.getItem('RFSIGBundle') != null)
-    {
-      this.combine = true;
-      console.log('Loading existing bundle');
-      this.readFromLS();
-      this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
-      console.log('bundle.games.length: ' + this.bundle.games.length);
-
-      if(this.bundle.url === window.location.href)
-      {
-        console.log("this.bundle.url: " + this.bundle.url + " === window.location.href: " + window.location.href);
-        this.exists = true;
-      }
-    }
-    else {
-      console.log('No existing bundle...');
-    }
-
-    this.bundle.name = $('.text_align_center h2')[0].innerText;
-    this.bundle.name_slug = this.convertToSlug(this.bundle.name);
-    this.bundle.site = "IndieGala";
-  },
 
   convertToSlug : function (value){
     return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
   },
 
-  removeDupes : function (list)
-  {
+  removeDupes : function (list) {
     console.log('removing dupes from : ');
     console.log(list);
 
@@ -154,8 +123,80 @@ var rfsbundlescraper = {
     return unique;
   },
 
-  gatherDRMGames : function()
-  {
+  indiegala: {
+
+    ig_run : function()  {
+
+      this.ig_init();
+
+      console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
+
+      do
+      {
+        if(settings.giftLinks.length >= 1 &&
+          settings.interval == 0 &&
+          localStorage.getItem('rfsSettingsAutoClick') === 'true')
+        {
+          this.clickGiftImages();
+        }
+      }while(settings.giftLinks.length > 0 && settings.interval != 0);
+
+      if(!this.exists)
+      {
+        this.indiegala.gatherDRMGames();
+
+        if(!this.combine)
+        {
+          this.indiegala.gatherDRMFreeGames();
+          this.indiegala.gatherMusicTracks();
+          this.indiegala.gatherAndroidGames();
+
+          this.cleanup()
+        }
+        this.removeDupes(this.bundle.games);
+        this.saveToLS();
+      }
+      else
+      {
+        console.log('It\'s the same bundle dude!');
+      }
+
+      this.readFromLS();
+    },
+
+    ig_init : function(){
+
+      settings.loadSettings();
+
+      console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
+
+      if($('#rfs-container').length == 0)
+        $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="settings.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="settings.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="settings.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="settings.reloadScript();">Reload</button>\n    <button class="btn-info" onClick="settings.readFromLS();">Load</button>    \n    <button class="btn-default" onClick="rfsbundlescraper.clickGiftImages();">Auto Click</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.close();">X</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.resetAndClear();">Reset/Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+
+      if(localStorage.getItem('RFSIGBundle') != null)
+      {
+        this.combine = true;
+        console.log('Loading existing bundle');
+        this.readFromLS();
+        this.bundle = JSON.parse(localStorage.getItem('RFSIGBundle'));
+        console.log('bundle.games.length: ' + this.bundle.games.length);
+
+        if(this.bundle.url === window.location.href)
+        {
+          console.log("this.bundle.url: " + this.bundle.url + " === window.location.href: " + window.location.href);
+          this.exists = true;
+        }
+      }
+      else {
+        console.log('No existing bundle...');
+      }
+
+      this.bundle.name = $('.text_align_center h2')[0].innerText;
+      this.bundle.name_slug = this.convertToSlug(this.bundle.name);
+      this.bundle.site = "IndieGala";
+    },
+
+  gatherDRMGames : function()  {
 
     var titles = $('.title_game a');
     var drm, game, key;
@@ -326,8 +367,7 @@ var rfsbundlescraper = {
     this.readFromLS();
   },
 
-  gatherDRMFreeGames: function()
-  {
+  gatherDRMFreeGames: function()  {
     var drmFreeGames = $('#drm-free-games #stringa-music-key');
     var drmFreeGamesTitles = $('#drm-free-games #stringa-music-key .title_game');
     var drmFreeGamesPlatforms = $('#drm-free-games #stringa-music-key .title_dev');
@@ -348,8 +388,7 @@ var rfsbundlescraper = {
     }
   },
 
-  gatherMusicTracks: function()
-  {
+  gatherMusicTracks: function()  {
 
     this.bundle.musictracks = [];
     var musictrack;
@@ -382,8 +421,7 @@ var rfsbundlescraper = {
     }
   },
 
-  gatherAndroidGames: function()
-  {
+  gatherAndroidGames: function()  {
     this.bundle.androidgames = [];
     var androidgame;
 
@@ -399,6 +437,19 @@ var rfsbundlescraper = {
 
       this.bundle.androidgames.push(androidgame);
     }
+  }
+
+  },
+
+  humblebundle: {
+
+    hb_init: function(){
+
+    },
+
+    hb_run: function(){
+
+    }
   },
 
   readFromLS: function()
@@ -409,8 +460,7 @@ var rfsbundlescraper = {
       $('#rfs-games-list').val('No Bundle in Local Storage');
   },
 
-  clickGiftImages: function()
-  {
+  clickGiftImages: function()  {
     if(settings.giftLinks.length > 0)
     {
       var interval = setInterval(function()
@@ -434,48 +484,9 @@ var rfsbundlescraper = {
     }
   },
 
-  run : function()
-  {
 
-    this.init();
 
-    console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
-
-    do
-    {
-      if(settings.giftLinks.length >= 1 &&
-          settings.interval == 0 &&
-            localStorage.getItem('rfsSettingsAutoClick') === 'true')
-      {
-        this.clickGiftImages();
-      }
-    }while(settings.giftLinks.length > 0 && settings.interval != 0);
-
-    if(!this.exists)
-    {
-      this.gatherDRMGames();
-
-      if(!this.combine)
-      {
-        this.gatherDRMFreeGames();
-        this.gatherMusicTracks();
-        this.gatherAndroidGames();
-
-        this.cleanup()
-      }
-      this.removeDupes(this.bundle.games);
-      this.saveToLS();
-    }
-    else
-    {
-      console.log('It\'s the same bundle dude!');
-    }
-
-    this.readFromLS();
-  },
-
-  cleanup : function()
-  {
+  cleanup : function()  {
     if(this.bundle.drmFreeGames.length == 0)
       delete this.bundle.drmFreeGames;
     if(this.bundle.musictracks.length == 0)
@@ -484,14 +495,12 @@ var rfsbundlescraper = {
       delete this.bundle.androidgames;
   },
 
-  saveToLS : function()
-  {
+  saveToLS : function()  {
     localStorage.setItem('RFSIGBundle', JSON.stringify(this.bundle, null, 2));
     this.readFromLS();
   },
 
-  removeFromLS : function()
-  {
+  removeFromLS : function()  {
     localStorage.removeItem('RFSIGBundle');
 
     localStorage.removeItem('rfsSettingsTextHeight');
@@ -504,8 +513,7 @@ var rfsbundlescraper = {
     this.readFromLS();
   },
 
-  resetAndClear : function()
-  {
+  resetAndClear : function()  {
     this.combiner = false;
     this.exists = false;
     this.debug = true;
@@ -518,4 +526,9 @@ var rfsbundlescraper = {
   }
 };
 
-rfsbundlescraper.run();
+var href=window.location.href;
+
+if(href.match(/indiegala/))
+  rfsbundlescraper.indiegala.ig_run();
+else if(href.match(/humblebundle/))
+  rfsbundlescraper.humblebundle.hb_run();
