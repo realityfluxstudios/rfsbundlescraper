@@ -12,6 +12,180 @@ var rfsbundlescraper = {
     games: []
   },
 
+  run: function(){
+    this.utilities.detect_site();
+
+    if(this.utilities.site === 'indiegala')
+      this.indiegala.ig_run();
+    else if(this.utilities.site === 'humblebundle')
+      this.humblebundle.hb_run();
+  },
+
+  utilities : {
+    href: window.location.href,
+    site: '',
+    interval : 0,
+    giftLinks : $('#icon-gift img'),
+    cacheBuster: 0,
+    oldCacheBuster: 0,
+    firstReload: true,
+    rfsSettingsTextHeight: 400,
+    rfsSettingsTextWidth: 315,
+    rfsSettingsAutoClick: true,
+
+    detect_site: function(){
+      if(this.href.match(/indiegala/))
+        this.site = 'indiegala';
+      else if(this.href.match(/humblebundle/))
+        this.site = 'humblebundle';
+    },
+
+    toggleSettingsDisplay: function(){
+      $('div#rfsSettings').toggle();
+    },
+
+    updateSettings: function(){
+      var textHeight = $('#rfsSettingsTextHeight');
+      var textWidth = $('#rfsSettingsTextWidth');
+      var autoClick = $('#rfsSettingsAutoClick');
+      var textArea = $('#rfs-games-list');
+
+      localStorage.setItem('rfsSettingsTextHeight', textHeight.val());
+      localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
+      localStorage.setItem('rfsSettingsAutoClick', autoClick.prop('checked'));
+
+      var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
+
+      textArea.css('cssText', cssString);
+    },
+
+    loadSettings: function(){
+      if(localStorage.getItem('rfsSettingsTextHeight') != null)
+      {
+        var checked = localStorage.getItem('rfsSettingsAutoClick');
+        console.log('checked: ' + checked);
+
+        $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
+        $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
+
+        if(checked === 'true')
+        {
+          $('#rfsSettingsAutoClick').prop('checked', false).click();
+          console.log('ticking the checkbox')
+        }
+        else
+        {
+          $('#rfsSettingsAutoClick').prop('checked', true).click();
+          console.log('unticking the checkbox')
+        }
+      }
+      else
+      {
+        var textHeight = $('#rfsSettingsTextHeight');
+        var textWidth = $('#rfsSettingsTextWidth');
+        var textArea = $('#rfs-games-list');
+
+        textArea.height(textHeight.val());
+        textArea.width(textWidth.val());
+      }
+    },
+
+    reloadScript: function()
+    {
+      var src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
+
+      $('#rfs-container').remove();
+
+      if(this.firstReload)
+      {
+        this.cacheBuster = Date.now().toString();
+        console.log(this.cacheBuster);
+        $('script[src="' + src + '"]').remove();
+        $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
+        this.oldCacheBuster = this.cacheBuster;
+        console.log(this.oldCacheBuster);
+        this.firstReload = false;
+      }
+      else
+      {
+        this.cacheBuster = Date.now().toString();
+        $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
+        $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
+        this.oldCacheBuster = this.cacheBuster;
+      }
+
+      this.updateSettings();
+    },
+
+    saveToLS : function()  {
+      if(rfsbundlescraper.utilities.site === 'indiegala')
+        localStorage.setItem('RFSIGBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      else if(rfsbundlescraper.utilities.site === 'humblebundle')
+        localStorage.setItem('RFSHBBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      else if(rfsbundlescraper.utilities.site === 'bundlestars')
+        localStorage.setItem('RFSBSBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
+
+      rfsbundlescraper.utilities.readFromLS();
+    },
+
+    removeFromLS : function()  {
+      if(rfsbundlescraper.utilities.site === 'indiegala')
+        localStorage.removeItem('RFSIGBundle');
+      else if(rfsbundlescraper.utilities.site === 'humblebundle')
+        localStorage.removeItem('RFSHBBundle');
+      else if(rfsbundlescraper.utilities.site === 'bundlestars')
+        localStorage.removeItem('RFSBSBundle');
+
+      localStorage.removeItem('rfsSettingsTextHeight');
+      localStorage.removeItem('rfsSettingsTextWidth');
+      localStorage.removeItem('rfsSettingsAutoClick');
+
+      rfsbundlescraper.bundle = {};
+      console.log('rfsbundlescraper.bundle: ' + JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      console.log('rfsbundlescraper.bundle.games: ' + JSON.stringify(rfsbundlescraper.bundle.games, null, 2));
+      rfsbundlescraper.utilities.readFromLS();
+    },
+
+    resetAndClear : function()  {
+      this.combine = false;
+      this.exists = false;
+      this.debug = true;
+      rfsbundlescraper.utilities.removeFromLS();
+    },
+
+    close : function()
+    {
+      $('#rfs-container').remove();
+    },
+
+    convertToSlug : function (value){
+      return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
+    },
+
+    removeDupes : function (list) {
+      console.log('removing dupes from : ');
+      console.log(list);
+
+      var unique = [];
+      $.each(list, function(i, el)
+      {
+        if($.inArray(el, unique) === -1)
+        {
+          unique.push(el);
+        }
+      });
+      return unique;
+    },
+
+    readFromLS: function()
+    {
+      if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
+        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      else
+        $('#rfs-games-list').val('No Bundle in Local Storage');
+    }
+  },
+
   indiegala: {
 
     ig_init : function(){
@@ -372,191 +546,7 @@ var rfsbundlescraper = {
     hb_run: function(){
       this.hb_init();
     }
-  },
-
-  bundlestars: {
-    bs_init: function(){
-      console.log('detected BundleStars');
-    },
-
-    bs_run: function(){
-      this.bs_init();
-    }
-  },
-
-  utilities : {
-    href: window.location.href,
-    site: '',
-    interval : 0,
-    giftLinks : $('#icon-gift img'),
-    cacheBuster: 0,
-    oldCacheBuster: 0,
-    firstReload: true,
-    rfsSettingsTextHeight: 400,
-    rfsSettingsTextWidth: 315,
-    rfsSettingsAutoClick: true,
-  
-    detect_site: function(){
-      if(this.href.match(/indiegala/))
-        this.site = 'indiegala';
-      else if(this.href.match(/humblebundle/))
-        this.site = 'humblebundle';
-      else if(this.href.match(/bundlestars/))
-        this.site = 'bundlestars';
-    },
-  
-    toggleSettingsDisplay: function(){
-      $('div#rfsSettings').toggle();
-    },
-  
-    updateSettings: function(){
-      var textHeight = $('#rfsSettingsTextHeight');
-      var textWidth = $('#rfsSettingsTextWidth');
-      var autoClick = $('#rfsSettingsAutoClick');
-      var textArea = $('#rfs-games-list');
-  
-      localStorage.setItem('rfsSettingsTextHeight', textHeight.val());
-      localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
-      localStorage.setItem('rfsSettingsAutoClick', autoClick.prop('checked'));
-  
-      var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
-  
-      textArea.css('cssText', cssString);
-    },
-  
-    loadSettings: function(){
-      if(localStorage.getItem('rfsSettingsTextHeight') != null)
-      {
-        var checked = localStorage.getItem('rfsSettingsAutoClick');
-        console.log('checked: ' + checked);
-  
-        $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
-        $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-  
-        if(checked === 'true')
-        {
-          $('#rfsSettingsAutoClick').prop('checked', false).click();
-          console.log('ticking the checkbox')
-        }
-        else
-        {
-          $('#rfsSettingsAutoClick').prop('checked', true).click();
-          console.log('unticking the checkbox')
-        }
-      }
-      else
-      {
-        var textHeight = $('#rfsSettingsTextHeight');
-        var textWidth = $('#rfsSettingsTextWidth');
-        var textArea = $('#rfs-games-list');
-  
-        textArea.height(textHeight.val());
-        textArea.width(textWidth.val());
-      }
-    },
-  
-    reloadScript: function()
-    {
-      var src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
-  
-      $('#rfs-container').remove();
-  
-      if(this.firstReload)
-      {
-        this.cacheBuster = Date.now().toString();
-        console.log(this.cacheBuster);
-        $('script[src="' + src + '"]').remove();
-        $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
-        this.oldCacheBuster = this.cacheBuster;
-        console.log(this.oldCacheBuster);
-        this.firstReload = false;
-      }
-      else
-      {
-        this.cacheBuster = Date.now().toString();
-        $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
-        $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
-        this.oldCacheBuster = this.cacheBuster;
-      }
-  
-      this.updateSettings();
-    },
-  
-    saveToLS : function()  {
-      if(rfsbundlescraper.utilities.site === 'indiegala')
-        localStorage.setItem('RFSIGBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      else if(rfsbundlescraper.utilities.site === 'humblebundle')
-        localStorage.setItem('RFSHBBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      else if(rfsbundlescraper.utilities.site === 'bundlestars')
-        localStorage.setItem('RFSBSBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
-  
-      rfsbundlescraper.utilities.readFromLS();
-    },
-  
-    removeFromLS : function()  {
-      if(rfsbundlescraper.utilities.site === 'indiegala')
-        localStorage.removeItem('RFSIGBundle');
-      else if(rfsbundlescraper.utilities.site === 'humblebundle')
-        localStorage.removeItem('RFSHBBundle');
-      else if(rfsbundlescraper.utilities.site === 'bundlestars')
-        localStorage.removeItem('RFSBSBundle');
-  
-      localStorage.removeItem('rfsSettingsTextHeight');
-      localStorage.removeItem('rfsSettingsTextWidth');
-      localStorage.removeItem('rfsSettingsAutoClick');
-  
-      rfsbundlescraper.bundle = {};
-      console.log('rfsbundlescraper.bundle: ' + JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      console.log('rfsbundlescraper.bundle.games: ' + JSON.stringify(rfsbundlescraper.bundle.games, null, 2));
-      rfsbundlescraper.utilities.readFromLS();
-    },
-  
-    resetAndClear : function()  {
-      this.combine = false;
-      this.exists = false;
-      this.debug = true;
-      rfsbundlescraper.utilities.removeFromLS();
-    },
-  
-    close : function()
-    {
-      $('#rfs-container').remove();
-    },
-
-    convertToSlug : function (value){
-      return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
-    },
-
-    removeDupes : function (list) {
-      console.log('removing dupes from : ');
-      console.log(list);
-
-      var unique = [];
-      $.each(list, function(i, el)
-      {
-        if($.inArray(el, unique) === -1)
-        {
-          unique.push(el);
-        }
-      });
-      return unique;
-    },
-
-    readFromLS: function()
-    {
-      if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
-        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      else
-        $('#rfs-games-list').val('No Bundle in Local Storage');
-    }
   }
 };
 
-rfsbundlescraper.utilities.detect_site();
-
-if(rfsbundlescraper.utilities.site === 'indiegala')
-  rfsbundlescraper.indiegala.ig_run();
-else if(rfsbundlescraper.utilities.site === 'humblebundle')
-  rfsbundlescraper.humblebundle.hb_run();
-else if(rfsbundlescraper.utilities.site === 'bundlestars')
-  rfsbundlescraper.bundlestars.bs_run();
+rfsbundlescraper.run();
