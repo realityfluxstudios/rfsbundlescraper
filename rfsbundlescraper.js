@@ -1,4 +1,4 @@
-var VERSION = '0.8200215';
+var VERSION = '0.8200216';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -193,7 +193,7 @@ var rfsbundlescraper = {
           rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
         else if(rfsbundlescraper.utils.site.indiegala)
           rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
-        $('#rfs-games-list').val( rfsbundlescraper.bundle);
+        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
       }
       else
         $('#rfs-games-list').val('No Bundle in Local Storage');
