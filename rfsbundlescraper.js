@@ -1,4 +1,4 @@
-var VERSION = '0.8200230';
+var VERSION = '0.8200232';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -619,7 +619,7 @@ var rfsbundlescraper = {
       this.bundle = {};
 
       this.bundle.name = $('title').text();
-      this.bundle.name_slug = this.utils.convertToSlug(this.bundle.name);
+      this.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(this.bundle.name);
       this.bundle.site = "Humble Bundle";
       this.bundle.url = $(location).attr('href');
 
@@ -673,7 +673,7 @@ var rfsbundlescraper = {
 
         item.keys = [];
         item.name = this.titles[i].textContent;
-        item.name_slug = this.utils.convertToSlug(this.item.name);
+        item.name_slug = rfsbundlescraper.utils.convertToSlug(this.item.name);
 
         if(!keys){
           key.key = this.giftLinks[i].href;
