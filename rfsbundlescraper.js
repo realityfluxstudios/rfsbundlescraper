@@ -1,4 +1,4 @@
-var VERSION = '0.8200040';
+var VERSION = '0.8200115';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -23,15 +23,17 @@ var rfsbundlescraper = {
   },
 
   run: function(){
-    this.utilities.detect_site();
+    this.utils.detect_site();
+    $('#ig_autoclick_btn').hide();
+    $('#hb_autoclick_btn').hide();
 
-    if(this.utilities.site.indiegala)
+    if(this.utils.site.indiegala)
       this.indiegala.ig_run();
-    else if(this.utilities.site.humblebundle)
+    else if(this.utils.site.humblebundle)
       this.humblebundle.hb_run();
   },
 
-  utilities : {
+  utils : {
     json_names: {
       humblebundle: 'rfshbbundle',
       indiegala: 'rfsigbundle'
@@ -61,7 +63,7 @@ var rfsbundlescraper = {
     },
 
     add_floating_textarea: function (){
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n    </div>\n    <button onClick="rfsbundlescraper.utilities.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utilities.reloadScript();">Reload</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.indiegala.clickGiftImages();" id="ig_autoclick_btn">Auto Click</button>\n    <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.humblebundle.clickGiftImages();" id=hb_autoclick_btn">Auto \n        Click</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utilities.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utilities.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="position:fixed;bottom: 1px;z-index:1500;width:415px;-webkit-user-select: none;">\n        RFS Bundle Scraper Bookmarklet v' + VERSION +'\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n    </div>\n    <button onClick="rfsbundlescraper.utils.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utils.reloadScript();">Reload</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.indiegala.clickGiftImages();" id="ig_autoclick_btn">Auto \n      Click IG</button>\n    <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.humblebundle.clickGiftImages();" id=hb_autoclick_btn">Auto \n        Click HB</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="position:fixed;bottom: 1px;z-index:1500;width:415px;-webkit-user-select: none;">\n        RFS Bundle Scraper Bookmarklet v' + VERSION +'\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
     },
 
     detect_site: function(){
@@ -134,11 +136,12 @@ var rfsbundlescraper = {
 
     saveToLS : function(bundle)  {
       localStorage.setItem(bundle, JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      rfsbundlescraper.utilities.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
-    removeFromLS : function(bundle)  {
-      localStorage.removeItem(bundle);
+    removeFromLS : function()  {
+      localStorage.removeItem(rfsbundlescraper.utils.json_names.indiegala);
+      localStorage.removeItem(rfsbundlescraper.utils.json_names.humblebundle);
 
       localStorage.removeItem('rfsSettingsTextHeight');
       localStorage.removeItem('rfsSettingsTextWidth');
@@ -186,8 +189,15 @@ var rfsbundlescraper = {
 
     readFromLS: function()
     {
-      if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
-        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      if(rfsbundlescraper.utils.bundle != null || rfsbundlescraper.utils.bundle != undefined)
+      {
+        if(rfsbundlescraper.utils.site.humblebundle)
+          rfsbundlescraper.utils.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle);
+        else if(rfsbundlescraper.utils.site.indiegala)
+          rfsbundlescraper.utils.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala);
+        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.utils.bundle, null, 2));
+
+      }
       else
         $('#rfs-games-list').val('No Bundle in Local Storage');
     }
@@ -198,19 +208,18 @@ var rfsbundlescraper = {
     ig_init : function(){
 
       $('#ig_autoclick_btn').show();
-      $('#hb_autoclick_btn').hide();
 
-      this.utilities.loadSettings();
+      this.utils.loadSettings();
 
       if($('#rfs-container').length == 0)
-        rfsbundlescraper.utilities.add_floating_textarea();
+        rfsbundlescraper.utils.add_floating_textarea();
 
       if(localStorage.getItem('rfsigbundle') != null)
       {
         rfsbundlescraper.combine = true;
         console.log('Loading existing bundle');
-        rfsbundlescraper.utilities.readFromLS();
-        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utilities.json_names.indiegala));
+        rfsbundlescraper.utils.readFromLS();
+        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
         console.log('bundle.games.length: ' + rfsbundlescraper.bundle.games.length);
 
         if(rfsbundlescraper.bundle.url === window.location.href)
@@ -224,10 +233,10 @@ var rfsbundlescraper = {
       }
 
       rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
-      rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utilities.convertToSlug(rfsbundlescraper.bundle.name);
+      rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.name);
       rfsbundlescraper.bundle.site = "IndieGala";
 
-      rfsbundlescraper.utilities.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
     ig_run : function()  {
@@ -238,13 +247,13 @@ var rfsbundlescraper = {
 
       do
       {
-        if(rfsbundlescraper.utilities.ig_giftLinks.length >= 1 &&
-          rfsbundlescraper.utilities.interval == 0 &&
+        if(rfsbundlescraper.utils.ig_giftLinks.length >= 1 &&
+          rfsbundlescraper.utils.interval == 0 &&
           localStorage.getItem('rfsSettingsAutoClick') === 'true')
         {
           this.clickGiftImages();
         }
-      }while(rfsbundlescraper.utilities.ig_giftLinks.length > 0 && rfsbundlescraper.utilities.interval != 0);
+      }while(rfsbundlescraper.utils.ig_giftLinks.length > 0 && rfsbundlescraper.utils.interval != 0);
 
       if(!this.exists)
       {
@@ -258,15 +267,15 @@ var rfsbundlescraper = {
 
           this.cleanup()
         }
-        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
-        rfsbundlescraper.utilities.saveToLS('rfsigbundle');
+        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
+        rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.indiegala);
       }
       else
       {
         console.log('It\'s the same bundle dude!');
       }
 
-      rfsbundlescraper.utilities.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
     gatherDRMGames : function()  {
@@ -352,7 +361,7 @@ var rfsbundlescraper = {
           else
           {
             game.title = titles[i].text;
-            game.title_slug = rfsbundlescraper.utilities.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
+            game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
             game.store_url = titles[i].href;
             rfsbundlescraper.bundle.games.push(game);
           }
@@ -402,7 +411,7 @@ var rfsbundlescraper = {
             game.drm = 'GOG';
 
           game.title = titlesOldBundles[i].innerText;
-          game.title_slug = rfsbundlescraper.utilities.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
+          game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
           game.store_url = titlesOldBundles[i].href;
 
           key.key = keys[i].value;
@@ -430,14 +439,14 @@ var rfsbundlescraper = {
         }
       }
 
-      rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
+      rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
 
       for(var z=0; z < rfsbundlescraper.bundle.games.length; z++)
       {
-        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games[z].keys);
+        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
-      rfsbundlescraper.utilities.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
     gatherDRMFreeGames: function()  {
@@ -453,7 +462,7 @@ var rfsbundlescraper = {
       {
         drmFreeGame = {};
         drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        drmFreeGame.title_slug = rfsbundlescraper.utilities.convertToSlug(drmFreeGame.title);
+        drmFreeGame.title_slug = rfsbundlescraper.utils.convertToSlug(drmFreeGame.title);
         drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
         drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
 
@@ -481,9 +490,9 @@ var rfsbundlescraper = {
         var FLACDLLinkText = $('#music .span-keys')[i].children[1].children[0].children[1].innerText;
 
         musictrack.title = musicTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        musictrack.title_slug = rfsbundlescraper.utilities.convertToSlug(musictrack.title);
+        musictrack.title_slug = rfsbundlescraper.utils.convertToSlug(musictrack.title);
         musictrack.dev = musicDev[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        musictrack.dev_slug = rfsbundlescraper.utilities.convertToSlug(musictrack.dev);
+        musictrack.dev_slug = rfsbundlescraper.utils.convertToSlug(musictrack.dev);
 
         musictrack.mp3dllink = MP3DLLink;
         musictrack.mp3type = MP3DLLinkText;
@@ -505,7 +514,7 @@ var rfsbundlescraper = {
       {
         androidgame = {};
         androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        androidgame.title_slug = rfsbundlescraper.utilities.convertToSlug(androidgame.title);
+        androidgame.title_slug = rfsbundlescraper.utils.convertToSlug(androidgame.title);
         androidgame.dllink = androidGameLink[i].href;
 
         rfsbundlescraper.bundle.androidgames.push(androidgame);
@@ -522,19 +531,19 @@ var rfsbundlescraper = {
     },
 
     clickGiftImages: function()  {
-      if(rfsbundlescraper.utilities.ig_giftLinks.length > 0)
+      if(rfsbundlescraper.utils.ig_giftLinks.length > 0)
       {
         var interval = setInterval(function()
         {
-          if(rfsbundlescraper.utilities.ig_giftLinks.length == 0)
+          if(rfsbundlescraper.utils.ig_giftLinks.length == 0)
           {
             clearInterval(interval);
           }
           else
           {
-            rfsbundlescraper.utilities.ig_giftLinks = $('#icon-gift img');
-            rfsbundlescraper.utilities.ig_giftLinks[0].click();
-            rfsbundlescraper.utilities.ig_giftLinks[0].remove();
+            rfsbundlescraper.utils.ig_giftLinks = $('#icon-gift img');
+            rfsbundlescraper.utils.ig_giftLinks[0].click();
+            rfsbundlescraper.utils.ig_giftLinks[0].remove();
             console.log('removing img');
           }
         }, 2000);
@@ -553,6 +562,8 @@ var rfsbundlescraper = {
     giftLinks          : [],
     bundle             : {},
     hblibrary          : [],
+    currentPlatforms   : [],
+    combine            : false,
     drm_free_titles    : $('div.gameinfo div.title a'),
     drm_free_subtitles : $('div.gameinfo div.subtitle a'),
     icons              : $('div.icn'),
@@ -563,18 +574,20 @@ var rfsbundlescraper = {
     audiodls           : $('div.js-platform.downloads.audio div.download-buttons'),
     ebookdls           : $('div.js-platform.downloads.ebook div.download-buttons'),
     comedydls          : $('div.js-platform.downloads.comedy div.download-buttons'),
-    currentPlatforms   : [],
 
     hb_init: function(){
       console.log('detected Humble Bundle');
-      rfsbundlescraper.utilities.loadSettings();
+      rfsbundlescraper.utils.loadSettings();
 
       if($('#rfs-container').length == 0)
       {
-        rfsbundlescraper.utilities.add_floating_textarea();
+        rfsbundlescraper.utils.add_floating_textarea();
         $('#ig_autoclick_btn').hide();
         $('#hb_autoclick_btn').show();
       }
+
+
+
       this.init();
       this.run();
     },
@@ -595,22 +608,22 @@ var rfsbundlescraper = {
 
       this.bundle.items = [];
 
-      if(localStorage.getItem(rfsbundlescraper.utilities.json_names.humblebundle) == null)
+      if(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle) == null)
       {
-        localStorage.setItem(rfsbundlescraper.utilities.json_names.humblebundle,"[]");
+        localStorage.setItem(rfsbundlescraper.utils.json_names.humblebundle,"[]");
         this.hblibrary = [];
       }
       else
       {
-        console.log(rfsbundlescraper.utilities.json_names.humblebundle + " found in Local Storage");
-        this.hblibrary = JSON.parse(localStorage.getItem(rfsbundlescraper.utilities.json_names.humblebundle));
+        console.log(rfsbundlescraper.utils.json_names.humblebundle + " found in Local Storage");
+        this.hblibrary = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
       }
     },
 
     run: function(){
       'use strict';
 
-      var i, keys = false, item ={};
+      var i, keys = false, item;
 
       this.init();
 
@@ -631,10 +644,12 @@ var rfsbundlescraper = {
       {
         item = {};
         item.name = this.titles[i].textContent;
-        if(!keys)
+        if(!keys){
           item.giftLink = this.giftLinks[i].href;
-        else
+        }
+        else{
           item.key = this.giftLinks[i].textContent;
+        }
 
         this.bundle.items.push(item);
 
@@ -678,13 +693,12 @@ var rfsbundlescraper = {
         this.bundle.items.push(item);
       }
 
-      this.hblibrary.push(this.bundle);
+//      this.hblibrary.push(this.bundle);
+      rfsbundlescraper.bundle = this.bundle;
 
-      rfsbundlescraper.utilities.saveToLS('rfshbbundle');
+      rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
 
-      rfsbundlescraper.bundle = this.hblibrary;
-
-      rfsbundlescraper.utilities.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
     process: function(item, platform, platformdl, type){
@@ -754,15 +768,15 @@ var rfsbundlescraper = {
 
     save: function () {
       'use strict';
-      var library = JSON.parse(localStorage.getItem(rfsbundlescraper.utilities.json_names.humblebundle));
+      var library = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
       library.push(this.bundle);
-      localStorage.setItem(rfsbundlescraper.utilities.json_names.humblebundle, JSON.stringify(library));
+      localStorage.setItem(rfsbundlescraper.utils.json_names.humblebundle, JSON.stringify(library));
       this.checkLS();
     },
 
     cleanup: function ( platforms ) {
       'use strict';
-      var i=0;
+      var i;
 
       /*
        This goes though the platforms array and removes duplicate objects leaving only 1 left.
@@ -799,42 +813,42 @@ var rfsbundlescraper = {
     },
 
     clearLS: function () {
-      localStorage.removeItem(rfsbundlescraper.utilities.json_names.humblebundle);
+      localStorage.removeItem(rfsbundlescraper.utils.json_names.humblebundle);
     },
 
     checkLS: function () {
-      if(localStorage.getItem(rfsbundlescraper.utilities.json_names.humblebundle))
+      if(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle))
       {
-        var ls = JSON.parse(localStorage.getItem(rfsbundlescraper.utilities.json_names.humblebundle));
-        console.log("Local Storage item " + rfsbundlescraper.utilities.json_names.humblebundle + " has " + ls.length + " items in the array.");
+        var ls = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
+        console.log("Local Storage item " + rfsbundlescraper.utils.json_names.humblebundle + " has " + ls.length + " items in the array.");
       }
       else
       {
-        console.log("Local Storage item " + rfsbundlescraper.utilities.json_names.humblebundle + " does not exist!");
+        console.log("Local Storage item " + rfsbundlescraper.utils.json_names.humblebundle + " does not exist!");
       }
     },
 
     clickGiftImages: function(){
-      if(rfsbundlescraper.utilities.hb_giftLinks.length > 0)
+      if(rfsbundlescraper.utils.hb_giftLinks.length > 0)
       {
-        rfsbundlescraper.utilities.hb_interval = setInterval(function()
+        rfsbundlescraper.utils.hb_interval = setInterval(function()
         {
-          if(rfsbundlescraper.utilities.hb_giftLinks.length == 0)
+          if(rfsbundlescraper.utils.hb_giftLinks.length == 0)
           {
-            clearInterval(rfsbundlescraper.utilities.hb_interval);
+            clearInterval(rfsbundlescraper.utils.hb_interval);
           }
           else
           {
-            rfsbundlescraper.utilities.hb_giftLinks = $('#steam-tab img');
+            rfsbundlescraper.utils.hb_giftLinks = $('#steam-tab img');
 
-            var title = rfsbundlescraper.utilities.hb_giftLinks[0].parentNode.parentNode.attributes[''];
+            var title = rfsbundlescraper.utils.hb_giftLinks[0].parentNode.parentNode.attributes[''];
 
-            rfsbundlescraper.utilities.hb_giftLinks[0].click();
-            rfsbundlescraper.utilities.hb_giftLinks[0].remove();
+            rfsbundlescraper.utils.hb_giftLinks[0].click();
+            rfsbundlescraper.utils.hb_giftLinks[0].remove();
 
             $('div.grayout-inner a.button-link.submit').click();
 
-            rfsbundlescraper.utilities.appendText('clicked ' + title + "\n");
+            rfsbundlescraper.utils.appendText('clicked ' + title + "\n");
           }
         }, 2000);
       }
