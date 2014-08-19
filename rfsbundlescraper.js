@@ -1,4 +1,4 @@
-var VERSION = '0.8192050';
+var VERSION = '0.8192057';
 
 var rfsbundlescraper = {
 
@@ -27,7 +27,7 @@ var rfsbundlescraper = {
     interval : 0,
     ig_giftLinks : $('#icon-gift img'),
     hb_giftLinks: $('#steam-tab img'),
-    hb_interval: '',
+    hb_interval: 0,
     hb_giftLinkCount: 0,
     cacheBuster: 0,
     oldCacheBuster: 0,
@@ -690,14 +690,13 @@ var rfsbundlescraper = {
         {
           if(rfsbundlescraper.utilities.hb_giftLinks.length == 0)
           {
-            clearInterval(interval);
+            clearInterval(rfsbundlescraper.utilities.hb_interval);
           }
           else
           {
             rfsbundlescraper.utilities.hb_giftLinks = $('#steam-tab img');
 
-            var img = rfsbundlescraper.utilities.hb_giftLinks[0];
-            var title = img.parentNode.parentNode.parentNode.childNodes[1].innerText;
+            var title = rfsbundlescraper.utilities.hb_giftLinks[0].parentNode.parentNode.parentNode.childNodes[1].innerText;
 
             rfsbundlescraper.utilities.hb_giftLinks[0].click();
             rfsbundlescraper.utilities.hb_giftLinks[0].remove();
