@@ -1,4 +1,14 @@
-var VERSION = '0.8192311';
+var VERSION = '0.8192313';
+
+/*
+  adding a clear function to arrays to empty out the array
+ */
+Array.prototype.clear = function () {
+  'use strict';
+  while (this.length > 0) {
+    this.pop();
+  }
+};
 
 var rfsbundlescraper = {
 
