@@ -1,4 +1,4 @@
-var VERSION = '0.8192313';
+var VERSION = '0.8192314';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -771,7 +771,7 @@ var rfsbundlescraper = {
       for(i=0;i < platforms.length-1; i++ )
       {
         if(platforms[i] === platforms[i+1])
-          platforms[i+1].pop();
+          platforms.pop();
       }
       /*
        removing empty properties from the platforms object to make things a little more tidy
