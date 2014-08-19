@@ -585,7 +585,7 @@ var rfsbundlescraper = {
         $('#hb_autoclick_btn').show();
       }
 
-      if(rfsbundlescraper.utils.bundle.name != 0)
+      if(rfsbundlescraper.utils.bundle != undefined)
       {
         if(rfsbundlescraper.utils.bundle.name === $('title').text())
           this.combine = true;
