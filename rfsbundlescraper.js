@@ -1,4 +1,4 @@
-var VERSION = '0.8192310';
+var VERSION = '0.8192311';
 
 var rfsbundlescraper = {
 
@@ -568,6 +568,7 @@ var rfsbundlescraper = {
         $('#ig_autoclick_btn').hide();
         $('#hb_autoclick_btn').show();
       }
+      this.init();
       this.run();
     },
 
@@ -575,10 +576,34 @@ var rfsbundlescraper = {
       this.hb_init();
     },
 
+    init: function (){
+      'use strict';
+      this.titles.clear();
+      this.giftLinks.clear();
+      this.bundle = {};
+
+      this.bundle.name = $('title').text();
+      this.bundle.site = "Humble Bundle";
+      this.bundle.url = $(location).attr('href');
+
+      this.bundle.items = [];
+
+      if(localStorage.getItem("HumbleBundleLibraryJSON") == null)
+      {
+        localStorage.setItem("HumbleBundleLibraryJSON","[]");
+        this.hblibrary = [];
+      }
+      else
+      {
+        console.log("HumbleBundleLibraryJSON found in Local Storage");
+        this.hblibrary = JSON.parse(localStorage.getItem("HumbleBundleLibraryJSON"));
+      }
+    },
+
     run: function(){
       'use strict';
 
-      var i = 0, keys = false, item ={};
+      var i, keys = false, item ={};
 
       this.init();
 
@@ -650,30 +675,6 @@ var rfsbundlescraper = {
       this.save();
 
       $('#games-list-text').val(JSON.stringify(this.bundle, null, 2));
-    },
-
-    init: function (){
-      'use strict';
-      this.titles.clear();
-      this.giftLinks.clear();
-      this.bundle = {};
-
-      this.bundle.name = $('title').text();
-      this.bundle.site = "Humble Bundle";
-      this.bundle.url = $(location).attr('href');
-
-      this.bundle.items = [];
-
-      if(localStorage.getItem("HumbleBundleLibraryJSON") == null)
-      {
-        localStorage.setItem("HumbleBundleLibraryJSON","[]");
-        this.hblibrary = [];
-      }
-      else
-      {
-        console.log("HumbleBundleLibraryJSON found in Local Storage");
-        this.hblibrary = JSON.parse(localStorage.getItem("HumbleBundleLibraryJSON"));
-      }
     },
 
     process: function(item, platform, platformdl, type){
