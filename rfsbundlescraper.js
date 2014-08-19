@@ -1,4 +1,4 @@
-var VERSION = '0.8200115';
+var VERSION = '0.8200130';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -113,8 +113,7 @@ var rfsbundlescraper = {
 
       $('#rfs-container').remove();
 
-      if(this.firstReload)
-      {
+      if(this.firstReload) {
         this.cacheBuster = Date.now().toString();
         console.log(this.cacheBuster);
         $('script[src="' + src + '"]').remove();
@@ -122,9 +121,7 @@ var rfsbundlescraper = {
         this.oldCacheBuster = this.cacheBuster;
         console.log(this.oldCacheBuster);
         this.firstReload = false;
-      }
-      else
-      {
+      } else {
         this.cacheBuster = Date.now().toString();
         $('script[src="' + src + '?' + this.oldCacheBuster + '"]').remove();
         $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
@@ -578,6 +575,7 @@ var rfsbundlescraper = {
     hb_init: function(){
       console.log('detected Humble Bundle');
       rfsbundlescraper.utils.loadSettings();
+      rfsbundlescraper.utils.readFromLS();
 
       if($('#rfs-container').length == 0)
       {
@@ -586,10 +584,17 @@ var rfsbundlescraper = {
         $('#hb_autoclick_btn').show();
       }
 
-
+      if(rfsbundlescraper.utils.bundle.name != 0)
+      {
+        if(rfsbundlescraper.utils.bundle.name === $('title').text())
+          this.combine = true;
+      }
 
       this.init();
-      this.run();
+      if(!this.combine)
+        this.run();
+      else
+        this.run_combine();
     },
 
     hb_run: function(){
@@ -624,6 +629,7 @@ var rfsbundlescraper = {
       'use strict';
 
       var i, keys = false, item;
+      var key = {};
 
       this.init();
 
@@ -645,11 +651,15 @@ var rfsbundlescraper = {
         item = {};
         item.name = this.titles[i].textContent;
         if(!keys){
-          item.giftLink = this.giftLinks[i].href;
+          key.key = this.giftLinks[i].href;
         }
         else{
-          item.key = this.giftLinks[i].textContent;
+          key.key = this.giftLinks[i].textContent;
         }
+
+        key.bundle_url = window.location.href;
+
+        this.bundle.item.keys.push(key);
 
         this.bundle.items.push(item);
 
@@ -699,6 +709,47 @@ var rfsbundlescraper = {
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
 
       rfsbundlescraper.utils.readFromLS();
+    },
+
+    run_combine: function(){
+      var keys=false, key={}, item;
+
+      this.titles = $('.redeemheading');
+
+      if($('.keyfield a').length > 0)
+      {
+        this.giftLinks = $('.keyfield a');
+        keys = false;
+      }
+      else
+      {
+        this.giftLinks = $('.keyfield');
+        keys = true;
+      }
+
+      for(var i = 0; i < this.giftLinks.length; i++)
+      {
+        item = rfsbundlescraper.bundle.items[i];
+        if(item.name === this.titles[i].textContent)
+        {
+          console.log('good to go!');
+        }
+        item.name = this.titles[i].textContent;
+        if(!keys){
+          key.key = this.giftLinks[i].href;
+        }
+        else{
+          key.key = this.giftLinks[i].textContent;
+        }
+
+        key.bundle_url = window.location.href;
+
+        this.bundle.item.keys.push(key);
+
+        this.bundle.items.push(item);
+
+        console.log(i + ". " + item.name);
+      }
     },
 
     process: function(item, platform, platformdl, type){
