@@ -1,4 +1,4 @@
-var VERSION = '0.8200220';
+var VERSION = '0.8200230';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -619,6 +619,7 @@ var rfsbundlescraper = {
       this.bundle = {};
 
       this.bundle.name = $('title').text();
+      this.bundle.name_slug = this.utils.convertToSlug(this.bundle.name);
       this.bundle.site = "Humble Bundle";
       this.bundle.url = $(location).attr('href');
 
@@ -639,7 +640,12 @@ var rfsbundlescraper = {
     run: function(){
       'use strict';
 
-      var i, keys = false, item;
+      var i, keys = false;
+      var item = {
+        name: '',
+        name_slug: '',
+        keys: []
+      };
       var key = {};
 
       this.bundle.items = [];
@@ -659,9 +665,16 @@ var rfsbundlescraper = {
 
       for(i = 0; i < this.giftLinks.length; i++)
       {
-        item = {};
+        item = {
+          name: '',
+          name_slug: '',
+          keys: []
+        };
+
         item.keys = [];
         item.name = this.titles[i].textContent;
+        item.name_slug = this.utils.convertToSlug(this.item.name);
+
         if(!keys){
           key.key = this.giftLinks[i].href;
         }
@@ -715,7 +728,6 @@ var rfsbundlescraper = {
         this.bundle.items.push(item);
       }
 
-//      this.hblibrary.push(this.bundle);
       rfsbundlescraper.bundle = this.bundle;
 
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
@@ -741,11 +753,10 @@ var rfsbundlescraper = {
 
       for(var i = 0; i < this.giftLinks.length; i++)
       {
-        if(rfsbundlescraper.bundle.items[i].name === this.titles[i].textContent)
-        {
-          console.log('good to go!');
-        }
-//        item.name = this.titles[i].textContent;
+        // prevent duplicates in the JSON
+        if(key.key === this.giftLinks[i].href || key.key === this.giftLinks[i].textContent)
+          continue;
+
         if(!keys){
           key.key = this.giftLinks[i].href;
         }
