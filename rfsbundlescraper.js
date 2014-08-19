@@ -1,4 +1,4 @@
-var VERSION = '0.8200150';
+var VERSION = '0.8200215';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -190,11 +190,10 @@ var rfsbundlescraper = {
       if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
       {
         if(rfsbundlescraper.utils.site.humblebundle)
-          rfsbundlescraper.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle);
+          rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
         else if(rfsbundlescraper.utils.site.indiegala)
-          rfsbundlescraper.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala);
-        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
-
+          rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
+        $('#rfs-games-list').val( rfsbundlescraper.bundle);
       }
       else
         $('#rfs-games-list').val('No Bundle in Local Storage');
@@ -575,23 +574,32 @@ var rfsbundlescraper = {
 
     hb_init: function(){
       console.log('detected Humble Bundle');
+
+      console.log('calling loadSettings()');
       rfsbundlescraper.utils.loadSettings();
+
+      console.log('calling readFromLS()');
       rfsbundlescraper.utils.readFromLS();
 
       if($('#rfs-container').length == 0)
       {
         rfsbundlescraper.utils.add_floating_textarea();
-        $('#ig_autoclick_btn').hide();
         $('#hb_autoclick_btn').show();
       }
 
+      console.log('checking rfsbundlescraper.bundle');
+      console.log(rfsbundlescraper.bundle);
+
       if(rfsbundlescraper.bundle != undefined)
       {
-        if(rfsbundlescraper.bundle.name === $('title').text())
+        if(rfsbundlescraper.bundle.name === $('title').text()){
           this.combine = true;
+          console.log('detected duplicate. Flipping combine bool');
+        }
       }
 
       this.init();
+
       if(!this.combine)
         this.run();
       else
@@ -624,7 +632,7 @@ var rfsbundlescraper = {
       else
       {
         console.log(rfsbundlescraper.utils.json_names.humblebundle + " found in Local Storage");
-        this.hblibrary = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
+        this.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
       }
     },
 
@@ -634,7 +642,7 @@ var rfsbundlescraper = {
       var i, keys = false, item;
       var key = {};
 
-      this.init();
+      this.bundle.items = [];
 
       this.titles = $('.redeemheading');
 
