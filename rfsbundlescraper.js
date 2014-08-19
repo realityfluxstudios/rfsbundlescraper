@@ -1,4 +1,4 @@
-var VERSION = '0.8192057';
+var VERSION = '0.8192310';
 
 var rfsbundlescraper = {
 
@@ -542,17 +542,21 @@ var rfsbundlescraper = {
 
   humblebundle: {
 
-    hblibrary   :   [],
-    titles      :   $('div.gameinfo div.title a'),
-    subtitles   :   $('div.gameinfo div.subtitle a'),
-    icons       :   $('div.icn'),
-    windls      :   $('div.js-platform.downloads.windows div.download-buttons'),
-    macdls      :   $('div.js-platform.downloads.mac div.download-buttons'),
-    linuxdls    :   $('div.js-platform.downloads.linux div.download-buttons'),
-    androiddls  :   $('div.js-platform.downloads.android div.download-buttons'),
-    audiodls    :   $('div.js-platform.downloads.audio div.download-buttons'),
-    ebookdls    :   $('div.js-platform.downloads.ebook div.download-buttons'),
-    comedydls   :   $('div.js-platform.downloads.comedy div.download-buttons'),
+    titles             : [],
+    giftLinks          : [],
+    bundle             : {},
+    hblibrary          : [],
+    drm_free_titles    : $('div.gameinfo div.title a'),
+    drm_free_subtitles : $('div.gameinfo div.subtitle a'),
+    icons              : $('div.icn'),
+    windls             : $('div.js-platform.downloads.windows div.download-buttons'),
+    macdls             : $('div.js-platform.downloads.mac div.download-buttons'),
+    linuxdls           : $('div.js-platform.downloads.linux div.download-buttons'),
+    androiddls         : $('div.js-platform.downloads.android div.download-buttons'),
+    audiodls           : $('div.js-platform.downloads.audio div.download-buttons'),
+    ebookdls           : $('div.js-platform.downloads.ebook div.download-buttons'),
+    comedydls          : $('div.js-platform.downloads.comedy div.download-buttons'),
+    currentPlatforms   : [],
 
     hb_init: function(){
       console.log('detected Humble Bundle');
@@ -564,6 +568,7 @@ var rfsbundlescraper = {
         $('#ig_autoclick_btn').hide();
         $('#hb_autoclick_btn').show();
       }
+      this.run();
     },
 
     hb_run: function(){
@@ -571,10 +576,42 @@ var rfsbundlescraper = {
     },
 
     run: function(){
-      for(var i = 0; i < this.titles.length; i++)
+      'use strict';
+
+      var i = 0, keys = false, item ={};
+
+      this.init();
+
+      this.titles = $('.redeemheading');
+      if($('.keyfield a').length > 0)
       {
-        var title     = this.titles[i];
-        var subtitle  = this.subtitles[i];
+        this.giftLinks = $('.keyfield a');
+        keys = false;
+      }
+      else
+      {
+        this.giftLinks = $('.keyfield');
+        keys = true;
+      }
+
+      for(i = 0; i < this.giftLinks.length; i++)
+      {
+        item = {};
+        item.name = this.titles[i].textContent;
+        if(!keys)
+          item.giftLink = this.giftLinks[i].href;
+        else
+          item.key = this.giftLinks[i].textContent;
+
+        this.bundle.items.push(item);
+
+        console.log(i + ". " + item.name);
+      }
+
+      for(i = 0; i < this.drm_free_titles.length; i++)
+      {
+        var title     = this.drm_free_titles[i];
+        var subtitle  = this.drm_free_subtitles[i];
         var icon      = this.icons[i];
         var windl     = this.windls[i];
         var macdl     = this.macdls[i];
@@ -584,7 +621,7 @@ var rfsbundlescraper = {
         var ebookdl   = this.ebookdls[i];
         var comedydl  = this.comedydls[i];
 
-        var item = {};
+        item = {};
 
         item.title = title.text.trim();
         item.developer = subtitle.text.trim();
@@ -605,21 +642,42 @@ var rfsbundlescraper = {
         item = this.process(item, thisPlatform, comedydl, 'Comedy');
         item = this.process(item, thisPlatform, ebookdl, 'eBook');
 
-        this.hblibrary.push(item);
+        this.bundle.items.push(item);
       }
-      $('#games-list-text').val(JSON.stringify(this.hblibrary, null, 2));
+
+      this.hblibrary.push(this.bundle);
+
+      this.save();
+
+      $('#games-list-text').val(JSON.stringify(this.bundle, null, 2));
     },
 
     init: function (){
-      this.hblibrary = [];
+      'use strict';
+      this.titles.clear();
+      this.giftLinks.clear();
+      this.bundle = {};
 
-      $('div#games-list').remove();
+      this.bundle.name = $('title').text();
+      this.bundle.site = "Humble Bundle";
+      this.bundle.url = $(location).attr('href');
 
-      $('h1:nth-child(2)').append('<div id="games-list"><textarea onClick="this.select();" id="games-list-text" rows="25" cols="950" style="width:900px"></textarea></div>');
+      this.bundle.items = [];
+
+      if(localStorage.getItem("HumbleBundleLibraryJSON") == null)
+      {
+        localStorage.setItem("HumbleBundleLibraryJSON","[]");
+        this.hblibrary = [];
+      }
+      else
+      {
+        console.log("HumbleBundleLibraryJSON found in Local Storage");
+        this.hblibrary = JSON.parse(localStorage.getItem("HumbleBundleLibraryJSON"));
+      }
     },
 
     process: function(item, platform, platformdl, type){
-
+      'use strict';
       if(type === "Windows")
         platform.windows = [];
       else if(type === "Mac")
@@ -671,16 +729,77 @@ var rfsbundlescraper = {
               platform.android.push(info);
             else if(type == "Comedy")
               platform.comedy.push(info);
-            else if(type == "eBook"){
+            else if(type == "eBook")
+            {
               platform.ebook.push(info);
-              item.platforms.push(platform);
             }
-            //platform.push(info);
+            item.platforms.push(platform);
+            item.platforms = this.cleanup(item.platforms);
           }
         }
       }
-
       return item;
+    },
+
+    save: function () {
+      'use strict';
+      var library = JSON.parse(localStorage.getItem("HumbleBundleLibraryJSON"));
+      library.push(this.bundle);
+      localStorage.setItem("HumbleBundleLibraryJSON", JSON.stringify(library));
+      this.checkLS();
+    },
+    cleanup: function ( platforms ) {
+      'use strict';
+      var i=0;
+
+      /*
+       This goes though the platforms array and removes duplicate objects leaving only 1 left.
+       Notice I am going length-1 so that the i+1 does not go out of bounds. This is just a simple
+       comparison check and then popping the last item if the two match.
+       */
+      for(i=0;i < platforms.length-1; i++ )
+      {
+        if(platforms[i] === platforms[i+1])
+          platforms[i+1].pop();
+      }
+      /*
+       removing empty properties from the platforms object to make things a little more tidy
+       I am not sure why it insists on creating the empty objects. This is a roundabout way of
+       removing them but it works. I am not worried about performance because this script only
+       runs one page at a time
+       */
+      if(platforms[0].hasOwnProperty('windows') && platforms[0].windows.length == 0)
+        delete platforms[0].windows;
+      if(platforms[0].hasOwnProperty('mac') && platforms[0].mac.length == 0)
+        delete platforms[0].mac;
+      if(platforms[0].hasOwnProperty('linux') && platforms[0].linux.length == 0)
+        delete platforms[0].linux;
+      if(platforms[0].hasOwnProperty('audio') && platforms[0].audio.length == 0)
+        delete platforms[0].audio;
+      if(platforms[0].hasOwnProperty('android') && platforms[0].android.length == 0)
+        delete platforms[0].android;
+      if(platforms[0].hasOwnProperty('comedy') && platforms[0].comedy.length == 0)
+        delete platforms[0].comedy;
+      if(platforms[0].hasOwnProperty('ebook') && platforms[0].ebook.length == 0)
+        delete platforms[0].ebook;
+
+      return platforms;
+    },
+
+    clearLS: function () {
+      localStorage.removeItem("HumbleBundleLibraryJSON");
+    },
+
+    checkLS: function () {
+      if(localStorage.getItem("HumbleBundleLibraryJSON"))
+      {
+        var ls = JSON.parse(localStorage.getItem("HumbleBundleLibraryJSON"));
+        console.log("Local Storage item HumbleBundleLibraryJSON has " + ls.length + " items in the array.");
+      }
+      else
+      {
+        console.log("Local Storage item HumbleBundleLibraryJSON does not exist!");
+      }
     },
 
     clickGiftImages: function(){
@@ -707,7 +826,7 @@ var rfsbundlescraper = {
 
 //            rfsbundlescraper.utilities.hb_giftLinkCount++;
           }
-        }, 3000);
+        }, 2000);
       }
       else
       {
