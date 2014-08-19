@@ -1,4 +1,4 @@
-var VERSION = '0.8192045';
+var VERSION = '0.8192050';
 
 var rfsbundlescraper = {
 
@@ -696,17 +696,17 @@ var rfsbundlescraper = {
           {
             rfsbundlescraper.utilities.hb_giftLinks = $('#steam-tab img');
 
-            var img = rfsbundlescraper.utilities.hb_giftLinks[rfsbundlescraper.utilities.hb_giftLinkCount];
+            var img = rfsbundlescraper.utilities.hb_giftLinks[0];
             var title = img.parentNode.parentNode.parentNode.childNodes[1].innerText;
 
-            rfsbundlescraper.utilities.hb_giftLinks[rfsbundlescraper.utilities.hb_giftLinkCount].click();
-            rfsbundlescraper.utilities.hb_giftLinks[rfsbundlescraper.utilities.hb_giftLinkCount].remove();
+            rfsbundlescraper.utilities.hb_giftLinks[0].click();
+            rfsbundlescraper.utilities.hb_giftLinks[0].remove();
 
             $('div.grayout-inner a.button-link.submit').click();
 
             rfsbundlescraper.utilities.appendText('clicked ' + title);
 
-            rfsbundlescraper.utilities.hb_giftLinkCount++;
+//            rfsbundlescraper.utilities.hb_giftLinkCount++;
           }
         }, 3000);
       }
