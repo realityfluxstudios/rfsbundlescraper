@@ -1,4 +1,4 @@
-var VERSION = '0.8192020';
+var VERSION = '0.8192030';
 
 var rfsbundlescraper = {
 
@@ -696,6 +696,7 @@ var rfsbundlescraper = {
             var title = img.parentNode.parentNode.parentNode.childNodes[1].innerText;
             rfsbundlescraper.utilities.hb_giftLinks = $('#steam-tab img');
             rfsbundlescraper.utilities.hb_giftLinks[0].click();
+            rfsbundlescraper.utilities.hb_giftLinks[0].remove();
             $('div.grayout-inner a.button-link.submit').click();
 
 //            rfsbundlescraper.utilities.clearText();
