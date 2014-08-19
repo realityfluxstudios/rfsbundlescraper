@@ -1,4 +1,4 @@
-var VERSION = '0.8192018';
+var VERSION = '0.8192020';
 
 var rfsbundlescraper = {
 
@@ -551,8 +551,6 @@ var rfsbundlescraper = {
     audiodls    :   $('div.js-platform.downloads.audio div.download-buttons'),
     ebookdls    :   $('div.js-platform.downloads.ebook div.download-buttons'),
     comedydls   :   $('div.js-platform.downloads.comedy div.download-buttons'),
-
-    utilities: rfsbundlescraper.utilities,
 
     hb_init: function(){
       console.log('detected Humble Bundle');
