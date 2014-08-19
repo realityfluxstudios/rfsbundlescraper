@@ -1,4 +1,4 @@
-var VERSION = '0.8200233';
+var VERSION = '0.8200240';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -753,10 +753,6 @@ var rfsbundlescraper = {
 
       for(var i = 0; i < this.giftLinks.length; i++)
       {
-        // prevent duplicates in the JSON
-        if(key.key === this.giftLinks[i].href || key.key === this.giftLinks[i].textContent)
-          continue;
-
         if(!keys){
           key.key = this.giftLinks[i].href;
         }
@@ -766,7 +762,13 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        rfsbundlescraper.bundle.items[i].keys.push(key);
+        if(!$.inArray(key, rfsbundlescraper.bundle.items[i].keys)) {
+          console.log('no match');
+          rfsbundlescraper.bundle.items[i].keys.push(key);
+        }
+        else {
+          console.log('found a match, skipping');
+        }
 
         console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
       }
