@@ -1,4 +1,4 @@
-var VERSION = '0.8191405';
+var VERSION = '0.8191430';
 
 var rfsbundlescraper = {
 
@@ -33,6 +33,10 @@ var rfsbundlescraper = {
     rfsSettingsTextWidth: 315,
     rfsSettingsAutoClick: true,
 
+    add_floating_textarea: function (){
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n    </div>\n    \n    <button onClick="rfsbundlescraper.utilities.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="rfsbundlescraper.utilities.reloadScript();">Reload</button>\n    <button class="btn-info" onClick="rfsbundlescraper.utilities.readFromLS();">Load</button>    \n    <button class="btn-default" onClick="rfsbundlescraper.indiegala.clickGiftImages();" id="ig_autoclick_btn">Auto Click</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.utilities.close();">X</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.utilities.resetAndClear();">Reset/Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+    },
+
     detect_site: function(){
       if(this.href.match(/indiegala/))
         this.site = 'indiegala';
@@ -47,12 +51,10 @@ var rfsbundlescraper = {
     updateSettings: function(){
       var textHeight = $('#rfsSettingsTextHeight');
       var textWidth = $('#rfsSettingsTextWidth');
-      var autoClick = $('#rfsSettingsAutoClick');
       var textArea = $('#rfs-games-list');
 
       localStorage.setItem('rfsSettingsTextHeight', textHeight.val());
       localStorage.setItem('rfsSettingsTextWidth', textWidth.val());
-      localStorage.setItem('rfsSettingsAutoClick', autoClick.prop('checked'));
 
       var cssString = "height: " + textHeight.val() + "px !important; width: " + textWidth.val() + "px !important";
 
@@ -62,22 +64,8 @@ var rfsbundlescraper = {
     loadSettings: function(){
       if(localStorage.getItem('rfsSettingsTextHeight') != null)
       {
-        var checked = localStorage.getItem('rfsSettingsAutoClick');
-        console.log('checked: ' + checked);
-
         $('#rfsSettingsTextHeight').val(localStorage.getItem('rfsSettingsTextHeight'));
         $('#rfsSettingsTextWidth').val(localStorage.getItem('rfsSettingsTextWidth'));
-
-        if(checked === 'true')
-        {
-          $('#rfsSettingsAutoClick').prop('checked', false).click();
-          console.log('ticking the checkbox')
-        }
-        else
-        {
-          $('#rfsSettingsAutoClick').prop('checked', true).click();
-          console.log('unticking the checkbox')
-        }
       }
       else
       {
@@ -122,8 +110,6 @@ var rfsbundlescraper = {
         localStorage.setItem('RFSIGBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
       else if(rfsbundlescraper.utilities.site === 'humblebundle')
         localStorage.setItem('RFSHBBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      else if(rfsbundlescraper.utilities.site === 'bundlestars')
-        localStorage.setItem('RFSBSBundle', JSON.stringify(rfsbundlescraper.bundle, null, 2));
 
       rfsbundlescraper.utilities.readFromLS();
     },
@@ -159,7 +145,11 @@ var rfsbundlescraper = {
     },
 
     convertToSlug : function (value){
-      return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/--+/g, '-');
+      return value.toLowerCase()
+        .replace(/-+/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '')
+        .replace(/--+/g, '-');
     },
 
     removeDupes : function (list) {
@@ -195,7 +185,7 @@ var rfsbundlescraper = {
       console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
 
       if($('#rfs-container').length == 0)
-        $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;display:none">\n        Height: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utilities.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Auto Click Gift Links: <input onChange="rfsbundlescraper.utilities.updateSettings()" id="rfsSettingsAutoClick" type="checkbox" checked="checked">\n    </div>\n    \n    <button onClick="rfsbundlescraper.utilities.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button class="btn-warning" onClick="rfsbundlescraper.utilities.reloadScript();">Reload</button>\n    <button class="btn-info" onClick="rfsbundlescraper.utilities.readFromLS();">Load</button>    \n    <button class="btn-default" onClick="rfsbundlescraper.indiegala.clickGiftImages();">Auto Click</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.close();">X</button>\n    <button class="btn-danger pull-right" onClick="rfsbundlescraper.utilities.resetAndClear();">Reset/Clear</button>\n     <br /> \n    <textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important"></textarea> \n</div>');
+        rfsbundlescraper.utilities.add_floating_textarea();
 
       if(localStorage.getItem('RFSIGBundle') != null)
       {
@@ -218,6 +208,8 @@ var rfsbundlescraper = {
       rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
       rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utilities.convertToSlug(rfsbundlescraper.bundle.name);
       rfsbundlescraper.bundle.site = "IndieGala";
+
+      rfsbundlescraper.utilities.readFromLS();
     },
 
     ig_run : function()  {
@@ -539,12 +531,146 @@ var rfsbundlescraper = {
 
   humblebundle: {
 
+    hblibrary   :   [],
+    titles      :   $('div.gameinfo div.title a'),
+    subtitles   :   $('div.gameinfo div.subtitle a'),
+    icons       :   $('div.icn'),
+    windls      :   $('div.js-platform.downloads.windows div.download-buttons'),
+    macdls      :   $('div.js-platform.downloads.mac div.download-buttons'),
+    linuxdls    :   $('div.js-platform.downloads.linux div.download-buttons'),
+    androiddls  :   $('div.js-platform.downloads.android div.download-buttons'),
+    audiodls    :   $('div.js-platform.downloads.audio div.download-buttons'),
+    ebookdls    :   $('div.js-platform.downloads.ebook div.download-buttons'),
+    comedydls   :   $('div.js-platform.downloads.comedy div.download-buttons'),
+
     hb_init: function(){
       console.log('detected Humble Bundle');
+      rfsbundlescraper.utilities.loadSettings();
+
+      console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
+
+      if($('#rfs-container').length == 0)
+      {
+        rfsbundlescraper.utilities.add_floating_textarea();
+        $('#ig_autoclick_btn').hide();
+      }
     },
 
     hb_run: function(){
       this.hb_init();
+    },
+
+    run: function(){
+      for(var i = 0; i < this.titles.length; i++)
+      {
+        var title     = this.titles[i];
+        var subtitle  = this.subtitles[i];
+        var icon      = this.icons[i];
+        var windl     = this.windls[i];
+        var macdl     = this.macdls[i];
+        var linuxdl   = this.linuxdls[i];
+        var androiddl = this.androiddls[i];
+        var audiodl   = this.audiodls[i];
+        var ebookdl   = this.ebookdls[i];
+        var comedydl  = this.comedydls[i];
+
+        var item = {};
+
+        item.title = title.text.trim();
+        item.developer = subtitle.text.trim();
+        item.url = subtitle.attributes['href']['value'];
+        item.icon = icon.children[0].children[0].attributes['src']['value'];
+
+        item.platforms = [];
+
+        console.log(i + ". " + item.title);
+
+        var thisPlatform = {};
+
+        item = this.process(item, thisPlatform, windl, "Windows");
+        item = this.process(item, thisPlatform, macdl, "Mac");
+        item = this.process(item, thisPlatform, linuxdl, "Linux");
+        item = this.process(item, thisPlatform, androiddl, "Android");
+        item = this.process(item, thisPlatform, audiodl, "Audio");
+        item = this.process(item, thisPlatform, comedydl, 'Comedy');
+        item = this.process(item, thisPlatform, ebookdl, 'eBook');
+
+        this.hblibrary.push(item);
+      }
+      $('#games-list-text').val(JSON.stringify(this.hblibrary, null, 2));
+    },
+
+    init: function (){
+      this.hblibrary = [];
+
+      $('div#games-list').remove();
+
+      $('h1:nth-child(2)').append('<div id="games-list"><textarea onClick="this.select();" id="games-list-text" rows="25" cols="950" style="width:900px"></textarea></div>');
+    },
+
+    process: function(item, platform, platformdl, type){
+
+      if(type === "Windows")
+        platform.windows = [];
+      else if(type === "Mac")
+        platform.mac = [];
+      else if(type === "Linux")
+        platform.linux = [];
+      else if(type === "Audio")
+        platform.audio = [];
+      else if(type === "Android")
+        platform.android = [];
+      else if(type === "Comedy")
+        platform.comedy = [];
+      else if(type === "eBook")
+        platform.ebook = [];
+
+      if(platformdl.children.length > 0){
+        for(var j=0; j <= platformdl.children.length-1; j++)
+        {
+          if(platformdl.children[j].className !== "custom-download-text")
+          {
+            var info  = {};
+            info.platform = type;
+
+            if( platformdl.children[j].children[0].childElementCount > 0)
+              info.type = platformdl.children[j].children[0].children[1].innerHTML;
+            if( platformdl.children[j].children[1].children[0].childElementCount > 0)
+              info.size = platformdl.children[j].children[1].children[0].children[0].innerHTML;
+
+            var dllinks = platformdl.children[j].children[0].children[2];
+
+            if(dllinks.hasAttribute('data-web'))
+              info.http = dllinks.attributes['data-web']['value'];
+
+            if(dllinks.hasAttribute('data-bt'))
+              info.bt   = dllinks.attributes['data-bt']['value'];
+
+            if(platformdl.children[j].hasAttribute('data-md5'))
+              info.hash = platformdl.children[j].attributes['data-md5']['value'];
+
+            if(type == "Windows")
+              platform.windows.push(info);
+            else if(type == "Mac")
+              platform.mac.push(info);
+            else if(type == "Linux")
+              platform.linux.push(info);
+            else if(type == "Audio")
+              platform.audio.push(info);
+            else if(type == "Android")
+              platform.android.push(info);
+            else if(type == "Comedy")
+              platform.comedy.push(info);
+            else if(type == "eBook"){
+              platform.ebook.push(info);
+              item.platforms.push(platform);
+            }
+            //platform.push(info);
+          }
+        }
+      }
+
+      return item;
     }
   }
 };
