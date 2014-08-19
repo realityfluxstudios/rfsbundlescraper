@@ -1,4 +1,4 @@
-var VERSION = '0.8200139';
+var VERSION = '0.8200150';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -63,7 +63,7 @@ var rfsbundlescraper = {
     },
 
     add_floating_textarea: function (){
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n    </div>\n    <button onClick="rfsbundlescraper.utils.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utils.reloadScript();">Reload</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.indiegala.clickGiftImages();" id="ig_autoclick_btn">Auto \n      Click IG</button>\n    <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.humblebundle.clickGiftImages();" id=hb_autoclick_btn">Auto \n        Click HB</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="position:fixed;bottom: 1px;z-index:1500;width:415px;-webkit-user-select: none;">\n        RFS Bundle Scraper Bookmarklet v' + VERSION +'\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n    </div>\n    <button onClick="rfsbundlescraper.utils.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utils.reloadScript();">Reload</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.indiegala.clickGiftImages();" id="ig_autoclick_btn">Auto \n      Click IG</button>\n    <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.humblebundle.clickGiftImages();" id=hb_autoclick_btn">Auto \n        Click HB</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="font-weight: bolder; position:fixed;bottom: 1px;z-index:1500;width:415px;-webkit-user-select: none;">\n        RFS Bundle Scraper Bookmarklet v' + VERSION +'\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
     },
 
     detect_site: function(){
@@ -187,13 +187,13 @@ var rfsbundlescraper = {
 
     readFromLS: function()
     {
-      if(rfsbundlescraper.utils.bundle != null || rfsbundlescraper.utils.bundle != undefined)
+      if(rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined)
       {
         if(rfsbundlescraper.utils.site.humblebundle)
-          rfsbundlescraper.utils.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle);
+          rfsbundlescraper.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle);
         else if(rfsbundlescraper.utils.site.indiegala)
-          rfsbundlescraper.utils.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala);
-        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.utils.bundle, null, 2));
+          rfsbundlescraper.bundle = localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala);
+        $('#rfs-games-list').val( JSON.stringify(rfsbundlescraper.bundle, null, 2));
 
       }
       else
@@ -585,9 +585,9 @@ var rfsbundlescraper = {
         $('#hb_autoclick_btn').show();
       }
 
-      if(rfsbundlescraper.utils.bundle != undefined)
+      if(rfsbundlescraper.bundle != undefined)
       {
-        if(rfsbundlescraper.utils.bundle.name === $('title').text())
+        if(rfsbundlescraper.bundle.name === $('title').text())
           this.combine = true;
       }
 
@@ -596,6 +596,8 @@ var rfsbundlescraper = {
         this.run();
       else
         this.run_combine();
+
+      rfsbundlescraper.utils.readFromLS();
     },
 
     hb_run: function(){
@@ -748,12 +750,18 @@ var rfsbundlescraper = {
 
         item.keys.push(key);
 
-        this.bundle.items[i] = item;
+        rfsbundlescraper.bundle.items[i] = item;
 
 //        this.bundle.items.push(item);
 
         console.log(i + ". " + item.name);
       }
+
+      rfsbundlescraper.bundle = this.bundle;
+
+      rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
+
+      rfsbundlescraper.utils.readFromLS();
     },
 
     process: function(item, platform, platformdl, type){
@@ -819,14 +827,6 @@ var rfsbundlescraper = {
         }
       }
       return item;
-    },
-
-    save: function () {
-      'use strict';
-      var library = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
-      library.push(this.bundle);
-      localStorage.setItem(rfsbundlescraper.utils.json_names.humblebundle, JSON.stringify(library));
-      this.checkLS();
     },
 
     cleanup: function ( platforms ) {
