@@ -1,4 +1,4 @@
-var VERSION = '0.8200130';
+var VERSION = '0.8200132';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -154,6 +154,7 @@ var rfsbundlescraper = {
       this.debug = true;
       this.removeFromLS();
       this.clearText();
+      this.appendText('Local Storage cleared')
     },
 
     close : function()
