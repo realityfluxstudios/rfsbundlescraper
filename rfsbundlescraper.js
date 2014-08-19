@@ -1,4 +1,4 @@
-var VERSION = '0.8191720';
+var VERSION = '0.8192010';
 
 var rfsbundlescraper = {
 
@@ -25,7 +25,8 @@ var rfsbundlescraper = {
     href: window.location.href,
     site: '',
     interval : 0,
-    giftLinks : $('#icon-gift img'),
+    ig_giftLinks : $('#icon-gift img'),
+    hb_giftLinks: $('#steam-tab img'),
     cacheBuster: 0,
     oldCacheBuster: 0,
     firstReload: true,
@@ -35,6 +36,10 @@ var rfsbundlescraper = {
 
     appendText: function(value){
       $('#rfs-games-list').val( $('#rfs-games-list').val() + value);
+    },
+
+    clearText: function(){
+      $('#rfs-games-list').val('');
     },
 
     add_floating_textarea: function (){
@@ -84,7 +89,7 @@ var rfsbundlescraper = {
 
     reloadScript: function()
     {
-      var src = "https://raw.githack.com/tvl83/GameBundleScraper/master/rfsbundlescraper.js";
+      var src = "https://raw.githack.com/tvl83/RFSBundleScraper/master/rfsbundlescraper.js";
 
       $('#rfs-container').remove();
 
@@ -131,18 +136,15 @@ var rfsbundlescraper = {
       localStorage.removeItem('rfsSettingsAutoClick');
 
       rfsbundlescraper.bundle = {};
-      console.log('rfsbundlescraper.bundle: ' + JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      console.log('rfsbundlescraper.bundle.games: ' + JSON.stringify(rfsbundlescraper.bundle.games, null, 2));
-      rfsbundlescraper.utilities.readFromLS();
+      this.appendText("Local Storage Cleared");
     },
 
     resetAndClear : function()  {
       this.combine = false;
       this.exists = false;
       this.debug = true;
-      rfsbundlescraper.utilities.removeFromLS();
-      $('#rfs-games-list').val('');
-      this.appendText("Local Storage Cleared");
+      this.removeFromLS();
+      this.clearText();
     },
 
     close : function()
@@ -184,15 +186,12 @@ var rfsbundlescraper = {
 
   indiegala: {
 
-    appendText: function(value){
-      rfsbundlescraper.utilities.appendText(value);
-    },
-
     ig_init : function(){
 
-      rfsbundlescraper.utilities.loadSettings();
+      $('#ig_autoclick_btn').show();
+      $('#hb_autoclick_btn').hide();
 
-      console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
+      this.utilities.loadSettings();
 
       if($('#rfs-container').length == 0)
         rfsbundlescraper.utilities.add_floating_textarea();
@@ -230,13 +229,13 @@ var rfsbundlescraper = {
 
       do
       {
-        if(rfsbundlescraper.utilities.giftLinks.length >= 1 &&
+        if(rfsbundlescraper.utilities.ig_giftLinks.length >= 1 &&
           rfsbundlescraper.utilities.interval == 0 &&
           localStorage.getItem('rfsSettingsAutoClick') === 'true')
         {
           this.clickGiftImages();
         }
-      }while(rfsbundlescraper.utilities.giftLinks.length > 0 && rfsbundlescraper.utilities.interval != 0);
+      }while(rfsbundlescraper.utilities.ig_giftLinks.length > 0 && rfsbundlescraper.utilities.interval != 0);
 
       if(!this.exists)
       {
@@ -250,16 +249,19 @@ var rfsbundlescraper = {
 
           this.cleanup()
         }
-        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
-        rfsbundlescraper.utilities.saveToLS();
+        this.utilities.removeDupes(rfsbundlescraper.bundle.games);
+        this.utilities.saveToLS();
       }
       else
       {
         console.log('It\'s the same bundle dude!');
       }
 
-      rfsbundlescraper.utilities.readFromLS();
+      this.utilities.readFromLS();
     },
+
+
+    utilities: rfsbundlescraper.utilities,
 
     gatherDRMGames : function()  {
 
@@ -514,19 +516,19 @@ var rfsbundlescraper = {
     },
 
     clickGiftImages: function()  {
-      if(rfsbundlescraper.utilities.giftLinks.length > 0)
+      if(rfsbundlescraper.utilities.ig_giftLinks.length > 0)
       {
         var interval = setInterval(function()
         {
-          if(rfsbundlescraper.utilities.giftLinks.length == 0)
+          if(rfsbundlescraper.utilities.ig_giftLinks.length == 0)
           {
             clearInterval(interval);
           }
           else
           {
-            rfsbundlescraper.utilities.giftLinks = $('#icon-gift img');
-            rfsbundlescraper.utilities.giftLinks[0].click();
-            rfsbundlescraper.utilities.giftLinks[0].remove();
+            rfsbundlescraper.utilities.ig_giftLinks = $('#icon-gift img');
+            rfsbundlescraper.utilities.ig_giftLinks[0].click();
+            rfsbundlescraper.utilities.ig_giftLinks[0].remove();
             console.log('removing img');
           }
         }, 2000);
@@ -553,20 +555,17 @@ var rfsbundlescraper = {
     ebookdls    :   $('div.js-platform.downloads.ebook div.download-buttons'),
     comedydls   :   $('div.js-platform.downloads.comedy div.download-buttons'),
 
-    appendText: function(value){
-      rfsbundlescraper.utilities.appendText(value);
-    },
+    utilities: rfsbundlescraper.utilities,
 
     hb_init: function(){
       console.log('detected Humble Bundle');
       rfsbundlescraper.utilities.loadSettings();
 
-      console.log("RFS Bundle Scraper Bookmarklet v" + VERSION);
-
       if($('#rfs-container').length == 0)
       {
         rfsbundlescraper.utilities.add_floating_textarea();
         $('#ig_autoclick_btn').hide();
+        $('#hb_autoclick_btn').show();
       }
     },
 
@@ -688,7 +687,31 @@ var rfsbundlescraper = {
     },
 
     clickGiftImages: function(){
+      if(this.utilities.hb_giftLinks.length > 0)
+      {
+        var interval = setInterval(function()
+        {
+          if(rfsbundlescraper.utilities.hb_giftLinks.length == 0)
+          {
+            clearInterval(interval);
+          }
+          else
+          {
+            var img = rfsbundlescraper.utilities.hb_giftLinks[0];
+            var title = img.parentNode.parentNode.parentNode.childNodes[1].innerText;
+            rfsbundlescraper.utilities.hb_giftLinks = $('#steam-tab img');
+            rfsbundlescraper.utilities.hb_giftLinks[0].click();
+            $('div.grayout-inner a.button-link.submit').click();
 
+//            rfsbundlescraper.utilities.clearText();
+            rfsbundlescraper.utilities.appendText('clicked ' + title)
+          }
+        }, 2000);
+      }
+      else
+      {
+        console.log('No gift images to click... continue on...');
+      }
     }
   }
 };
