@@ -1,4 +1,4 @@
-var VERSION = '0.8200135';
+var VERSION = '0.8200139';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -661,7 +661,7 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        this.bundle.item.keys.push(key);
+        item.keys.push(key);
 
         this.bundle.items.push(item);
 
