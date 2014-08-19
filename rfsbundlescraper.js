@@ -1,4 +1,4 @@
-var VERSION = '0.8200132';
+var VERSION = '0.8200135';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -650,6 +650,7 @@ var rfsbundlescraper = {
       for(i = 0; i < this.giftLinks.length; i++)
       {
         item = {};
+        item.keys = [];
         item.name = this.titles[i].textContent;
         if(!keys){
           key.key = this.giftLinks[i].href;
@@ -735,7 +736,7 @@ var rfsbundlescraper = {
         {
           console.log('good to go!');
         }
-        item.name = this.titles[i].textContent;
+//        item.name = this.titles[i].textContent;
         if(!keys){
           key.key = this.giftLinks[i].href;
         }
@@ -745,9 +746,11 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        this.bundle.item.keys.push(key);
+        item.keys.push(key);
 
-        this.bundle.items.push(item);
+        this.bundle.items[i] = item;
+
+//        this.bundle.items.push(item);
 
         console.log(i + ". " + item.name);
       }
