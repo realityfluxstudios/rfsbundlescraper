@@ -1,8 +1,8 @@
 # RFS Bundle Scraper
 
-This has turned into a script that will not only scrap IG bundles, but will also scrape Humble Bundle. All of the information is then printed neatly in JSON for your own consumption.
+This has turned into a script that will not only scrap Indiegala bundles, but will also scrape Humble Bundle. All of the information is then printed neatly in JSON for your own consumption.
 
-I use it specifically for a game database to organize all the bundles I own.
+A companion website will be made available
 
 
 ### How to use
@@ -20,7 +20,7 @@ I am releasing this to the public in the hopes that it will be useful to others.
 
 ### To Do
 
-* Integrate the Humble Bundle code and detect which site you're on.
+* Integrate the Humble Bundle code and detect which site you're on. (**IN PROGRESS**)
 
 ### Known Issues
 
@@ -36,6 +36,12 @@ info on how I am creating the game database. I am using a Ruby on Rails backend 
 for the frontend.
 
 ## History
+(this is not a comprehensive list of changes)
+
+### 19Aug14 - v0.8191640
+* Integrating Humble Bundle code
+* Cleaned up repo a lot to just be the bare essentials.
+* Added css inline so bootstrap isn't required and it looks decent.
 
 ### 14Aug14 - v0.8140125
 
