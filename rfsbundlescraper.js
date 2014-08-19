@@ -706,7 +706,7 @@ var rfsbundlescraper = {
 //            rfsbundlescraper.utilities.clearText();
             rfsbundlescraper.utilities.appendText('clicked ' + title)
           }
-        }, 2000);
+        }, 3000);
       }
       else
       {
