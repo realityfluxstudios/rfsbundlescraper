@@ -1,4 +1,4 @@
-var VERSION = '0.8192015';
+var VERSION = '0.8192018';
 
 var rfsbundlescraper = {
 
@@ -249,19 +249,16 @@ var rfsbundlescraper = {
 
           this.cleanup()
         }
-        this.utilities.removeDupes(rfsbundlescraper.bundle.games);
-        this.utilities.saveToLS();
+        rfsbundlescraper.utilities.removeDupes(rfsbundlescraper.bundle.games);
+        rfsbundlescraper.utilities.saveToLS();
       }
       else
       {
         console.log('It\'s the same bundle dude!');
       }
 
-      this.utilities.readFromLS();
+      rfsbundlescraper.utilities.readFromLS();
     },
-
-
-    utilities: rfsbundlescraper.utilities,
 
     gatherDRMGames : function()  {
 
@@ -687,7 +684,7 @@ var rfsbundlescraper = {
     },
 
     clickGiftImages: function(){
-      if(this.utilities.hb_giftLinks.length > 0)
+      if(rfsbundlescraper.utilities.hb_giftLinks.length > 0)
       {
         var interval = setInterval(function()
         {
