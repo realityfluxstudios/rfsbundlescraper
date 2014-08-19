@@ -1,4 +1,4 @@
-var VERSION = '0.8192010';
+var VERSION = '0.8192015';
 
 var rfsbundlescraper = {
 
