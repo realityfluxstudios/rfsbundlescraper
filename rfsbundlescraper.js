@@ -1,4 +1,4 @@
-var VERSION = '0.8200300';
+var VERSION = '0.8200305';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -767,6 +767,7 @@ var rfsbundlescraper = {
         //check for dupes
         for(var j=0; j < rfsbundlescraper.bundle.items[i].keys.length; j++)
         {
+          console.log('checking key ' + rfsbundlescraper.bundle.items[i].keys[j].key + ' against ' + key.key);
           if(key.key == rfsbundlescraper.bundle.items[i].keys[j].key ) {
             console.log('found a match, skipping');
             i = this.giftLinks.length + 3;
