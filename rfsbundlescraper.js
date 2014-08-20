@@ -1,4 +1,4 @@
-var VERSION = '0.8200240';
+var VERSION = '0.8200300';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -618,7 +618,9 @@ var rfsbundlescraper = {
       this.giftLinks.clear();
       this.bundle = {};
 
-      this.bundle.name = $('title').text();
+      var bundle_name = $('title').text();
+
+      this.bundle.name = bundle_name.replace(' (pay what you want and help charity)', '');
       this.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(this.bundle.name);
       this.bundle.site = "Humble Bundle";
       this.bundle.url = $(location).attr('href');
@@ -751,7 +753,7 @@ var rfsbundlescraper = {
         keys = true;
       }
 
-      for(var i = 0; i < this.giftLinks.length; i++)
+      a: for(var i = 0; i < this.giftLinks.length; i++)
       {
         if(!keys){
           key.key = this.giftLinks[i].href;
@@ -762,13 +764,16 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        if(!$.inArray(key, rfsbundlescraper.bundle.items[i].keys)) {
-          console.log('no match');
-          rfsbundlescraper.bundle.items[i].keys.push(key);
+        //check for dupes
+        for(var j=0; j < rfsbundlescraper.bundle.items[i].keys.length; j++)
+        {
+          if(key.key == rfsbundlescraper.bundle.items[i].keys[j].key ) {
+            console.log('found a match, skipping');
+            i = this.giftLinks.length + 3;
+            continue a;
+          }
         }
-        else {
-          console.log('found a match, skipping');
-        }
+        rfsbundlescraper.bundle.items[i].keys.push(key);
 
         console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
       }
