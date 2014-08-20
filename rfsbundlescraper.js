@@ -1,4 +1,4 @@
-var VERSION = '0.8201200';
+var VERSION = '0.8201205';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -714,6 +714,8 @@ var rfsbundlescraper = {
 
       if(this.secondaryTitles.length > 0)
       {
+        $('.genericbutton').click();
+
         for(var k=0; k < this.secondaryKeys.length; k++)
         {
           item = {
@@ -838,6 +840,7 @@ var rfsbundlescraper = {
 
       if(this.secondaryTitles.length > 0)
       {
+        $('.genericbutton').click();
         for(var k=0; k < this.secondaryKeys.length;k++)
         {
           item = rfsbundlescraper.bundle.items[k];
