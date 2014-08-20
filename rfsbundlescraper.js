@@ -1,4 +1,4 @@
-var VERSION = '0.8200500';
+var VERSION = '0.8200505';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -671,7 +671,7 @@ var rfsbundlescraper = {
         keys = true;
       }
 
-      for(i = 0; i < this.giftLinks.length; i++)
+      b: for(i = 0; i < this.giftLinks.length; i++)
       {
         key = {
           key: '',
@@ -690,6 +690,11 @@ var rfsbundlescraper = {
 
         if(!keys){
           key.key = this.giftLinks[i].href;
+          if(key.key.match(/Click the button to redeem on Steam/))
+          {
+            i = this.giftLinks.length + 3;
+            continue b;
+          }
         }
         else{
           key.key = this.giftLinks[i].textContent;
@@ -767,6 +772,7 @@ var rfsbundlescraper = {
 
       a: for(var i = 0; i < this.giftLinks.length; i++)
       {
+
         key = {
           key: '',
           bundle_url: ''
@@ -777,6 +783,12 @@ var rfsbundlescraper = {
         }
         else{
           key.key = this.giftLinks[i].textContent;
+        }
+
+        if(key.key.match(/Click the button to redeem on Steam/))
+        {
+          i = this.giftLinks.length + 3;
+          continue a;
         }
 
         key.bundle_url = window.location.href;
