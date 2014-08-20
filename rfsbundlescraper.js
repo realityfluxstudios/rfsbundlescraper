@@ -690,14 +690,15 @@ var rfsbundlescraper = {
 
         if(!keys){
           key.key = this.giftLinks[i].href;
-          if(key.key.match(/Click the button to redeem on Steam/))
-          {
-            i = this.giftLinks.length + 3;
-            continue b;
-          }
         }
         else{
           key.key = this.giftLinks[i].textContent;
+        }
+
+        if(key.key.match(/Click the button to redeem on Steam/))
+        {
+          i = this.giftLinks.length + 3;
+          continue b;
         }
 
         key.bundle_url = window.location.href;
