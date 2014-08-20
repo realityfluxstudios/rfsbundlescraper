@@ -1,4 +1,4 @@
-var VERSION = '0.8201252';
+var VERSION = '0.8201257';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -736,6 +736,7 @@ var rfsbundlescraper = {
           item.keys.push(key);
 
           this.bundle.items.push(item);
+          console.log(i + ". " + item.title);
         }
       }
 
@@ -854,6 +855,7 @@ var rfsbundlescraper = {
 
           item.keys.push(key);
 
+          console.log(i + ". " + item.title);
 //          this.bundle.items.push(item);
         }
       }
