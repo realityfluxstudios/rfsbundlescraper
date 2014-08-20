@@ -1,4 +1,4 @@
-var VERSION = '0.8200317';
+var VERSION = '0.8200320';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -69,10 +69,14 @@ var rfsbundlescraper = {
     },
 
     detect_site: function(){
-      if(this.href.match(/indiegala/))
+      if(this.href.match(/indiegala/)){
         this.site.indiegala = true;
-      else if(this.href.match(/humblebundle/))
+        $('#ig_autoclick_btn').show();
+      }
+      else if(this.href.match(/humblebundle/)){
         this.site.humblebundle = true;
+        $('#hg_autoclick_btn').show();
+      }
     },
 
     toggleSettingsDisplay: function(){
