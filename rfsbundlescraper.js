@@ -1,4 +1,4 @@
-var VERSION = '0.8200320';
+var VERSION = '0.8200330';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -25,9 +25,6 @@ var rfsbundlescraper = {
   run: function(){
 
     this.utils.detect_site();
-
-    $('#ig_autoclick_btn').hide();
-    $('#hb_autoclick_btn').hide();
 
     if(this.utils.site.indiegala)
       this.indiegala.ig_run();
@@ -212,7 +209,7 @@ var rfsbundlescraper = {
 
       $('#ig_autoclick_btn').show();
 
-      this.utils.loadSettings();
+      rfsbundlescraper.utils.loadSettings();
 
       if($('#rfs-container').length == 0)
         rfsbundlescraper.utils.add_floating_textarea();
