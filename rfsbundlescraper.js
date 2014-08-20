@@ -1,4 +1,4 @@
-var VERSION = '0.8200305';
+var VERSION = '0.8200308';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -587,14 +587,11 @@ var rfsbundlescraper = {
         $('#hb_autoclick_btn').show();
       }
 
-      console.log('checking rfsbundlescraper.bundle');
-      console.log(rfsbundlescraper.bundle);
-
       if(rfsbundlescraper.bundle != undefined)
       {
-        if(rfsbundlescraper.bundle.name === $('title').text()){
+        if(rfsbundlescraper.bundle.name === $('title').text().replace(' (pay what you want and help charity)', '')){
           this.combine = true;
-          console.log('detected duplicate. Flipping combine bool');
+          console.log('detected same bundle. Flipping combine bool');
         }
       }
 
