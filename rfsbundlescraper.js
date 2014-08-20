@@ -1,4 +1,4 @@
-var VERSION = '0.8202102';
+var VERSION = '0.8202120';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -838,11 +838,9 @@ var rfsbundlescraper = {
 
       if(this.secondaryTitles.length > 0)
       {
-        var loop=0;
-        for(var k=0; loop < (this.secondaryKeys.length + this.giftLinks.length) - 1;k++)
+        for(var k=0; i < (this.secondaryKeys.length + this.giftLinks.length) - 1;k++)
         {
-          loop = i+k;
-          item = rfsbundlescraper.bundle.items[k];
+          item = rfsbundlescraper.bundle.items[i];
 
           key = {};
 
@@ -857,6 +855,7 @@ var rfsbundlescraper = {
 
           console.log(k + ". " + item.name);
 //          this.bundle.items.push(item);
+          i++;
         }
       }
 
