@@ -1,4 +1,4 @@
-var VERSION = '0.8202050';
+var VERSION = '0.8202057';
 
 Array.prototype.clear = function () {
   'use strict';
