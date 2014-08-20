@@ -1,4 +1,4 @@
-var VERSION = '0.8201210';
+var VERSION = '0.8201245';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -574,7 +574,7 @@ var rfsbundlescraper = {
     drm_free_titles    : $('div.gameinfo div.title a'),
     drm_free_subtitles : $('div.gameinfo div.subtitle a'),
     secondaryTitles    : $(':nth-child(8) .shrinksizer-new .redeemheading'),
-    secondaryKeys      : $(':nth-child(8) .shrinksizer-new .activated .keyfield'),
+    secondaryKeys      : $(':nth-child(8) .shrinksizer-new .keyfield'),
     icons              : $('div.icn'),
     windls             : $('div.js-platform.downloads.windows div.download-buttons'),
     macdls             : $('div.js-platform.downloads.mac div.download-buttons'),
@@ -650,8 +650,6 @@ var rfsbundlescraper = {
     run: function(){
       'use strict';
 
-      $('.genericbutton').click();
-
       var i, keys = false;
       var item = {
         name: '',
@@ -717,9 +715,10 @@ var rfsbundlescraper = {
       if(this.secondaryTitles.length > 0)
       {
 
-
         for(var k=0; k < this.secondaryKeys.length; k++)
         {
+          if(this.secondaryTitles[k].innerText === '')
+
           item = {
             name: '',
             name_slug: '',
