@@ -1,4 +1,4 @@
-var VERSION = '0.8201245';
+var VERSION = '0.8201252';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -976,6 +976,7 @@ var rfsbundlescraper = {
     clickGiftImages: function(){
       if(rfsbundlescraper.utils.hb_giftLinks.length > 0)
       {
+        $('.genericbutton').click();
         rfsbundlescraper.utils.hb_interval = setInterval(function()
         {
           if(rfsbundlescraper.utils.hb_giftLinks.length == 0)
