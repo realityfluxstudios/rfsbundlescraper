@@ -1,4 +1,4 @@
-var VERSION = '0.8200513';
+var VERSION = '0.8201200';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -573,6 +573,8 @@ var rfsbundlescraper = {
     combine            : false,
     drm_free_titles    : $('div.gameinfo div.title a'),
     drm_free_subtitles : $('div.gameinfo div.subtitle a'),
+    secondaryTitles    : $(':nth-child(8) .shrinksizer-new .redeemheading'),
+    secondaryKeys      : $(':nth-child(8) .shrinksizer-new .activated .keyfield'),
     icons              : $('div.icn'),
     windls             : $('div.js-platform.downloads.windows div.download-buttons'),
     macdls             : $('div.js-platform.downloads.mac div.download-buttons'),
@@ -710,6 +712,30 @@ var rfsbundlescraper = {
         console.log(i + ". " + item.name);
       }
 
+      if(this.secondaryTitles.length > 0)
+      {
+        for(var k=0; k < this.secondaryKeys.length; k++)
+        {
+          item = {
+            name: '',
+            name_slug: '',
+            keys: []
+          };
+
+          key = {};
+
+          item.name = this.secondaryTitles[k].innerText;
+          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
+
+          key.bundle_url = window.location.href;
+          key.key = this.secondaryKeys[k].innerText;
+
+          item.keys.push(key);
+
+          this.bundle.items.push(item);
+        }
+      }
+
       for(i = 0; i < this.drm_free_titles.length; i++)
       {
         var title     = this.drm_free_titles[i];
@@ -760,6 +786,7 @@ var rfsbundlescraper = {
 
       this.titles = $('.redeemheading');
 
+
       if($('.keyfield a').length > 0)
       {
         this.giftLinks = $('.keyfield a');
@@ -807,6 +834,26 @@ var rfsbundlescraper = {
         rfsbundlescraper.bundle.items[i].keys.push(key);
 
         console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
+      }
+
+      if(this.secondaryTitles.length > 0)
+      {
+        for(var k=0; k < this.secondaryKeys.length;k++)
+        {
+          item = rfsbundlescraper.bundle.items[k];
+
+          key = {};
+
+          item.name = this.secondaryTitles[k].innerText;
+          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
+
+          key.bundle_url = window.location.href;
+          key.key = this.secondaryKeys[k].innerText;
+
+          item.keys.push(key);
+
+//          this.bundle.items.push(item);
+        }
       }
 
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
