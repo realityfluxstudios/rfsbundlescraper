@@ -1,4 +1,4 @@
-var VERSION = '0.8202057';
+var VERSION = '0.8202100';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -838,8 +838,10 @@ var rfsbundlescraper = {
 
       if(this.secondaryTitles.length > 0)
       {
-        for(var k=i; k < (this.secondaryKeys.length + this.giftLinks.length);k++)
+        var loop=0;
+        for(var k=0; loop < (this.secondaryKeys.length + this.giftLinks.length);k++)
         {
+          loop = i+k;
           item = rfsbundlescraper.bundle.items[k];
 
           key = {};
