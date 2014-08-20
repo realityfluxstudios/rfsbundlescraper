@@ -1,4 +1,4 @@
-var VERSION = '0.8201320';
+var VERSION = '0.8201350';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -596,7 +596,6 @@ var rfsbundlescraper = {
       if($('#rfs-container').length == 0)
       {
         rfsbundlescraper.utils.add_floating_textarea();
-        $('#hb_autoclick_btn').show();
       }
 
       if(rfsbundlescraper.bundle != undefined)
@@ -675,6 +674,7 @@ var rfsbundlescraper = {
 
       b: for(i = 0; i < this.giftLinks.length; i++)
       {
+
         key = {
           key: '',
           bundle_url: ''
@@ -705,6 +705,7 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
+        console.log('adding a key to ' +  this.secondaryTitles[k].innerText);
         item.keys.push(key);
 
         this.bundle.items.push(item);
@@ -730,6 +731,7 @@ var rfsbundlescraper = {
           key.bundle_url = window.location.href;
           key.key = this.secondaryKeys[k].innerText;
 
+          console.log('adding a key to ' +  this.secondaryTitles[k].innerText);
           item.keys.push(key);
 
           this.bundle.items.push(item);
