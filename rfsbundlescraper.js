@@ -1,4 +1,4 @@
-var VERSION = '0.8200330';
+var VERSION = '0.8200343';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -235,6 +235,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
       rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.name);
       rfsbundlescraper.bundle.site = "IndieGala";
+      rfsbundlescraper.bundle.games = [];
 
       rfsbundlescraper.utils.readFromLS();
     },
