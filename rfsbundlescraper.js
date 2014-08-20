@@ -1,4 +1,4 @@
-var VERSION = '0.8202120';
+var VERSION = '0.8202125';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -667,6 +667,7 @@ var rfsbundlescraper = {
         keys = true;
       }
 
+      console.log('-------- MAIN BODY ITEMS --------');
       b: for(i = 0; i < this.giftLinks.length; i++)
       {
 
@@ -708,8 +709,11 @@ var rfsbundlescraper = {
         console.log(i + ". " + item.name);
       }
 
+      console.log('-------- SECONDARY ITEMS --------');
       if(this.secondaryTitles.length > 0)
       {
+        console.log('found secondary titles');
+
         for(var k=0; k < this.secondaryKeys.length; k++)
         {
           item = {
@@ -734,6 +738,7 @@ var rfsbundlescraper = {
         }
       }
 
+      console.log('-------- DRM FREE --------');
       for(i = 0; i < this.drm_free_titles.length; i++)
       {
         var title     = this.drm_free_titles[i];
@@ -795,6 +800,7 @@ var rfsbundlescraper = {
         keys = true;
       }
 
+      console.log('-------- MAIN BODY ITEMS --------');
       a: for(var i = 0; i < this.giftLinks.length; i++)
       {
 
@@ -836,8 +842,10 @@ var rfsbundlescraper = {
         console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
       }
 
+      console.log('-------- SECONDARY ITEMS --------');
       if(this.secondaryTitles.length > 0)
       {
+        console.log('found secondary titles');
         for(var k=0; i < (this.secondaryKeys.length + this.giftLinks.length) - 1;k++)
         {
           item = rfsbundlescraper.bundle.items[i];
