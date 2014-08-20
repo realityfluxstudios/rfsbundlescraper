@@ -1,4 +1,4 @@
-var VERSION = '0.8201350';
+var VERSION = '0.8201353';
 
 /*
   adding a clear function to arrays to empty out the array
@@ -125,11 +125,11 @@ var rfsbundlescraper = {
 
       if(this.firstReload) {
         this.cacheBuster = Date.now().toString();
-        console.log(this.cacheBuster);
+
         $('script[src="' + src + '"]').remove();
         $('<script>').attr('src', src + "?" + this.cacheBuster).appendTo('body');
         this.oldCacheBuster = this.cacheBuster;
-        console.log(this.oldCacheBuster);
+
         this.firstReload = false;
       } else {
         this.cacheBuster = Date.now().toString();
@@ -705,7 +705,7 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        console.log('adding a key to ' +  this.secondaryTitles[k].innerText);
+        console.log('adding the first key to ' +  item.name);
         item.keys.push(key);
 
         this.bundle.items.push(item);
@@ -731,7 +731,7 @@ var rfsbundlescraper = {
           key.bundle_url = window.location.href;
           key.key = this.secondaryKeys[k].innerText;
 
-          console.log('adding a key to ' +  this.secondaryTitles[k].innerText);
+          console.log('adding the first key to ' +  this.secondaryTitles[k].innerText);
           item.keys.push(key);
 
           this.bundle.items.push(item);
@@ -833,6 +833,9 @@ var rfsbundlescraper = {
             continue a;
           }
         }
+
+        console.log('adding another key to ' + rfsbundlescraper.bundle.items[i].name);
+
         rfsbundlescraper.bundle.items[i].keys.push(key);
 
         console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
@@ -852,6 +855,7 @@ var rfsbundlescraper = {
           key.bundle_url = window.location.href;
           key.key = this.secondaryKeys[k].innerText;
 
+          console.log('adding another key to ' +  this.secondaryTitles[k].innerText);
           item.keys.push(key);
 
           console.log(k + ". " + item.name);
