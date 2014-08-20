@@ -1,4 +1,4 @@
-var VERSION = '0.8200505';
+var VERSION = '0.8200513';
 
 /*
   adding a clear function to arrays to empty out the array
