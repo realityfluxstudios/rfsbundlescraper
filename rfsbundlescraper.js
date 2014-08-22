@@ -1,4 +1,4 @@
-var VERSION = '0.8221540';
+var VERSION = '0.8221541';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -822,7 +822,7 @@ var rfsbundlescraper = {
         item.developer = subtitle.text.trim();
         item.title_slug = rfsbundlescraper.utils.convertToSlug(item.developer) + "-" + rfsbundlescraper.utils.convertToSlug(item.title) ;
         item.url = subtitle.attributes['href']['value'];
-        if(icon.children[0].children[0].attributes != undefined)
+        if(icon.children[0].children[0] != undefined)
           item.icon = icon.children[0].children[0].attributes['src']['value'];
 
         item.platforms = [];
