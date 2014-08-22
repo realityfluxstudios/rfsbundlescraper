@@ -1,4 +1,4 @@
-var VERSION = '0.8221710';
+var VERSION = '0.8221835';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -31,7 +31,6 @@ var rfsbundlescraper = {
 
   rerun: function(){
     this.utils.clearText();
-    this.utils.removeFromLS();
 
     this.run();
   },
