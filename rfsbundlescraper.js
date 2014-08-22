@@ -1,4 +1,4 @@
-var VERSION = '0.8221639';
+var VERSION = '0.8221643';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -1017,6 +1017,7 @@ var rfsbundlescraper = {
             else if(type == "eBook")    { platform.ebook.push(info);   }
             var cleanPlatform = this.cleanup(platform);
             item.platforms.push(cleanPlatform);
+            item.platforms = this.removeDupeProperties(item.platforms);
 //            item.platforms = this.cleanup(item.platforms);
           }
         }
@@ -1024,8 +1025,7 @@ var rfsbundlescraper = {
       return item;
     },
 
-    cleanup: function ( platforms ) {
-      'use strict';
+    removeDupeProperties: function( platforms ) {
       var i;
 
       /*
@@ -1038,6 +1038,10 @@ var rfsbundlescraper = {
         if(platforms[i] === platforms[i+1])
           platforms.pop();
       }
+    },
+
+    cleanup: function ( platforms ) {
+      'use strict';
       /*
        removing empty properties from the platforms object to make things a little more tidy
        I am not sure why it insists on creating the empty objects. This is a roundabout way of
