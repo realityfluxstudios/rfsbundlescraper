@@ -1,4 +1,4 @@
-var VERSION = '0.8221435';
+var VERSION = '0.8221540';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -710,7 +710,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- SECONDARY ITEMS --------');
-      if(this.secondaryTitles.length > 0 && $('#secondaryItems').checked == 'checked')
+      if(this.secondaryTitles.length > 0 && $('#secondaryItems').attr('checked') == 'checked')
       {
         console.log('found secondary titles');
 
@@ -739,7 +739,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- TERTIARY ITEMS --------');
-      if(this.tertiaryTitles.length > 0 && $('#tertiaryItems').checked == 'checked')
+      if(this.tertiaryTitles.length > 0 && $('#tertiaryItems').attr('checked') == 'checked')
       {
         console.log('found tertiary titles');
 
@@ -822,7 +822,8 @@ var rfsbundlescraper = {
         item.developer = subtitle.text.trim();
         item.title_slug = rfsbundlescraper.utils.convertToSlug(item.developer) + "-" + rfsbundlescraper.utils.convertToSlug(item.title) ;
         item.url = subtitle.attributes['href']['value'];
-        item.icon = icon.children[0].children[0].attributes['src']['value'];
+        if(icon.children[0].children[0].attributes != undefined)
+          item.icon = icon.children[0].children[0].attributes['src']['value'];
 
         item.platforms = [];
 
