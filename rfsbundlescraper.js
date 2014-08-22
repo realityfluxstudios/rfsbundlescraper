@@ -1,4 +1,4 @@
-var VERSION = '0.8221345';
+var VERSION = '0.8221355';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -584,10 +584,7 @@ var rfsbundlescraper = {
     hb_init: function(){
       console.log('detected Humble Bundle');
 
-      console.log('calling loadSettings()');
       rfsbundlescraper.utils.loadSettings();
-
-      console.log('calling readFromLS()');
       rfsbundlescraper.utils.readFromLS();
 
       if($('#rfs-container').length == 0)
@@ -606,7 +603,12 @@ var rfsbundlescraper = {
       this.init();
 
       if(!this.combine)
-        this.run();
+      {
+        if(rfsbundlescraper.hb_giftLinks.length == 0)
+          this.run();
+        else
+          rfsbundlescraper.utils.appendText("Click the AutoClick button above");
+      }
       else
         this.run_combine();
 
