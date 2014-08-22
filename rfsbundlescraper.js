@@ -1,4 +1,4 @@
-var VERSION = '0.8221643';
+var VERSION = '0.8221650';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -990,7 +990,7 @@ var rfsbundlescraper = {
           if(platformdl.children[j].className !== "custom-download-text")
           {
             var info  = {};
-            info.platform = type;
+            info.platform = [];
 
             if( platformdl.children[j].children[0].childElementCount > 0)
               info.type = platformdl.children[j].children[0].children[1].innerHTML;
@@ -1016,6 +1016,7 @@ var rfsbundlescraper = {
             else if(type == "Comedy")   { platform.comedy.push(info);  }
             else if(type == "eBook")    { platform.ebook.push(info);   }
             var cleanPlatform = this.cleanup(platform);
+            console.log(item);
             item.platforms.push(cleanPlatform);
             item.platforms = this.removeDupeProperties(item.platforms);
 //            item.platforms = this.cleanup(item.platforms);
