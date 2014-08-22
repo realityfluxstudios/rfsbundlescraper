@@ -1,4 +1,4 @@
-var VERSION = '0.8221632';
+var VERSION = '0.8221634';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -1044,20 +1044,34 @@ var rfsbundlescraper = {
        removing them but it works. I am not worried about performance because this script only
        runs one page at a time
        */
-      if(platforms.hasOwnProperty('windows') && platforms.windows.length == 0)
+      if(platforms.hasOwnProperty('windows') && platforms.windows.length == 0) {
         delete platforms.windows;
-      if(platforms.hasOwnProperty('mac') && platforms.mac.length == 0)
+        console.log('deleted empty platforms.windows')
+      }
+      if(platforms.hasOwnProperty('mac') && platforms.mac.length == 0){
         delete platforms.mac;
-      if(platforms.hasOwnProperty('linux') && platforms.linux.length == 0)
+        console.log('deleted empty platforms.mac')
+      }
+      if(platforms.hasOwnProperty('linux') && platforms.linux.length == 0){
         delete platforms.linux;
-      if(platforms.hasOwnProperty('audio') && platforms.audio.length == 0)
+        console.log('deleted empty platforms.linux')
+      }
+      if(platforms.hasOwnProperty('audio') && platforms.audio.length == 0){
         delete platforms.audio;
-      if(platforms.hasOwnProperty('android') && platforms.android.length == 0)
+        console.log('deleted empty platforms.audio')
+      }
+      if(platforms.hasOwnProperty('android') && platforms.android.length == 0){
         delete platforms.android;
-      if(platforms.hasOwnProperty('comedy') && platforms.comedy.length == 0)
+        console.log('deleted empty platforms.android')
+      }
+      if(platforms.hasOwnProperty('comedy') && platforms.comedy.length == 0){
         delete platforms.comedy;
-      if(platforms.hasOwnProperty('ebook') && platforms.ebook.length == 0)
+        console.log('deleted empty platforms.comedy')
+      }
+      if(platforms.hasOwnProperty('ebook') && platforms.ebook.length == 0){
         delete platforms.ebook;
+        console.log('deleted empty platforms.ebook')
+      }
 
       return platforms;
     },
