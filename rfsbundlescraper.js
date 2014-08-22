@@ -1,4 +1,4 @@
-var VERSION = '0.8221618';
+var VERSION = '0.8221630';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -1015,8 +1015,9 @@ var rfsbundlescraper = {
             else if(type == "Android")  { platform.android.push(info); }
             else if(type == "Comedy")   { platform.comedy.push(info);  }
             else if(type == "eBook")    { platform.ebook.push(info);   }
-            item.platforms.push(platform);
-            item.platforms = this.cleanup(item.platforms);
+            var cleanPlatform = this.cleanup(platform);
+            item.platforms.push(cleanPlatform);
+//            item.platforms = this.cleanup(item.platforms);
           }
         }
       }
