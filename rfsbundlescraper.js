@@ -1,4 +1,4 @@
-var VERSION = '0.8221630';
+var VERSION = '0.8221632';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -1044,20 +1044,20 @@ var rfsbundlescraper = {
        removing them but it works. I am not worried about performance because this script only
        runs one page at a time
        */
-      if(platforms[0].hasOwnProperty('windows') && platforms[0].windows.length == 0)
-        delete platforms[0].windows;
-      if(platforms[0].hasOwnProperty('mac') && platforms[0].mac.length == 0)
-        delete platforms[0].mac;
-      if(platforms[0].hasOwnProperty('linux') && platforms[0].linux.length == 0)
-        delete platforms[0].linux;
-      if(platforms[0].hasOwnProperty('audio') && platforms[0].audio.length == 0)
-        delete platforms[0].audio;
-      if(platforms[0].hasOwnProperty('android') && platforms[0].android.length == 0)
-        delete platforms[0].android;
-      if(platforms[0].hasOwnProperty('comedy') && platforms[0].comedy.length == 0)
-        delete platforms[0].comedy;
-      if(platforms[0].hasOwnProperty('ebook') && platforms[0].ebook.length == 0)
-        delete platforms[0].ebook;
+      if(platforms.hasOwnProperty('windows') && platforms.windows.length == 0)
+        delete platforms.windows;
+      if(platforms.hasOwnProperty('mac') && platforms.mac.length == 0)
+        delete platforms.mac;
+      if(platforms.hasOwnProperty('linux') && platforms.linux.length == 0)
+        delete platforms.linux;
+      if(platforms.hasOwnProperty('audio') && platforms.audio.length == 0)
+        delete platforms.audio;
+      if(platforms.hasOwnProperty('android') && platforms.android.length == 0)
+        delete platforms.android;
+      if(platforms.hasOwnProperty('comedy') && platforms.comedy.length == 0)
+        delete platforms.comedy;
+      if(platforms.hasOwnProperty('ebook') && platforms.ebook.length == 0)
+        delete platforms.ebook;
 
       return platforms;
     },
