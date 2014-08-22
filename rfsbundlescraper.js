@@ -1,4 +1,4 @@
-var VERSION = '0.8221655';
+var VERSION = '0.8221710';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -915,7 +915,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- SECONDARY ITEMS --------');
-      if(this.secondaryTitles.length > 0)
+      if(this.secondaryTitles.length > 0 && $('#secondaryItems').is(':checked'))
       {
         console.log('found secondary titles');
         for(var k=0; i < (this.secondaryKeys.length + this.giftLinks.length);k++)
@@ -939,7 +939,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- TERTIARY ITEMS --------');
-      if(this.tertiaryTitles.length > 0)
+      if(this.tertiaryTitles.length > 0 && $('#tertiaryItems').is(':checked'))
       {
         console.log('found tertiary titles');
         for(k=0; i < (this.tertiaryKeys.length + this.giftLinks.length + this.secondaryKeys.length);k++)
