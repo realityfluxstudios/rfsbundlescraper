@@ -1,4 +1,4 @@
-var VERSION = '0.8221355';
+var VERSION = '0.8221356';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -604,7 +604,7 @@ var rfsbundlescraper = {
 
       if(!this.combine)
       {
-        if(rfsbundlescraper.hb_giftLinks.length == 0)
+        if(rfsbundlescraper.utils.hb_giftLinks.length == 0)
           this.run();
         else
           rfsbundlescraper.utils.appendText("Click the AutoClick button above");
