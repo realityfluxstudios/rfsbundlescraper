@@ -1,4 +1,4 @@
-var VERSION = '0.8221340';
+var VERSION = '0.8221345';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -744,6 +744,9 @@ var rfsbundlescraper = {
       if(this.tertiaryTitles.length > 0)
       {
         console.log('found tertiary titles');
+
+        if(this.tertiaryKeys.length ==0)
+          this.tertiaryKeys = $('.overgrowthspf_link');
 
         for(k=0; k < this.tertiaryKeys.length; k++)
         {
