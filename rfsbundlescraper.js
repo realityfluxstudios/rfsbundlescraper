@@ -1016,11 +1016,16 @@ var rfsbundlescraper = {
             else if(type == "Android")  { platform.android.push(info); }
             else if(type == "Comedy")   { platform.comedy.push(info);  }
             else if(type == "eBook")    { platform.ebook.push(info);   }
+
+//            console.log('before:');
+//            console.log(platform);
             var cleanPlatform = this.cleanup(platform);
+//            console.log('after:');
+//            console.log(platform);
 
             item.platforms.push(cleanPlatform);
-            item.platforms = this.removeDupeProperties(item.platforms);
-            console.log(item);
+//            item.platforms = this.removeDupeProperties(item.platforms);
+//            console.log(item);
 //            item.platforms = this.cleanup(item.platforms);
           }
         }
