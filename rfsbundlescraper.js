@@ -1,4 +1,4 @@
-var VERSION = '0.8221835';
+var VERSION = '0.8221850';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -754,6 +754,9 @@ var rfsbundlescraper = {
 
         for(k=0; k < this.tertiaryKeys.length; k++)
         {
+          console.log('k: '+ k);
+          console.log('i: '+ i);
+
           item = {
             name: '',
             name_slug: '',
@@ -940,9 +943,20 @@ var rfsbundlescraper = {
       console.log('-------- TERTIARY ITEMS --------');
       if(this.tertiaryTitles.length > 0 && $('#tertiaryItems').is(':checked'))
       {
+        var totalTitles;
         console.log('found tertiary titles');
-        for(k=0; i < (this.tertiaryKeys.length + this.giftLinks.length + this.secondaryKeys.length);k++)
+        if($('#secondaryItems').is(':checked'))
+          totalTitles =  this.tertiaryKeys.length + this.giftLinks.length + this.secondaryKeys.length;
+        else
+          totalTitles =  this.tertiaryKeys.length + this.giftLinks.length;
+        for(k=0; i < totalTitles;k++)
         {
+          console.log('k: '+ k);
+          console.log('i: '+ i);
+          console.log('tertiaryTitles[k]: ');
+          console.log(this.tertiaryTitles[k]);
+
+
           item = rfsbundlescraper.bundle.items[i];
 
           key = {};
