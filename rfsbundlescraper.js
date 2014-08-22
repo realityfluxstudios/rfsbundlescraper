@@ -1,4 +1,4 @@
-var VERSION = '0.8221615';
+var VERSION = '0.8221618';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -575,10 +575,10 @@ var rfsbundlescraper = {
     combine            : false,
     drm_free_titles    : $('div.gameinfo div.title a'),
     drm_free_subtitles : $('div.gameinfo div.subtitle a'),
-    secondaryTitles    : $(':nth-child(8) .shrinksizer-new .redeemheading'),
-    secondaryKeys      : $(':nth-child(8) .shrinksizer-new .keyfield'),
-    tertiaryTitles     : $(':nth-child(7) .shrinksizer-new .redeemheading'),
-    tertiaryKeys       : $(':nth-child(7) .shrinksizer-new .keyfield'),
+    secondaryTitles    : $(':nth-child(7) .shrinksizer-new .redeemheading'),
+    secondaryKeys      : $(':nth-child(7) .shrinksizer-new .keyfield'),
+    tertiaryTitles     : $(':nth-child(8) .shrinksizer-new .redeemheading'),
+    tertiaryKeys       : $(':nth-child(8) .shrinksizer-new .keyfield'),
     icons              : $('div.icn'),
     windls             : $('div.js-platform.downloads.windows div.download-buttons'),
     macdls             : $('div.js-platform.downloads.mac div.download-buttons'),
