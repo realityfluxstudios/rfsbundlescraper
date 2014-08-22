@@ -1,4 +1,4 @@
-var VERSION = '0.8221852';
+var VERSION = '0.8221915';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -1121,9 +1121,21 @@ var rfsbundlescraper = {
     },
 
     clickGiftImages: function(){
+      if($('genericbutton').length > 0)
+        $('.genericbutton').click();
+      if($('.steambutton').length > 0){
+        rfsbundlescraper.utils.hb_interval = setInterval(function(){
+          if($('.steambutton').length == 0){
+            clearInterval(rfsbundlescraper.utils.hb_interval);
+          }
+          else{
+            $('.steambutton')[0].click();
+            $('.steambutton')[0].remove();
+          }
+        }, 2000)
+      }
       if(rfsbundlescraper.utils.hb_giftLinks.length > 0)
       {
-        $('.genericbutton').click();
         rfsbundlescraper.utils.hb_interval = setInterval(function()
         {
           if(rfsbundlescraper.utils.hb_giftLinks.length == 0)
@@ -1134,7 +1146,7 @@ var rfsbundlescraper = {
           {
             rfsbundlescraper.utils.hb_giftLinks = $('#steam-tab img');
 
-            var title = rfsbundlescraper.utils.hb_giftLinks[0].parentNode.parentNode.attributes[''];
+            var title = rfsbundlescraper.utils.hb_giftLinks[0].parentNode.parentNode.previousElementSibling.innerText;
 
             rfsbundlescraper.utils.hb_giftLinks[0].click();
             rfsbundlescraper.utils.hb_giftLinks[0].remove();
