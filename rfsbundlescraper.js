@@ -1,4 +1,4 @@
-var VERSION = '0.8221650';
+var VERSION = '0.8221655';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -990,7 +990,8 @@ var rfsbundlescraper = {
           if(platformdl.children[j].className !== "custom-download-text")
           {
             var info  = {};
-            info.platform = [];
+            info.platform = type;
+            item.platforms = [];
 
             if( platformdl.children[j].children[0].childElementCount > 0)
               info.type = platformdl.children[j].children[0].children[1].innerHTML;
