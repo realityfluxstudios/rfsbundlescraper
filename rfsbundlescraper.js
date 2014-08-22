@@ -1,4 +1,4 @@
-var VERSION = '0.8202127';
+var VERSION = '0.8221340';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -570,6 +570,8 @@ var rfsbundlescraper = {
     drm_free_subtitles : $('div.gameinfo div.subtitle a'),
     secondaryTitles    : $(':nth-child(8) .shrinksizer-new .redeemheading'),
     secondaryKeys      : $(':nth-child(8) .shrinksizer-new .keyfield'),
+    tertiaryTitles     : $(':nth-child(7) .shrinksizer-new .redeemheading'),
+    tertiaryKeys       : $(':nth-child(7) .shrinksizer-new .keyfield'),
     icons              : $('div.icn'),
     windls             : $('div.js-platform.downloads.windows div.download-buttons'),
     macdls             : $('div.js-platform.downloads.mac div.download-buttons'),
@@ -738,6 +740,35 @@ var rfsbundlescraper = {
         }
       }
 
+      console.log('-------- TERTIARY ITEMS --------');
+      if(this.tertiaryTitles.length > 0)
+      {
+        console.log('found tertiary titles');
+
+        for(k=0; k < this.tertiaryKeys.length; k++)
+        {
+          item = {
+            name: '',
+            name_slug: '',
+            keys: []
+          };
+
+          key = {};
+
+          item.name = this.tertiaryTitles[k].innerText;
+          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
+
+          key.bundle_url = window.location.href;
+          key.key = this.tertiaryKeys[k].innerText;
+
+          console.log('adding the first key to ' +  this.tertiaryTitles[k].innerText);
+          item.keys.push(key);
+
+          this.bundle.items.push(item);
+          console.log(k + ". " + item.name);
+        }
+      }
+
       console.log('-------- DRM FREE --------');
       for(i = 0; i < this.drm_free_titles.length; i++)
       {
@@ -862,7 +893,30 @@ var rfsbundlescraper = {
           item.keys.push(key);
 
           console.log(k + ". " + item.name);
-//          this.bundle.items.push(item);
+          i++;
+        }
+      }
+
+      console.log('-------- TERTIARY ITEMS --------');
+      if(this.tertiaryTitles.length > 0)
+      {
+        console.log('found tertiary titles');
+        for(k=0; i < (this.tertiaryKeys.length + this.giftLinks.length + this.secondaryKeys.length);k++)
+        {
+          item = rfsbundlescraper.bundle.items[i];
+
+          key = {};
+
+          item.name = this.tertiaryTitles[k].innerText;
+          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
+
+          key.bundle_url = window.location.href;
+          key.key = this.tertiaryKeys[k].innerText;
+
+          console.log('adding another key to ' +  this.tertiaryTitles[k].innerText);
+          item.keys.push(key);
+
+          console.log(k + ". " + item.name);
           i++;
         }
       }
