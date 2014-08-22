@@ -1,4 +1,4 @@
-var VERSION = '0.8221415';
+var VERSION = '0.8221416';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -771,7 +771,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- GOG TAB ITEMS --------');
-      var gogTabTitles = $('#gog-tab');
+      var gogTabTitles = $('#gog-tab .redeemheading');
       var gogTabKeys = $('#gog-tab .keyfield');
 
       if(gogTabTitles.length > 0)
