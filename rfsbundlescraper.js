@@ -1,4 +1,4 @@
-var VERSION = '0.8221605';
+var VERSION = '0.8221615';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -6,8 +6,6 @@ Array.prototype.clear = function () {
     this.pop();
   }
 };
-
-
 
 var rfsbundlescraper = {
 
@@ -630,8 +628,8 @@ var rfsbundlescraper = {
 
     init: function (){
       'use strict';
-      this.titles.clear();
-      this.giftLinks.clear();
+      this.titles.length = 0;
+      this.giftLinks.length = 0;
       this.bundle = {};
 
       var bundle_name = $('title').text();
