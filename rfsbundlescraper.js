@@ -1017,9 +1017,10 @@ var rfsbundlescraper = {
             else if(type == "Comedy")   { platform.comedy.push(info);  }
             else if(type == "eBook")    { platform.ebook.push(info);   }
             var cleanPlatform = this.cleanup(platform);
-            console.log(item);
+
             item.platforms.push(cleanPlatform);
             item.platforms = this.removeDupeProperties(item.platforms);
+            console.log(item);
 //            item.platforms = this.cleanup(item.platforms);
           }
         }
