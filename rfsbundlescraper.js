@@ -1,4 +1,4 @@
-var VERSION = '0.8221356';
+var VERSION = '0.8221415';
 
 Array.prototype.clear = function () {
   'use strict';
@@ -596,7 +596,7 @@ var rfsbundlescraper = {
       {
         if(rfsbundlescraper.bundle.name === $('title').text().replace(' (pay what you want and help charity)', '')){
           this.combine = true;
-          console.log('detected same bundle. Flipping combine bool');
+          console.log('detected same bundle. Changing to combine mode');
         }
       }
 
@@ -634,11 +634,7 @@ var rfsbundlescraper = {
 
       this.bundle.items = [];
 
-      if(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle) == null)
-      {
-        localStorage.setItem(rfsbundlescraper.utils.json_names.humblebundle,"[]");
-      }
-      else
+      if(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle) != null)
       {
         console.log(rfsbundlescraper.utils.json_names.humblebundle + " found in Local Storage");
         this.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
@@ -672,7 +668,7 @@ var rfsbundlescraper = {
       }
 
       console.log('-------- MAIN BODY ITEMS --------');
-      b: for(i = 0; i < this.giftLinks.length; i++)
+      for(i = 0; i < this.giftLinks.length; i++)
       {
 
         key = {
@@ -700,7 +696,7 @@ var rfsbundlescraper = {
         if(key.key.match(/Click the button to redeem on Steam/))
         {
           i = this.giftLinks.length + 3;
-          continue b;
+          continue;
         }
 
         key.bundle_url = window.location.href;
@@ -767,6 +763,38 @@ var rfsbundlescraper = {
           key.key = this.tertiaryKeys[k].innerText;
 
           console.log('adding the first key to ' +  this.tertiaryTitles[k].innerText);
+          item.keys.push(key);
+
+          this.bundle.items.push(item);
+          console.log(k + ". " + item.name);
+        }
+      }
+
+      console.log('-------- GOG TAB ITEMS --------');
+      var gogTabTitles = $('#gog-tab');
+      var gogTabKeys = $('#gog-tab .keyfield');
+
+      if(gogTabTitles.length > 0)
+      {
+        console.log('found gog-tab titles');
+
+        for(k=0; k < gogTabKeys.length; k++)
+        {
+          item = {
+            name: '',
+            name_slug: '',
+            keys: []
+          };
+
+          key = {};
+
+          item.name = gogTabTitles[k].innerText;
+          item.name_slug = rfsbundlescraper.utils.convertToSlug(gogTabTitles[k].innerText);
+
+          key.bundle_url = window.location.href;
+          key.key = gogTabKeys[k].innerText;
+
+          console.log('adding the first key to ' +  gogTabTitles[k].innerText);
           item.keys.push(key);
 
           this.bundle.items.push(item);
@@ -855,7 +883,7 @@ var rfsbundlescraper = {
         if(key.key.match(/Click the button to redeem on Steam/))
         {
           i = this.giftLinks.length + 3;
-          continue a;
+          continue;
         }
 
         key.bundle_url = window.location.href;
