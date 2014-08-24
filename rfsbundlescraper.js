@@ -1,4 +1,4 @@
-var VERSION = '0.8241800';
+var VERSION = '0.8241805';
 
 var rfsbundlescraper = {
 
@@ -6,8 +6,8 @@ var rfsbundlescraper = {
   exists: false,
   debug: true,
   bundle: {
-    name: '',
-    name_slug: '',
+    title: '',
+    title_slug: '',
     site: '',
     games: []
   },
@@ -231,8 +231,8 @@ var rfsbundlescraper = {
         console.log(rfsbundlescraper.bundle);
       }
 
-      rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
-      rfsbundlescraper.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.name);
+      rfsbundlescraper.bundle.title = $('.text_align_center h2')[0].innerText;
+      rfsbundlescraper.bundle.title_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.title);
       rfsbundlescraper.bundle.site = "IndieGala";
       rfsbundlescraper.bundle.games = [];
 
@@ -572,7 +572,7 @@ var rfsbundlescraper = {
       }
 
       if (rfsbundlescraper.bundle != undefined) {
-        if (rfsbundlescraper.bundle.name === $('title').text().replace(' (pay what you want and help charity)', '')) {
+        if (rfsbundlescraper.bundle.title === $('title').text().replace(' (pay what you want and help charity)', '')) {
           this.combine = true;
           console.log('detected same bundle. Changing to combine mode');
         }
@@ -604,8 +604,8 @@ var rfsbundlescraper = {
 
       var bundle_name = $('title').text();
 
-      this.bundle.name = bundle_name.replace(' (pay what you want and help charity)', '');
-      this.bundle.name_slug = rfsbundlescraper.utils.convertToSlug(this.bundle.name);
+      this.bundle.title = bundle_name.replace(' (pay what you want and help charity)', '');
+      this.bundle.title_slug = rfsbundlescraper.utils.convertToSlug(this.bundle.title);
       this.bundle.site = "Humble Bundle";
       this.bundle.url = $(location).attr('href');
 
@@ -656,8 +656,8 @@ var rfsbundlescraper = {
         };
 
         item.keys = [];
-        item.name = this.titles[i].textContent;
-        item.name_slug = rfsbundlescraper.utils.convertToSlug(item.name);
+        item.title = this.titles[i].textContent;
+        item.title_slug = rfsbundlescraper.utils.convertToSlug(item.title);
 
         if (!keys) {
           key.key = this.giftLinks[i].href;
@@ -673,12 +673,12 @@ var rfsbundlescraper = {
 
         key.bundle_url = window.location.href;
 
-        console.log('adding the first key to ' + item.name);
+        console.log('adding the first key to ' + item.title);
         item.keys.push(key);
 
         this.bundle.items.push(item);
 
-        console.log(i + ". " + item.name);
+        console.log(i + ". " + item.title);
       }
 
       console.log('-------- SECONDARY ITEMS --------');
@@ -694,8 +694,8 @@ var rfsbundlescraper = {
 
           key = {};
 
-          item.name = this.secondaryTitles[k].innerText;
-          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
+          item.title = this.secondaryTitles[k].innerText;
+          item.title_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
 
           key.bundle_url = window.location.href;
           key.key = this.secondaryKeys[k].innerText;
@@ -704,7 +704,7 @@ var rfsbundlescraper = {
           item.keys.push(key);
 
           this.bundle.items.push(item);
-          console.log(k + ". " + item.name);
+          console.log(k + ". " + item.title);
         }
       }
 
@@ -727,8 +727,8 @@ var rfsbundlescraper = {
 
           key = {};
 
-          item.name = this.tertiaryTitles[k].innerText;
-          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
+          item.title = this.tertiaryTitles[k].innerText;
+          item.title_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
 
           key.bundle_url = window.location.href;
           key.key = this.tertiaryKeys[k].innerText;
@@ -737,7 +737,7 @@ var rfsbundlescraper = {
           item.keys.push(key);
 
           this.bundle.items.push(item);
-          console.log(k + ". " + item.name);
+          console.log(k + ". " + item.title);
         }
       }
 
@@ -757,8 +757,8 @@ var rfsbundlescraper = {
 
           key = {};
 
-          item.name = gogTabTitles[k].innerText;
-          item.name_slug = rfsbundlescraper.utils.convertToSlug(gogTabTitles[k].innerText);
+          item.title = gogTabTitles[k].innerText;
+          item.title_slug = rfsbundlescraper.utils.convertToSlug(gogTabTitles[k].innerText);
 
           key.bundle_url = window.location.href;
           key.key = gogTabKeys[k].innerText;
@@ -767,7 +767,7 @@ var rfsbundlescraper = {
           item.keys.push(key);
 
           this.bundle.items.push(item);
-          console.log(k + ". " + item.name);
+          console.log(k + ". " + item.title);
         }
       }
 
@@ -863,11 +863,11 @@ var rfsbundlescraper = {
           }
         }
 
-        console.log('adding another key to ' + rfsbundlescraper.bundle.items[i].name);
+        console.log('adding another key to ' + rfsbundlescraper.bundle.items[i].title);
 
         rfsbundlescraper.bundle.items[i].keys.push(key);
 
-        console.log(i + ". " + rfsbundlescraper.bundle.items[i].name);
+        console.log(i + ". " + rfsbundlescraper.bundle.items[i].title);
       }
 
       console.log('-------- SECONDARY ITEMS --------');
@@ -882,8 +882,8 @@ var rfsbundlescraper = {
 
           key = {};
 
-          item.name = this.secondaryTitles[k].innerText;
-          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
+          item.title = this.secondaryTitles[k].innerText;
+          item.title_slug = rfsbundlescraper.utils.convertToSlug(this.secondaryTitles[k].innerText);
 
           key.bundle_url = window.location.href;
           key.key = this.secondaryKeys[k].innerText;
@@ -891,7 +891,7 @@ var rfsbundlescraper = {
           console.log('adding another key to ' + this.secondaryTitles[k].innerText);
           item.keys.push(key);
 
-          console.log(k + ". " + item.name);
+          console.log(k + ". " + item.title);
           i++;
         }
       }
@@ -914,8 +914,8 @@ var rfsbundlescraper = {
 
           key = {};
 
-          item.name = this.tertiaryTitles[k].innerText;
-          item.name_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
+          item.title = this.tertiaryTitles[k].innerText;
+          item.title_slug = rfsbundlescraper.utils.convertToSlug(this.tertiaryTitles[k].innerText);
 
           key.bundle_url = window.location.href;
           key.key = this.tertiaryKeys[k].innerText;
@@ -923,7 +923,7 @@ var rfsbundlescraper = {
           console.log('adding another key to ' + this.tertiaryTitles[k].innerText);
           item.keys.push(key);
 
-          console.log(k + ". " + item.name);
+          console.log(k + ". " + item.title);
           i++;
         }
       }
