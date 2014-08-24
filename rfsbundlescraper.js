@@ -1,4 +1,4 @@
-var VERSION = '0.8242105';
+var VERSION = '0.8242110';
 
 var rfsbundlescraper = {
 
@@ -809,35 +809,35 @@ var rfsbundlescraper = {
 
         $.each(windl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(macdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Mac');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(linuxdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Linux');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(androiddl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Android');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(audiodl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Audio');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(comedydl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Comedy');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
         $.each(ebookdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'eBook');
-          rfsbundlescraper.bundle.items.push(item);
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
       }
 
-//      rfsbundlescraper.bundle = this.bundle;
+      rfsbundlescraper.bundle = rfsbundlescraper.humblebundle.bundle;
 
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
 
