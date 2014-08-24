@@ -1,4 +1,4 @@
-var VERSION = '0.8241552';
+var VERSION = '0.8241555';
 
 var rfsbundlescraper = {
 
@@ -267,7 +267,7 @@ var rfsbundlescraper = {
 
           this.cleanup()
         }
-        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
+//        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
         rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.indiegala);
       }
       else {
@@ -426,7 +426,7 @@ var rfsbundlescraper = {
 
       for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
 //        console.log(rfsbundlescraper.bundle);
-        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
+//        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
 //      console.log(rfsbundlescraper.bundle);
