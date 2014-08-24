@@ -1,4 +1,4 @@
-var VERSION = '0.8242120';
+var VERSION = '0.8242125';
 
 var rfsbundlescraper = {
 
@@ -622,8 +622,8 @@ var rfsbundlescraper = {
 
       var i, keys = false;
       var item = {
-        name: '',
-        name_slug: '',
+        title: '',
+        title_slug: '',
         keys: []
       };
       var key = {};
@@ -866,6 +866,8 @@ var rfsbundlescraper = {
         if (value.hasAttribute('data-md5'))
           info.hash = value.attributes['data-md5']['value'];
       }
+
+      item.platforms.push(info);
     },
 
     run_combine: function () {
