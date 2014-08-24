@@ -1,4 +1,4 @@
-var VERSION = '0.8241645';
+var VERSION = '0.8241655';
 
 var rfsbundlescraper = {
 
@@ -264,17 +264,14 @@ var rfsbundlescraper = {
           this.gatherDRMFreeGames();
           this.gatherMusicTracks();
           this.gatherAndroidGames();
-
-//          this.cleanup()
         }
 //        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
         rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.indiegala);
       }
       else {
         console.log('It\'s the same bundle dude!');
+        rfsbundlescraper.utils.readFromLS();
       }
-
-      rfsbundlescraper.utils.readFromLS();
     },
 
     gatherDRMGames: function () {
