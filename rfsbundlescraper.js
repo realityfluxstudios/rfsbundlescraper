@@ -1,4 +1,4 @@
-var VERSION = '0.8241555';
+var VERSION = '0.8241558';
 
 var rfsbundlescraper = {
 
@@ -265,7 +265,7 @@ var rfsbundlescraper = {
           this.gatherMusicTracks();
           this.gatherAndroidGames();
 
-          this.cleanup()
+//          this.cleanup()
         }
 //        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
         rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.indiegala);
