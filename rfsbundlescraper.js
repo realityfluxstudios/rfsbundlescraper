@@ -1,4 +1,4 @@
-var VERSION = '0.8241410';
+var VERSION = '0.8241430';
 
 var rfsbundlescraper = {
 
@@ -207,7 +207,7 @@ var rfsbundlescraper = {
       if ($('#rfs-container').length == 0)
         rfsbundlescraper.utils.add_floating_textarea();
 
-      if (localStorage.getItem('rfsigbundle') != null) {
+      if (localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala) != null) {
         rfsbundlescraper.combine = true;
         console.log('Loading existing bundle');
         rfsbundlescraper.utils.readFromLS();
@@ -220,7 +220,9 @@ var rfsbundlescraper = {
         }
       }
       else {
+        rfsbundlescraper.combine = false;
         console.log('No existing bundle...');
+        console.log(rfsbundlescraper.bundle);
       }
 
       rfsbundlescraper.bundle.name = $('.text_align_center h2')[0].innerText;
@@ -265,6 +267,7 @@ var rfsbundlescraper = {
     },
 
     gatherDRMGames: function () {
+      console.log(rfsbundlescraper.bundle);
 
       var titles = $('.title_game a');
       var drm, game, key;
@@ -1096,5 +1099,7 @@ var rfsbundlescraper = {
     }
   }
 };
+
+console.log(rfsbundlescraper.bundle);
 
 rfsbundlescraper.run();
