@@ -1,4 +1,4 @@
-var VERSION = '0.8241655';
+var VERSION = '0.8241700';
 
 var rfsbundlescraper = {
 
@@ -47,7 +47,6 @@ var rfsbundlescraper = {
     firstReload: true,
     rfsSettingsTextHeight: 400,
     rfsSettingsTextWidth: 315,
-    rfsSettingsAutoClick: true,
 
     appendText: function (value) {
       $('#rfs-games-list').val($('#rfs-games-list').val() + value);
@@ -134,6 +133,7 @@ var rfsbundlescraper = {
 
     saveToLS: function (bundle) {
       localStorage.setItem(bundle, JSON.stringify(rfsbundlescraper.bundle, null, 2));
+      console.log('calling readfromLS() from saveToLS()');
       rfsbundlescraper.utils.readFromLS();
     },
 
@@ -143,7 +143,6 @@ var rfsbundlescraper = {
 
       localStorage.removeItem('rfsSettingsTextHeight');
       localStorage.removeItem('rfsSettingsTextWidth');
-      localStorage.removeItem('rfsSettingsAutoClick');
 
       rfsbundlescraper.bundle = {};
       this.appendText("Local Storage Cleared");
@@ -216,9 +215,9 @@ var rfsbundlescraper = {
 
       if (localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala) != null) {
         rfsbundlescraper.combine = true;
-        console.log('Loading existing bundle');
+        console.log('Loading existing bundle calling readFromLS()');
         rfsbundlescraper.utils.readFromLS();
-        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
+//        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
         console.log('bundle.games.length: ' + rfsbundlescraper.bundle.games.length);
 
         if (rfsbundlescraper.bundle.url === window.location.href) {
@@ -251,8 +250,7 @@ var rfsbundlescraper = {
       do
       {
         if (rfsbundlescraper.utils.ig_giftLinks.length >= 1 &&
-          rfsbundlescraper.utils.interval == 0 &&
-          localStorage.getItem('rfsSettingsAutoClick') === 'true') {
+          rfsbundlescraper.utils.interval == 0) {
           this.clickGiftImages();
         }
       } while (rfsbundlescraper.utils.ig_giftLinks.length > 0 && rfsbundlescraper.utils.interval != 0);
@@ -270,6 +268,7 @@ var rfsbundlescraper = {
       }
       else {
         console.log('It\'s the same bundle dude!');
+        console.log('this.exists == true');
         rfsbundlescraper.utils.readFromLS();
       }
     },
@@ -426,7 +425,8 @@ var rfsbundlescraper = {
 //        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
-//      console.log(rfsbundlescraper.bundle);
+      console.log(rfsbundlescraper.bundle);
+      console.log('end of gatherDRMgames()');
       rfsbundlescraper.utils.readFromLS();
     },
 
