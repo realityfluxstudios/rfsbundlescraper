@@ -1,11 +1,4 @@
-var VERSION = '0.8221930';
-
-Array.prototype.clear = function () {
-  'use strict';
-  while (this.length > 0) {
-    this.pop();
-  }
-};
+var VERSION = '0.8241205';
 
 var rfsbundlescraper = {
 
@@ -252,8 +245,6 @@ var rfsbundlescraper = {
 
       this.ig_init();
 
-      console.log('localStorage.getItem(\'rfsSettingsAutoClick\'): ' + localStorage.getItem('rfsSettingsAutoClick'));
-
       do
       {
         if(rfsbundlescraper.utils.ig_giftLinks.length >= 1 &&
@@ -312,6 +303,14 @@ var rfsbundlescraper = {
             game = rfsbundlescraper.bundle.games[i];
             console.log('Combining ' + rfsbundlescraper.bundle.games[i].title);
           } else {
+
+            rfsbundlescraper.bundle = {
+              name: '',
+              name_slug: '',
+              site: '',
+              games: []
+            };
+
             game = {
               title: '',
               title_slug: '',
