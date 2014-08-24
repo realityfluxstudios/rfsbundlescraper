@@ -346,7 +346,8 @@ var rfsbundlescraper = {
             game.title = titles[i].text;
             game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
             game.store_url = titles[i].href;
-            console.log('titles[' + i + ']: \n' + titles[i]);
+            console.log('titles[' + i + '].text');
+            console.log(titles[i].text);
             rfsbundlescraper.bundle.games.push(game);
             console.log('rfsbundlescraper.bundle: \n' + rfsbundlescraper.bundle);
           }
