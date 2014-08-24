@@ -1,4 +1,4 @@
-var VERSION = '0.8241715';
+var VERSION = '0.8241800';
 
 var rfsbundlescraper = {
 
@@ -133,8 +133,8 @@ var rfsbundlescraper = {
 
     saveToLS: function (bundle) {
       localStorage.setItem(bundle, JSON.stringify(rfsbundlescraper.bundle, null, 2));
-      console.log('calling readfromLS() from saveToLS()');
-      rfsbundlescraper.utils.readFromLS();
+
+      $('#rfs-games-list').val(JSON.stringify(rfsbundlescraper.bundle, null, 2));
     },
 
     removeFromLS: function () {
