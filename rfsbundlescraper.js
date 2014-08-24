@@ -1,4 +1,4 @@
-var VERSION = '0.8241815';
+var VERSION = '0.8241843';
 
 var rfsbundlescraper = {
 
@@ -797,24 +797,77 @@ var rfsbundlescraper = {
 
         console.log(i + ". " + item.title);
 
-        var thisPlatform = {};
+////        var thisPlatform = {};
+//
+//        item = this.process(item, windl, "Windows");
+//        item = this.process(item, macdl, "Mac");
+//        item = this.process(item, linuxdl, "Linux");
+//        item = this.process(item, androiddl, "Android");
+//        item = this.process(item, audiodl, "Audio");
+//        item = this.process(item, comedydl, 'Comedy');
+//        item = this.process(item, ebookdl, 'eBook');
 
-        item = this.process(item, thisPlatform, windl, "Windows");
-        item = this.process(item, thisPlatform, macdl, "Mac");
-        item = this.process(item, thisPlatform, linuxdl, "Linux");
-        item = this.process(item, thisPlatform, androiddl, "Android");
-        item = this.process(item, thisPlatform, audiodl, "Audio");
-        item = this.process(item, thisPlatform, comedydl, 'Comedy');
-        item = this.process(item, thisPlatform, ebookdl, 'eBook');
-
-        this.bundle.items.push(item);
+        $.each(windl, function(index, value){
+          item = this.new_process(value, 'Windows');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(macdl, function(index, value){
+          item = this.new_process(value, 'Mac');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(linuxdl, function(index, value){
+          item = this.new_process(value, 'Linux');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(androiddl, function(index, value){
+          item = this.new_process(value, 'Android');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(audiodl, function(index, value){
+          item = this.new_process(value, 'Audio');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(comedydl, function(index, value){
+          item = this.new_process(value, 'Comedy');
+          rfsbundlescraper.bundle.items.push(item);
+        });
+        $.each(ebookdl, function(index, value){
+          item = this.new_process(value, 'eBook');
+          rfsbundlescraper.bundle.items.push(item);
+        });
       }
 
-      rfsbundlescraper.bundle = this.bundle;
+//      rfsbundlescraper.bundle = this.bundle;
 
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
 
       rfsbundlescraper.utils.readFromLS();
+    },
+
+    new_process: function(value, platform){
+      if (value.className !== "custom-download-text") {
+        var info = {};
+        info.platform = platform;
+        item.platforms = [];
+
+        if (value.children[0].childElementCount > 0)
+          info.format = value.children[0].children[1].innerHTML;
+        if (value.children[1].children[0].childElementCount > 0)
+          info.size = value.children[1].children[0].children[0].innerHTML;
+
+        var dllinks = value.children[0].children[2];
+
+        if (dllinks.hasAttribute('data-web'))
+          info.http = dllinks.attributes['data-web']['value'];
+
+        if (dllinks.hasAttribute('data-bt'))
+          info.bt = dllinks.attributes['data-bt']['value'];
+
+        if (value.hasAttribute('data-md5'))
+          info.hash = value.attributes['data-md5']['value'];
+      }
+      return info;
+
     },
 
     run_combine: function () {
@@ -933,7 +986,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.utils.readFromLS();
     },
 
-    process: function (item, platform, platformdl, type) {
+    process: function (item, platformdl, type) {
       'use strict';
 //      if (type === "Windows")
 //        platform.windows = [];
@@ -958,7 +1011,7 @@ var rfsbundlescraper = {
             item.platforms = [];
 
             if (platformdl.children[j].children[0].childElementCount > 0)
-              info.type = platformdl.children[j].children[0].children[1].innerHTML;
+              info.format = platformdl.children[j].children[0].children[1].innerHTML;
             if (platformdl.children[j].children[1].children[0].childElementCount > 0)
               info.size = platformdl.children[j].children[1].children[0].children[0].innerHTML;
 
@@ -973,7 +1026,7 @@ var rfsbundlescraper = {
             if (platformdl.children[j].hasAttribute('data-md5'))
               info.hash = platformdl.children[j].attributes['data-md5']['value'];
 
-            item.platforms.push(info);
+//            item.platforms.push(info);
 
 //            if (type == "Windows") {
 //              platform.windows.push(info);
