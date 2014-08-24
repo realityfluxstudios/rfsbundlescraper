@@ -1,4 +1,4 @@
-var VERSION = '0.8241558';
+var VERSION = '0.8241645';
 
 var rfsbundlescraper = {
 
@@ -185,7 +185,7 @@ var rfsbundlescraper = {
 
     readFromLS: function () {
       console.log('readFromLS()');
-
+      console.log(rfsbundlescraper.bundle);
       if (rfsbundlescraper.bundle != null) {
         console.log('-- if(rfsbundlescraper.bundle == null');
         console.log('rfsbundlescraper.bundle');
