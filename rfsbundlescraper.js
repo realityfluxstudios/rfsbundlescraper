@@ -1,4 +1,4 @@
-var VERSION = '0.8241205';
+var VERSION = '0.8241340';
 
 var rfsbundlescraper = {
 
@@ -348,6 +348,7 @@ var rfsbundlescraper = {
             game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
             game.store_url = titles[i].href;
             rfsbundlescraper.bundle.games.push(game);
+            console.log(rfsbundlescraper.bundle);
           }
         }
       }
@@ -415,9 +416,11 @@ var rfsbundlescraper = {
       }
 
       for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
+        console.log(rfsbundlescraper.bundle);
         rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
+      console.log(rfsbundlescraper.bundle);
       rfsbundlescraper.utils.readFromLS();
     },
 
