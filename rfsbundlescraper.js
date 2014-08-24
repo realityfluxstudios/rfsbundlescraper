@@ -1,4 +1,4 @@
-var VERSION = '0.8241533';
+var VERSION = '0.8241550';
 
 var rfsbundlescraper = {
 
@@ -512,11 +512,11 @@ var rfsbundlescraper = {
     },
 
     cleanup: function () {
-      if (rfsbundlescraper.bundle.drmFreeGames.length == 0)
+      if (rfsbundlescraper.bundle.hasOwnProperty('drmFreeGames'))
         delete rfsbundlescraper.bundle.drmFreeGames;
-      if (rfsbundlescraper.bundle.musictracks.length == 0)
+      if (rfsbundlescraper.bundle.hasOwnProperty('musictracks'))
         delete rfsbundlescraper.bundle.musictracks;
-      if (rfsbundlescraper.bundle.androidgames.length == 0)
+      if (rfsbundlescraper.bundle.hasOwnProperty('androidgames'))
         delete rfsbundlescraper.bundle.androidgames;
     },
 
