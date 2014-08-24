@@ -1,4 +1,4 @@
-var VERSION = '0.8241700';
+var VERSION = '0.8241715';
 
 var rfsbundlescraper = {
 
@@ -420,14 +420,15 @@ var rfsbundlescraper = {
         }
       }
 
-      for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
+//      for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
 //        console.log(rfsbundlescraper.bundle);
 //        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
-      }
+//      }
 
-      console.log(rfsbundlescraper.bundle);
-      console.log('end of gatherDRMgames()');
-      rfsbundlescraper.utils.readFromLS();
+//      console.log(rfsbundlescraper.bundle);
+//      console.log('end of gatherDRMgames()');
+//      rfsbundlescraper.utils.readFromLS();
+      rfsbundlescraper.utils.saveToLS();
     },
 
     gatherDRMFreeGames: function () {
