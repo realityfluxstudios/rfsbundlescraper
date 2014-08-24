@@ -1,4 +1,4 @@
-var VERSION = '0.8241845';
+var VERSION = '0.8242100';
 
 var rfsbundlescraper = {
 
@@ -808,31 +808,31 @@ var rfsbundlescraper = {
 //        item = this.process(item, ebookdl, 'eBook');
 
         $.each(windl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Windows');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(macdl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Mac');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Mac');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(linuxdl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Linux');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Linux');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(androiddl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Android');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Android');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(audiodl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Audio');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Audio');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(comedydl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'Comedy');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Comedy');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(ebookdl, function(index, value){
-          item = rfsbundlescraper.humblebundle.new_process(value, 'eBook');
+          rfsbundlescraper.humblebundle.new_process(item, value, 'eBook');
           rfsbundlescraper.bundle.items.push(item);
         });
       }
@@ -844,7 +844,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.utils.readFromLS();
     },
 
-    new_process: function(value, platform){
+    new_process: function(item, value, platform){
       if (value.className !== "custom-download-text") {
         var info = {};
         info.platform = platform;
@@ -866,8 +866,6 @@ var rfsbundlescraper = {
         if (value.hasAttribute('data-md5'))
           info.hash = value.attributes['data-md5']['value'];
       }
-      return info;
-
     },
 
     run_combine: function () {
