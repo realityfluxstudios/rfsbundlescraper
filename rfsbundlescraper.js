@@ -1,4 +1,4 @@
-var VERSION = '0.8242125';
+var VERSION = '0.8242135';
 
 var rfsbundlescraper = {
 
@@ -809,32 +809,38 @@ var rfsbundlescraper = {
 
         $.each(windl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(macdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Mac');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(linuxdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Linux');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(androiddl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Android');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(audiodl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(item, value, 'Audio');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
+          item = rfsbundlescraper.humblebundle.new_process(item, value, 'Audio');
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(comedydl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Comedy');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
         $.each(ebookdl.children, function(index, value){
           rfsbundlescraper.humblebundle.new_process(item, value, 'eBook');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
         });
+        rfsbundlescraper.humblebundle.bundle.items.push(item);
       }
 
       rfsbundlescraper.bundle = rfsbundlescraper.humblebundle.bundle;
@@ -845,6 +851,7 @@ var rfsbundlescraper = {
     },
 
     new_process: function(item, value, platform){
+
       if (value.className !== "custom-download-text") {
         var info = {};
         info.platform = platform;
