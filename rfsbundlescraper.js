@@ -463,69 +463,80 @@ var rfsbundlescraper = {
       var drmFreeGamesPlatforms = $('#drm-free-games #stringa-music-key .title_dev');
       var drmFreeGamesDLLink = $('#drm-free-games #stringa-music-key .button');
 
-      rfsbundlescraper.bundle.drmFreeGames = [];
-      var drmFreeGame;
+      if(drmFreeGames.length > 0){
+        rfsbundlescraper.bundle.drmFreeGames = [];
+        var drmFreeGame;
 
-      for(var i = 0; i < drmFreeGames.length; i++)
-      {
-        drmFreeGame = {};
-        drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        drmFreeGame.title_slug = rfsbundlescraper.utils.convertToSlug(drmFreeGame.title);
-        drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
-        drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
+        for(var i = 0; i < drmFreeGames.length; i++)
+        {
+          drmFreeGame = {};
+          drmFreeGame.title = drmFreeGamesTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+          drmFreeGame.title_slug = rfsbundlescraper.utils.convertToSlug(drmFreeGame.title);
+          drmFreeGame.platform = drmFreeGamesPlatforms[i].innerText;
+          drmFreeGame.dllink = drmFreeGamesDLLink[i].href;
 
-        rfsbundlescraper.bundle.drmFreeGames.push(drmFreeGame);
+          rfsbundlescraper.bundle.drmFreeGames.push(drmFreeGame);
+        }
       }
     },
 
     gatherMusicTracks: function()  {
 
-      rfsbundlescraper.bundle.musictracks = [];
+
       var musictrack;
 
       var musicTracks = $('#music #stringa-music-key');
       var musicTitles = $('#music #stringa-music-key .title_music');
       var musicDev = $('#music #stringa-music-key .title_dev');
 
-      for(var i = 0; i < musicTracks.length; i++)
-      {
-        musictrack = {};
-        /* forgive the magic numbers in the arrays. they are necessary to drill down to the location of the given required information */
-        var MP3DLLink = $('#music .span-keys')[i].children[0].children[0].children[0].href;
-        var MP3DLLinkText = $('#music .span-keys')[i].children[0].children[0].children[1].innerText;
+      if(musicTracks.length > 0){
+        rfsbundlescraper.bundle.musictracks = [];
 
-        var FLACDLLink = $('#music .span-keys')[i].children[1].children[0].children[0].href;
-        var FLACDLLinkText = $('#music .span-keys')[i].children[1].children[0].children[1].innerText;
 
-        musictrack.title = musicTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        musictrack.title_slug = rfsbundlescraper.utils.convertToSlug(musictrack.title);
-        musictrack.dev = musicDev[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        musictrack.dev_slug = rfsbundlescraper.utils.convertToSlug(musictrack.dev);
+        for(var i = 0; i < musicTracks.length; i++)
+        {
+          musictrack = {};
+          /* forgive the magic numbers in the arrays. they are necessary to drill down to the location of the given required information */
+          var MP3DLLink = $('#music .span-keys')[i].children[0].children[0].children[0].href;
+          var MP3DLLinkText = $('#music .span-keys')[i].children[0].children[0].children[1].innerText;
 
-        musictrack.mp3dllink = MP3DLLink;
-        musictrack.mp3type = MP3DLLinkText;
-        musictrack.flacdllink = FLACDLLink;
-        musictrack.flactype = FLACDLLinkText;
+          var FLACDLLink = $('#music .span-keys')[i].children[1].children[0].children[0].href;
+          var FLACDLLinkText = $('#music .span-keys')[i].children[1].children[0].children[1].innerText;
 
-        rfsbundlescraper.bundle.musictracks.push(musictrack);
+          musictrack.title = musicTitles[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+          musictrack.title_slug = rfsbundlescraper.utils.convertToSlug(musictrack.title);
+          musictrack.dev = musicDev[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+          musictrack.dev_slug = rfsbundlescraper.utils.convertToSlug(musictrack.dev);
+
+          musictrack.mp3dllink = MP3DLLink;
+          musictrack.mp3type = MP3DLLinkText;
+          musictrack.flacdllink = FLACDLLink;
+          musictrack.flactype = FLACDLLinkText;
+
+          rfsbundlescraper.bundle.musictracks.push(musictrack);
+        }
       }
     },
 
     gatherAndroidGames: function()  {
-      rfsbundlescraper.bundle.androidgames = [];
+
       var androidgame;
 
       var androidGameTitle = $('#android #stringa-android-key .title_game');
       var androidGameLink = $('#android #stringa-android-key .button');
 
-      for(var i = 0; i< androidGameTitle.length; i++)
-      {
-        androidgame = {};
-        androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
-        androidgame.title_slug = rfsbundlescraper.utils.convertToSlug(androidgame.title);
-        androidgame.dllink = androidGameLink[i].href;
+      if(androidGameTitle.length > 0){
+        rfsbundlescraper.bundle.androidgames = [];
 
-        rfsbundlescraper.bundle.androidgames.push(androidgame);
+        for(var i = 0; i< androidGameTitle.length; i++)
+        {
+          androidgame = {};
+          androidgame.title = androidGameTitle[i].innerText.replace(/\t/g, '').replace(/\n/g,'').replace(/  /g,'');
+          androidgame.title_slug = rfsbundlescraper.utils.convertToSlug(androidgame.title);
+          androidgame.dllink = androidGameLink[i].href;
+
+          rfsbundlescraper.bundle.androidgames.push(androidgame);
+        }
       }
     },
 
