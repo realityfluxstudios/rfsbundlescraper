@@ -1,4 +1,4 @@
-var VERSION = '0.8241550';
+var VERSION = '0.8241552';
 
 var rfsbundlescraper = {
 
@@ -186,7 +186,7 @@ var rfsbundlescraper = {
     readFromLS: function () {
       console.log('readFromLS()');
 
-      if (rfsbundlescraper.bundle == null) {
+      if (rfsbundlescraper.bundle != null) {
         console.log('-- if(rfsbundlescraper.bundle == null');
         console.log('rfsbundlescraper.bundle');
         console.log(rfsbundlescraper.bundle);
@@ -237,7 +237,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.bundle.site = "IndieGala";
       rfsbundlescraper.bundle.games = [];
 
-      rfsbundlescraper.utils.readFromLS();
+//      rfsbundlescraper.utils.readFromLS();
     },
 
     ig_run: function () {
@@ -425,11 +425,11 @@ var rfsbundlescraper = {
       }
 
       for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
-        console.log(rfsbundlescraper.bundle);
+//        console.log(rfsbundlescraper.bundle);
         rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
       }
 
-      console.log(rfsbundlescraper.bundle);
+//      console.log(rfsbundlescraper.bundle);
       rfsbundlescraper.utils.readFromLS();
     },
 
