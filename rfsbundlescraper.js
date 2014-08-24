@@ -1,4 +1,4 @@
-var VERSION = '0.8241430';
+var VERSION = '0.8241533';
 
 var rfsbundlescraper = {
 
@@ -184,15 +184,22 @@ var rfsbundlescraper = {
     },
 
     readFromLS: function () {
-      if (rfsbundlescraper.bundle != null || rfsbundlescraper.bundle != undefined) {
+      console.log('readFromLS()');
+
+      if (rfsbundlescraper.bundle == null) {
+        console.log('-- if(rfsbundlescraper.bundle == null');
+        console.log('rfsbundlescraper.bundle');
+        console.log(rfsbundlescraper.bundle);
         if (rfsbundlescraper.utils.site.humblebundle)
           rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
         else if (rfsbundlescraper.utils.site.indiegala)
           rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
         $('#rfs-games-list').val(JSON.stringify(rfsbundlescraper.bundle, null, 2));
       }
-      else
+      else{
+        console.log('-- else');
         $('#rfs-games-list').val('No Bundle in Local Storage');
+      }
     }
   },
 
@@ -235,7 +242,11 @@ var rfsbundlescraper = {
 
     ig_run: function () {
 
+      console.log('before ig_init()');
+      console.log(rfsbundlescraper.bundle);
       this.ig_init();
+      console.log('after ig_init()');
+      console.log(rfsbundlescraper.bundle);
 
       do
       {
