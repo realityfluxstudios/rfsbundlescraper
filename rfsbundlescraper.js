@@ -1,4 +1,4 @@
-var VERSION = '0.8242110';
+var VERSION = '0.8242120';
 
 var rfsbundlescraper = {
 
@@ -650,8 +650,8 @@ var rfsbundlescraper = {
         };
 
         item = {
-          name: '',
-          name_slug: '',
+          title: '',
+          title_slug: '',
           keys: []
         };
 
@@ -687,8 +687,8 @@ var rfsbundlescraper = {
 
         for (var k = 0; k < this.secondaryKeys.length; k++) {
           item = {
-            name: '',
-            name_slug: '',
+            title: '',
+            title_slug: '',
             keys: []
           };
 
@@ -720,8 +720,8 @@ var rfsbundlescraper = {
           console.log('i: ' + i);
 
           item = {
-            name: '',
-            name_slug: '',
+            title: '',
+            title_slug: '',
             keys: []
           };
 
@@ -750,8 +750,8 @@ var rfsbundlescraper = {
 
         for (k = 0; k < gogTabKeys.length; k++) {
           item = {
-            name: '',
-            name_slug: '',
+            title: '',
+            title_slug: '',
             keys: []
           };
 
