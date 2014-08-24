@@ -1,4 +1,4 @@
-var VERSION = '0.8241843';
+var VERSION = '0.8241845';
 
 var rfsbundlescraper = {
 
@@ -808,31 +808,31 @@ var rfsbundlescraper = {
 //        item = this.process(item, ebookdl, 'eBook');
 
         $.each(windl, function(index, value){
-          item = this.new_process(value, 'Windows');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Windows');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(macdl, function(index, value){
-          item = this.new_process(value, 'Mac');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Mac');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(linuxdl, function(index, value){
-          item = this.new_process(value, 'Linux');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Linux');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(androiddl, function(index, value){
-          item = this.new_process(value, 'Android');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Android');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(audiodl, function(index, value){
-          item = this.new_process(value, 'Audio');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Audio');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(comedydl, function(index, value){
-          item = this.new_process(value, 'Comedy');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'Comedy');
           rfsbundlescraper.bundle.items.push(item);
         });
         $.each(ebookdl, function(index, value){
-          item = this.new_process(value, 'eBook');
+          item = rfsbundlescraper.humblebundle.new_process(value, 'eBook');
           rfsbundlescraper.bundle.items.push(item);
         });
       }
