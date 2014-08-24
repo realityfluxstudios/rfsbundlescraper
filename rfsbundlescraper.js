@@ -1,4 +1,4 @@
-var VERSION = '0.8241350';
+var VERSION = '0.8241410';
 
 var rfsbundlescraper = {
 
@@ -288,13 +288,6 @@ var rfsbundlescraper = {
           } else {
             console.log('---------- NOT COMBINING ----------');
 
-            rfsbundlescraper.bundle = {
-              name: '',
-              name_slug: '',
-              site: '',
-              games: []
-            };
-
             game = {
               title: '',
               title_slug: '',
@@ -346,10 +339,11 @@ var rfsbundlescraper = {
             game.title = titles[i].text;
             game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
             game.store_url = titles[i].href;
-            console.log('titles[' + i + '].text');
+            console.log('titles[' + i + '].text: ');
             console.log(titles[i].text);
             rfsbundlescraper.bundle.games.push(game);
-            console.log('rfsbundlescraper.bundle: \n' + rfsbundlescraper.bundle);
+            console.log('rfsbundlescraper.bundle: ');
+            console.log(rfsbundlescraper.bundle);
           }
         }
       }
