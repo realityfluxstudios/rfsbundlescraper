@@ -286,6 +286,7 @@ var rfsbundlescraper = {
             game = rfsbundlescraper.bundle.games[i];
             console.log('Combining ' + rfsbundlescraper.bundle.games[i].title);
           } else {
+            console.log('---------- NOT COMBINING ----------');
 
             rfsbundlescraper.bundle = {
               name: '',
@@ -345,8 +346,9 @@ var rfsbundlescraper = {
             game.title = titles[i].text;
             game.title_slug = rfsbundlescraper.utils.convertToSlug(game.title) + '-' + game.drm.toLowerCase();
             game.store_url = titles[i].href;
+            console.log('titles[' + i + ']: \n' + titles[i]);
             rfsbundlescraper.bundle.games.push(game);
-            console.log(rfsbundlescraper.bundle);
+            console.log('rfsbundlescraper.bundle: \n' + rfsbundlescraper.bundle);
           }
         }
       }
