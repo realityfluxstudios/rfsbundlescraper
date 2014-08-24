@@ -1,4 +1,4 @@
-var VERSION = '0.8241340';
+var VERSION = '0.8241343';
 
 var rfsbundlescraper = {
 
@@ -275,8 +275,6 @@ var rfsbundlescraper = {
       var otherKeys = $('.keys');
       var steamLinks = $('.keyfield a');
       var smalltits2 = $('.small-tits2');
-
-      rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
 
       if (steamLinks.length != 0) {
         console.log('New Bundle Type');
