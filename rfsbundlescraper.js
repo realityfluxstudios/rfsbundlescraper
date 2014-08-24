@@ -1,4 +1,4 @@
-var VERSION = '0.8242151';
+var VERSION = '0.8242206';
 
 var rfsbundlescraper = {
 
@@ -57,7 +57,7 @@ var rfsbundlescraper = {
     },
 
     add_floating_textarea: function () {
-      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Secondary: <input type="checkbox" id="secondaryItems" name="secondaryItems" value="secondary">\n        Tertiary: <input type="checkbox" id="tertiaryItems" name="tertiaryItems" value="tertiary">\n    </div>\n    <button onClick="rfsbundlescraper.utils.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utils.reloadScript();">Reload</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.rerun();">Run</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.utils.autoClickButton();" id="ig_autoclick_btn">Auto \n      Click</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="font-weight: bolder; position:fixed;bottom: 20px;z-index:1500;width: 422px;-webkit-user-select: none;right: 10px; background:black; color:white; text-align:center">\n        RFS Bundle Scraper Bookmarklet v' + VERSION + '\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
+      $('body').append('<div id="rfs-container" style="position:fixed;bottom:10px;right:10px;z-index:1000;">\n    <div id="rfsSettings" style="color:#f5f5f5;background: black; display:none">\n        Height: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextHeight" style="width:50px" value="408">\n        Width: <input onBlur="rfsbundlescraper.utils.updateSettings()" type="text" id="rfsSettingsTextWidth" style="width:50px" value="415">\n        Secondary: <input type="checkbox" id="secondaryItems" name="secondaryItems" value="secondary">\n        Tertiary: <input type="checkbox" id="tertiaryItems" name="tertiaryItems" value="tertiary">\n    </div>\n    <button onClick="rfsbundlescraper.utils.toggleSettingsDisplay()" id="rfsSettingsBtn" class="btn-info">Settings</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.utils.reloadScript();">Reload</button>\n    <button style="color: #fff;background-color: #f0ad4e;border-color: #eea236;" onClick="rfsbundlescraper.rerun();">Run</button>\n  <button style="color: #333;background-color: #fff;border-color: #ccc;" onClick="rfsbundlescraper.utils.autoClickButton();" id="ig_autoclick_btn">Auto \n      Click</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.close();">X</button>\n    <button style="color: #fff; float: right !important;background-color: #d9534f;border-color: #d43f3a;" onClick="rfsbundlescraper.utils.resetAndClear();">Reset/Clear</button>\n     <br />\n    <div id="rfsbundlescraper-version" style="font-weight: bolder; position:fixed;bottom: 3px;z-index:1500;width: 422px;-webkit-user-select: none;right: 10px; background:black; color:white; text-align:center">\n        RFS Bundle Scraper Bookmarklet v' + VERSION + '\n    </div><textarea onClick="this.select()" id="rfs-games-list" spellcheck="false" style="width: 415px; height: 408px !important; margin-bottom: 10px;"></textarea> \n    \n</div>');
     },
 
     detect_site: function () {
@@ -624,7 +624,8 @@ var rfsbundlescraper = {
       var item = {
         title: '',
         title_slug: '',
-        keys: []
+        keys: [],
+        platforms: []
       };
       var key = {};
 
