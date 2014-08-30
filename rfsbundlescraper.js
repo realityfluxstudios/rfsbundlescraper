@@ -1,4 +1,4 @@
-var VERSION = '0.8301200';
+var VERSION = '0.8301220';
 
 var rfsbundlescraper = {
 
@@ -109,7 +109,7 @@ var rfsbundlescraper = {
     },
 
     reloadScript: function () {
-      var src = "https://raw.githack.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js";
+      var src = "https://cdn.rawgit.com/realityfluxstudios/RFSBundleScraper/v1.1.1/rfsbundlescraper.js";
 
       $('#rfs-container').remove();
 
