@@ -1,4 +1,4 @@
-var VERSION = '0.8301140';
+var VERSION = '0.8301145';
 
 var rfsbundlescraper = {
 
@@ -787,87 +787,24 @@ var rfsbundlescraper = {
 
         console.log(i + ". " + item.title);
 
-////        var thisPlatform = {};
-//
-        item = this.process(item, windl, "Windows");
-        item = this.process(item, macdl, "Mac");
-        item = this.process(item, linuxdl, "Linux");
-        item = this.process(item, androiddl, "Android");
-        item = this.process(item, audiodl, "Audio");
-        item = this.process(item, comedydl, 'Comedy');
-        item = this.process(item, ebookdl, 'eBook');
+        var thisPlatform = {};
 
-//        for(i=0; i <= windl.children.length; i++){
-//          item = rfsbundlescraper.humblebundle.new_process(item, windl.children[i], 'Windows');
-//          rfsbundlescraper.humblebundle.bundle.items.push(item);
-//        }
+        item = this.process(item, thisPlatform, windl, "Windows");
+        item = this.process(item, thisPlatform, macdl, "Mac");
+        item = this.process(item, thisPlatform, linuxdl, "Linux");
+        item = this.process(item, thisPlatform, androiddl, "Android");
+        item = this.process(item, thisPlatform, audiodl, "Audio");
+        item = this.process(item, thisPlatform, comedydl, 'Comedy');
+        item = this.process(item, thisPlatform, ebookdl, 'eBook');
 
-//
-//        $.each(macdl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Mac');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
-//
-//        $.each(linuxdl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Linux');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
-//
-//        $.each(androiddl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Android');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
-//
-//        $.each(audiodl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Audio');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
-//
-//        $.each(comedydl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Comedy');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
-//
-//        $.each(ebookdl.children, function(index, value){
-//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'eBook');
-//        });
-//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+        this.bundle.items.push(item);
       }
 
-      rfsbundlescraper.bundle = rfsbundlescraper.humblebundle.bundle;
+      rfsbundlescraper.bundle = this.bundle;
 
       rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.humblebundle);
 
       rfsbundlescraper.utils.readFromLS();
-    },
-
-    new_process: function(item, value, platform){
-
-      if (value.className !== "custom-download-text") {
-        var info = {};
-        info.platform = platform;
-        item.platforms = [];
-
-        if (value.children[0].childElementCount > 0)
-          info.format = value.children[0].children[1].innerHTML;
-        if (value.children[1].children[0].childElementCount > 0)
-          info.size = value.children[1].children[0].children[0].innerHTML;
-
-        var dllinks = value.children[0].children[2];
-
-        if (dllinks.hasAttribute('data-web'))
-          info.http = dllinks.attributes['data-web']['value'];
-
-        if (dllinks.hasAttribute('data-bt'))
-          info.bt = dllinks.attributes['data-bt']['value'];
-
-        if (value.hasAttribute('data-md5'))
-          info.hash = value.attributes['data-md5']['value'];
-      }
-
-      item.platforms.push(info);
-
-      return item;
     },
 
     run_combine: function () {
@@ -986,7 +923,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.utils.readFromLS();
     },
 
-    process: function (item, platformdl, type) {
+    process: function (item, platform, platformdl, type) {
       'use strict';
 //      if (type === "Windows")
 //        platform.windows = [];
@@ -1026,8 +963,6 @@ var rfsbundlescraper = {
             if (platformdl.children[j].hasAttribute('data-md5'))
               info.hash = platformdl.children[j].attributes['data-md5']['value'];
 
-//            item.platforms.push(info);
-
 //            if (type == "Windows") {
 //              platform.windows.push(info);
 //            }
@@ -1052,11 +987,11 @@ var rfsbundlescraper = {
 
 //            console.log('before:');
 //            console.log(platform);
-//            var cleanPlatform = this.cleanup(platform);
+            var cleanPlatform = this.cleanup(platform);
 //            console.log('after:');
 //            console.log(platform);
 
-//            item.platforms.push(cleanPlatform);
+            item.platforms.push(cleanPlatform);
 //            item.platforms = this.removeDupeProperties(item.platforms);
 //            console.log(item);
 //            item.platforms = this.cleanup(item.platforms);
