@@ -1,4 +1,4 @@
-var VERSION = '0.8300945';
+var VERSION = '0.8300955';
 
 var rfsbundlescraper = {
 
@@ -229,14 +229,15 @@ var rfsbundlescraper = {
         rfsbundlescraper.combine = false;
         console.log('No existing bundle...');
         console.log(rfsbundlescraper.bundle);
+
+        rfsbundlescraper.bundle.title = $('.text_align_center h2')[0].innerText;
+        rfsbundlescraper.bundle.title_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.title);
+        rfsbundlescraper.bundle.site = "IndieGala";
+
         rfsbundlescraper.bundle.games = [];
+
+        rfsbundlescraper.utils.readFromLS();
       }
-
-      rfsbundlescraper.bundle.title = $('.text_align_center h2')[0].innerText;
-      rfsbundlescraper.bundle.title_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.title);
-      rfsbundlescraper.bundle.site = "IndieGala";
-
-      rfsbundlescraper.utils.readFromLS();
     },
 
     ig_run: function () {
@@ -278,7 +279,6 @@ var rfsbundlescraper = {
 
       var titles = $('.title_game a');
       var drm, game, key;
-
 
       var steamLinkIndex = 0;
 
