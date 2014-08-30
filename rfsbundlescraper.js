@@ -109,7 +109,7 @@ var rfsbundlescraper = {
     },
 
     reloadScript: function () {
-      var src = "https://rawgit.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js";
+      var src = "https://raw.githack.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js";
 
       $('#rfs-container').remove();
 
