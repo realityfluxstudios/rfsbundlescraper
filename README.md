@@ -45,7 +45,7 @@ I am releasing this to the public in the hopes that it will be useful to others.
 
 * ~~On the android games list the very first game has a list of all the subsequent game names for some reason~~
 * ~~`games.game[i].title_slug` is not being saved for some reason despite line 200. `games.game[i].title` is saved properly but `title_slug` is not.~~
-* ~~ the `rfsbundle` object will be an array of all bundles, but because localStorage doesn't cross domains it'll have to always be separate.~~
+* ~~the `rfsbundle` object will be an array of all bundles, but because localStorage doesn't cross domains it'll have to always be separate.~~
 
 ### More Info
 
