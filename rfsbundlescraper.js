@@ -1,4 +1,4 @@
-var VERSION = '0.8300955';
+var VERSION = '0.8300957';
 
 var rfsbundlescraper = {
 
@@ -235,8 +235,6 @@ var rfsbundlescraper = {
         rfsbundlescraper.bundle.site = "IndieGala";
 
         rfsbundlescraper.bundle.games = [];
-
-        rfsbundlescraper.utils.readFromLS();
       }
     },
 
