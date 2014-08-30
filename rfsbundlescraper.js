@@ -789,18 +789,18 @@ var rfsbundlescraper = {
 
 ////        var thisPlatform = {};
 //
-//        item = this.process(item, windl, "Windows");
-//        item = this.process(item, macdl, "Mac");
-//        item = this.process(item, linuxdl, "Linux");
-//        item = this.process(item, androiddl, "Android");
-//        item = this.process(item, audiodl, "Audio");
-//        item = this.process(item, comedydl, 'Comedy');
-//        item = this.process(item, ebookdl, 'eBook');
+        item = this.process(item, windl, "Windows");
+        item = this.process(item, macdl, "Mac");
+        item = this.process(item, linuxdl, "Linux");
+        item = this.process(item, androiddl, "Android");
+        item = this.process(item, audiodl, "Audio");
+        item = this.process(item, comedydl, 'Comedy');
+        item = this.process(item, ebookdl, 'eBook');
 
-        for(i=0; i <= windl.children.length; i++){
-          item = rfsbundlescraper.humblebundle.new_process(item, windl.children[i], 'Windows');
-          rfsbundlescraper.humblebundle.bundle.items.push(item);
-        }
+//        for(i=0; i <= windl.children.length; i++){
+//          item = rfsbundlescraper.humblebundle.new_process(item, windl.children[i], 'Windows');
+//          rfsbundlescraper.humblebundle.bundle.items.push(item);
+//        }
 
 //
 //        $.each(macdl.children, function(index, value){
