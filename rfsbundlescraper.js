@@ -1,4 +1,4 @@
-var VERSION = '0.8301104';
+var VERSION = '0.8301115';
 
 var rfsbundlescraper = {
 
@@ -798,9 +798,10 @@ var rfsbundlescraper = {
 //        item = this.process(item, ebookdl, 'eBook');
 
         for(i=0; i <= windl.children; i++){
-          rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
+          item = rfsbundlescraper.humblebundle.new_process(item, windl.children[i], 'Windows');
+          rfsbundlescraper.humblebundle.bundle.items.push(item);
         }
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
+
 //
 //        $.each(macdl.children, function(index, value){
 //          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Mac');
