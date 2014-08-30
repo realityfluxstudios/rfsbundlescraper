@@ -6,26 +6,26 @@ A companion website will be made available
 
 
 ### How to use
-1. Copy `javascript: (function() {s = document.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('src', 'https://raw.githack.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js');document.body.appendChild(s); })();` into the
+1. Copy `javascript: (function() {s = document.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('src', 'https://cdn.rawgit.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js');document.body.appendChild(s); })();` into the
 URL part of a bookmark.
 2. When on the bundle page of either IndieGala or HumbleBundle, simply click the bookmark you just created.
 
- A textbox will appear in the lower right side of the screen. This will contain the JSON data of the items in the
- bundle.
+A textbox will appear in the lower right side of the screen. This will contain the JSON data of the items in the
+bundle.
 
- There are a couple reasons why the JSON won't instantly appear in the textbox on the first try. If the bundle is one
-  of the newer ones that requires linking to Steam then you will need to click the `Auto Click` button above the
-  textbox. This will click all of the guest link images and create gift links so that they can be given out. Don't
-  worry, you can claim them for yourself as well later.
+There are a couple reasons why the JSON won't instantly appear in the textbox on the first try. If the bundle is one
+of the newer ones that requires linking to Steam then you will need to click the `Auto Click` button above the
+textbox. This will click all of the guest link images and create gift links so that they can be given out. Don't
+worry, you can claim them for yourself as well later.
 
- If you have multiple copies of the same bundle you can go to each successive page and run the script and it will
- properly combine the serials/urls for the same item.
+If you have multiple copies of the same bundle you can go to each successive page and run the script and it will
+properly combine the serials/urls for the same item.
 
- When going to a new bundle, be sure to hit the `Reset/Clear` button to clear the local storage data so the JSON will
- be accurate based on the current bundle.
+When going to a new bundle, be sure to hit the `Reset/Clear` button to clear the local storage data so the JSON will
+be accurate based on the current bundle.
 
- When all else fails, clear the localStorage `click reset/clear` and hit `reload` this removes the text area,
- attaches the script (and supposed to remove the previous one) and re-runs the script on the page.
+When all else fails, clear the localStorage `click reset/clear` and hit `reload` this removes the text area,
+attaches the script (and supposed to remove the previous one) and re-runs the script on the page.
 
 #### History
 
