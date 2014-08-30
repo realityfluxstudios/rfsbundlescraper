@@ -1,4 +1,4 @@
-var VERSION = '0.8301100';
+var VERSION = '0.8301104';
 
 var rfsbundlescraper = {
 
@@ -797,7 +797,7 @@ var rfsbundlescraper = {
 //        item = this.process(item, comedydl, 'Comedy');
 //        item = this.process(item, ebookdl, 'eBook');
 
-        for(i=0; i< windl.children; i++){
+        for(i=0; i <= windl.children; i++){
           rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
         }
         rfsbundlescraper.humblebundle.bundle.items.push(item);
