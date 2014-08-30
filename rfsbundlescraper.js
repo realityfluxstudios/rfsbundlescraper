@@ -1,4 +1,4 @@
-var VERSION = '0.8301150';
+var VERSION = '0.8301153';
 
 var rfsbundlescraper = {
 
@@ -925,27 +925,14 @@ var rfsbundlescraper = {
 
     process: function (item, platform, platformdl, type) {
       'use strict';
-//      if (type === "Windows")
-//        platform.windows = [];
-//      else if (type === "Mac")
-//        platform.mac = [];
-//      else if (type === "Linux")
-//        platform.linux = [];
-//      else if (type === "Audio")
-//        platform.audio = [];
-//      else if (type === "Android")
-//        platform.android = [];
-//      else if (type === "Comedy")
-//        platform.comedy = [];
-//      else if (type === "eBook")
-//        platform.ebook = [];
 
       if (platformdl.children.length > 0) {
         for (var j = 0; j <= platformdl.children.length - 1; j++) {
           if (platformdl.children[j].className !== "custom-download-text") {
             var info = {};
             info.platform = type;
-            item.platforms = [];
+            if(item.platforms == null)
+              item.platforms = [];
 
             if (platformdl.children[j].children[0].childElementCount > 0)
               info.format = platformdl.children[j].children[0].children[1].innerHTML;
@@ -963,38 +950,7 @@ var rfsbundlescraper = {
             if (platformdl.children[j].hasAttribute('data-md5'))
               info.hash = platformdl.children[j].attributes['data-md5']['value'];
 
-//            if (type == "Windows") {
-//              platform.windows.push(info);
-//            }
-//            else if (type == "Mac") {
-//              platform.mac.push(info);
-//            }
-//            else if (type == "Linux") {
-//              platform.linux.push(info);
-//            }
-//            else if (type == "Audio") {
-//              platform.audio.push(info);
-//            }
-//            else if (type == "Android") {
-//              platform.android.push(info);
-//            }
-//            else if (type == "Comedy") {
-//              platform.comedy.push(info);
-//            }
-//            else if (type == "eBook") {
-//              platform.ebook.push(info);
-//            }
-
-//            console.log('before:');
-//            console.log(platform);
-//            var cleanPlatform = this.cleanup(platform);
-//            console.log('after:');
-//            console.log(platform);
-
             item.platforms.push(info);
-//            item.platforms = this.removeDupeProperties(item.platforms);
-//            console.log(item);
-//            item.platforms = this.cleanup(item.platforms);
           }
         }
       }
