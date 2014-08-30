@@ -1,4 +1,4 @@
-var VERSION = '0.8301153';
+var VERSION = '0.8301200';
 
 var rfsbundlescraper = {
 
@@ -217,7 +217,6 @@ var rfsbundlescraper = {
         rfsbundlescraper.combine = true;
         console.log('Loading existing bundle calling readFromLS()');
         rfsbundlescraper.utils.readFromLS();
-//        rfsbundlescraper.bundle = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.indiegala));
         console.log('bundle.games.length: ' + rfsbundlescraper.bundle.games.length);
 
         if (rfsbundlescraper.bundle.url === window.location.href) {
@@ -496,15 +495,6 @@ var rfsbundlescraper = {
           rfsbundlescraper.bundle.androidgames.push(androidgame);
         }
       }
-    },
-
-    cleanup: function () {
-      if (rfsbundlescraper.bundle.hasOwnProperty('drmFreeGames'))
-        delete rfsbundlescraper.bundle.drmFreeGames;
-      if (rfsbundlescraper.bundle.hasOwnProperty('musictracks'))
-        delete rfsbundlescraper.bundle.musictracks;
-      if (rfsbundlescraper.bundle.hasOwnProperty('androidgames'))
-        delete rfsbundlescraper.bundle.androidgames;
     },
 
     clickGiftImages: function () {
@@ -787,15 +777,13 @@ var rfsbundlescraper = {
 
         console.log(i + ". " + item.title);
 
-        var thisPlatform = {};
-
-        item = this.process(item, thisPlatform, windl, "Windows");
-        item = this.process(item, thisPlatform, macdl, "Mac");
-        item = this.process(item, thisPlatform, linuxdl, "Linux");
-        item = this.process(item, thisPlatform, androiddl, "Android");
-        item = this.process(item, thisPlatform, audiodl, "Audio");
-        item = this.process(item, thisPlatform, comedydl, 'Comedy');
-        item = this.process(item, thisPlatform, ebookdl, 'eBook');
+        item = this.process(item, windl, "Windows");
+        item = this.process(item, macdl, "Mac");
+        item = this.process(item, linuxdl, "Linux");
+        item = this.process(item, androiddl, "Android");
+        item = this.process(item, audiodl, "Audio");
+        item = this.process(item, comedydl, 'Comedy');
+        item = this.process(item, ebookdl, 'eBook');
 
         this.bundle.items.push(item);
       }
@@ -923,7 +911,7 @@ var rfsbundlescraper = {
       rfsbundlescraper.utils.readFromLS();
     },
 
-    process: function (item, platform, platformdl, type) {
+    process: function (item, platformdl, type) {
       'use strict';
 
       if (platformdl.children.length > 0) {
@@ -955,74 +943,6 @@ var rfsbundlescraper = {
         }
       }
       return item;
-    },
-
-    removeDupeProperties: function (platforms) {
-      var i;
-
-      /*
-       This goes though the platforms array and removes duplicate objects leaving only 1 left.
-       Notice I am going length-1 so that the i+1 does not go out of bounds. This is just a simple
-       comparison check and then popping the last item if the two match.
-       */
-      for (i = 0; i < platforms.length - 1; i++) {
-        if (platforms[i] === platforms[i + 1])
-          platforms.pop();
-      }
-    },
-
-    cleanup: function (platforms) {
-      'use strict';
-      /*
-       removing empty properties from the platforms object to make things a little more tidy
-       I am not sure why it insists on creating the empty objects. This is a roundabout way of
-       removing them but it works. I am not worried about performance because this script only
-       runs one page at a time
-       */
-      if (platforms.hasOwnProperty('windows') && platforms.windows.length == 0) {
-        if (delete platforms.windows)
-          console.log('deleted empty platforms.windows')
-      }
-      if (platforms.hasOwnProperty('mac') && platforms.mac.length == 0) {
-        if (delete platforms.mac)
-          console.log('deleted empty platforms.mac')
-      }
-      if (platforms.hasOwnProperty('linux') && platforms.linux.length == 0) {
-        if (delete platforms.linux)
-          console.log('deleted empty platforms.linux')
-      }
-      if (platforms.hasOwnProperty('audio') && platforms.audio.length == 0) {
-        if (delete platforms.audio)
-          console.log('deleted empty platforms.audio')
-      }
-      if (platforms.hasOwnProperty('android') && platforms.android.length == 0) {
-        if (delete platforms.android)
-          console.log('deleted empty platforms.android')
-      }
-      if (platforms.hasOwnProperty('comedy') && platforms.comedy.length == 0) {
-        if (delete platforms.comedy)
-          console.log('deleted empty platforms.comedy')
-      }
-      if (platforms.hasOwnProperty('ebook') && platforms.ebook.length == 0) {
-        if (delete platforms.ebook)
-          console.log('deleted empty platforms.ebook')
-      }
-
-      return platforms;
-    },
-
-    clearLS: function () {
-      localStorage.removeItem(rfsbundlescraper.utils.json_names.humblebundle);
-    },
-
-    checkLS: function () {
-      if (localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle)) {
-        var ls = JSON.parse(localStorage.getItem(rfsbundlescraper.utils.json_names.humblebundle));
-        console.log("Local Storage item " + rfsbundlescraper.utils.json_names.humblebundle + " has " + ls.length + " items in the array.");
-      }
-      else {
-        console.log("Local Storage item " + rfsbundlescraper.utils.json_names.humblebundle + " does not exist!");
-      }
     },
 
     clickGiftImages: function () {
