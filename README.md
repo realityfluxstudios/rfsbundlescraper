@@ -6,7 +6,7 @@ A companion website will be made available
 
 
 ### How to use
-1. Copy `javascript: (function() {s = document.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('src', 'https://cdn.rawgit.com/realityfluxstudios/RFSBundleScraper/1.0/rfsbundlescraper.js');document.body.appendChild(s); })();` into the
+1. Copy `javascript: (function() {s = document.createElement('script');s.setAttribute('type', 'text/javascript');s.setAttribute('src', 'https://cdn.rawgit.com/realityfluxstudios/RFSBundleScraper/v1.1.1/rfsbundlescraper.js');document.body.appendChild(s); })();` into the
 URL part of a bookmark.
 2. When on the bundle page of either IndieGala or HumbleBundle, simply click the bookmark you just created.
 
