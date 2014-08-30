@@ -1,4 +1,4 @@
-var VERSION = '0.8301147';
+var VERSION = '0.8301150';
 
 var rfsbundlescraper = {
 
@@ -991,7 +991,7 @@ var rfsbundlescraper = {
 //            console.log('after:');
 //            console.log(platform);
 
-            item.platforms.push(platform);
+            item.platforms.push(info);
 //            item.platforms = this.removeDupeProperties(item.platforms);
 //            console.log(item);
 //            item.platforms = this.cleanup(item.platforms);
