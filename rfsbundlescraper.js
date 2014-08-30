@@ -1,4 +1,4 @@
-var VERSION = '0.8242206';
+var VERSION = '0.8300945';
 
 var rfsbundlescraper = {
 
@@ -109,7 +109,7 @@ var rfsbundlescraper = {
     },
 
     reloadScript: function () {
-      var src = "https://raw.githack.com/tvl83/RFSBundleScraper/master/rfsbundlescraper.js";
+      var src = "https://raw.githack.com/RealityFluxStudios/RFSBundleScraper/master/rfsbundlescraper.js";
 
       $('#rfs-container').remove();
 
@@ -186,7 +186,7 @@ var rfsbundlescraper = {
       console.log('readFromLS()');
       console.log(rfsbundlescraper.bundle);
       if (rfsbundlescraper.bundle != null) {
-        console.log('-- if(rfsbundlescraper.bundle == null');
+        console.log('-- if(rfsbundlescraper.bundle != null');
         console.log('rfsbundlescraper.bundle');
         console.log(rfsbundlescraper.bundle);
         if (rfsbundlescraper.utils.site.humblebundle)
@@ -229,14 +229,14 @@ var rfsbundlescraper = {
         rfsbundlescraper.combine = false;
         console.log('No existing bundle...');
         console.log(rfsbundlescraper.bundle);
+        rfsbundlescraper.bundle.games = [];
       }
 
       rfsbundlescraper.bundle.title = $('.text_align_center h2')[0].innerText;
       rfsbundlescraper.bundle.title_slug = rfsbundlescraper.utils.convertToSlug(rfsbundlescraper.bundle.title);
       rfsbundlescraper.bundle.site = "IndieGala";
-      rfsbundlescraper.bundle.games = [];
 
-//      rfsbundlescraper.utils.readFromLS();
+      rfsbundlescraper.utils.readFromLS();
     },
 
     ig_run: function () {
@@ -263,7 +263,7 @@ var rfsbundlescraper = {
           this.gatherMusicTracks();
           this.gatherAndroidGames();
         }
-//        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
+        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games);
         rfsbundlescraper.utils.saveToLS(rfsbundlescraper.utils.json_names.indiegala);
       }
       else {
@@ -419,15 +419,6 @@ var rfsbundlescraper = {
           }
         }
       }
-
-//      for (var z = 0; z < rfsbundlescraper.bundle.games.length; z++) {
-//        console.log(rfsbundlescraper.bundle);
-//        rfsbundlescraper.utils.removeDupes(rfsbundlescraper.bundle.games[z].keys);
-//      }
-
-//      console.log(rfsbundlescraper.bundle);
-//      console.log('end of gatherDRMgames()');
-//      rfsbundlescraper.utils.readFromLS();
       rfsbundlescraper.utils.saveToLS();
     },
 
