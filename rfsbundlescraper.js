@@ -109,7 +109,7 @@ var rfsbundlescraper = {
     },
 
     reloadScript: function () {
-      var src = "https://cdn.rawgit.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js";
+      var src = "https://rawgit.com/realityfluxstudios/RFSBundleScraper/master/rfsbundlescraper.js";
 
       $('#rfs-container').remove();
 
@@ -797,40 +797,40 @@ var rfsbundlescraper = {
 //        item = this.process(item, comedydl, 'Comedy');
 //        item = this.process(item, ebookdl, 'eBook');
 
-        $.each(windl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Windows');
-        });
+        for(i=0; i< windl.children; i++){
+          rfsbundlescraper.humblebundle.new_process(item, value, 'Windows');
+        }
         rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(macdl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Mac');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(linuxdl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Linux');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(androiddl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Android');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(audiodl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Audio');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(comedydl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Comedy');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
-
-        $.each(ebookdl.children, function(index, value){
-          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'eBook');
-        });
-        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(macdl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Mac');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(linuxdl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Linux');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(androiddl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Android');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(audiodl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Audio');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(comedydl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'Comedy');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
+//
+//        $.each(ebookdl.children, function(index, value){
+//          rfsbundlescraper.humblebundle.new_process(rfsbundlescraper.humblebundle.run.item, value, 'eBook');
+//        });
+//        rfsbundlescraper.humblebundle.bundle.items.push(item);
       }
 
       rfsbundlescraper.bundle = rfsbundlescraper.humblebundle.bundle;
