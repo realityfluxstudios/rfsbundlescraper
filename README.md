@@ -1,3 +1,5 @@
+# This project is no longer maintained
+
 # RFS Bundle Scraper
 
 This has turned into a script that will not only scrap Indiegala bundles, but will also scrape Humble Bundle. All of the information is then printed neatly in JSON for your own consumption.
